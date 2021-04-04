@@ -86,7 +86,7 @@ class Request
     {
         $data = self::getParam($key);
 
-        if (!is_null($data)) {
+        if (!empty($data)) {
             if ($data == '0') return 0;
             if (filter_var($data, FILTER_VALIDATE_INT)) {
                 return (int)$data;
@@ -107,7 +107,7 @@ class Request
     {
         $data = self::getParam($key);
 
-        if (!is_null($data)) {
+        if (!empty($data)) {
             if ($data == '0') return 0;
             return filter_var($data, FILTER_VALIDATE_FLOAT);
         }
@@ -126,7 +126,7 @@ class Request
     public static function getAsString(string $key, $required = false): ?string
     {
         $data = self::getParam($key);
-        if (!is_null($data)) {
+        if (!empty($data)) {
             return filter_var($data, FILTER_SANITIZE_STRING);
         }
 
