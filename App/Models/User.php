@@ -68,14 +68,67 @@ class User implements IModel
 
     }
 
-    public function update()
+    /**
+     * @throws Exception
+     */
+    public function update(): bool
     {
-        // TODO: Implement update() method.
+
+        if ($this->sameUsernameExist()) throw new Exception('Username already exist');
+        if ($this->sameEmailExist()) throw new Exception('Email already exist');
+
+        $data = [
+            'username' => $this->username,
+            'full_name' => $this->full_name,
+            'email' => $this->email,
+        ];
+
+        return Database::update(self::TABLE, $data, ['id' => $this->id]);
+
     }
 
     public function delete()
     {
         // TODO: Implement delete() method.
+    }
+
+
+    /**
+     * Check if username provided exists for other users in the database
+     * @return bool
+     */
+    public function sameUsernameExist(): bool
+    {
+        $db = Database::instance();
+        $statement = $db->prepare('select * from users where username = :username and id != :id');
+        $statement->execute([
+            ':username' => $this->username,
+            ':id' => $this->id
+        ]);
+
+        $result = $statement->fetchObject(self::class);
+
+        if (!empty($result)) return true;
+        return false;
+    }
+
+    /**
+     * Check if email provided exists for other users in the database
+     * @return bool
+     */
+    public function sameEmailExist(): bool
+    {
+        $db = Database::instance();
+        $statement = $db->prepare('select * from users where email = :email and id != :id');
+        $statement->execute([
+            ':email' => $this->email,
+            ':id' => $this->id
+        ]);
+
+        $result = $statement->fetchObject(self::class);
+
+        if (!empty($result)) return true;
+        return false;
     }
 
     /*-------------------------------------------*/

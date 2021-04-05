@@ -41,9 +41,19 @@
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
 
+
 export default {
   name: "Home",
-  components: {TopNavigationBar}
+  components: {TopNavigationBar},
+
+  mounted() {
+
+
+
+
+
+  },
+
 }
 </script>
 

@@ -40,8 +40,16 @@
           </div>
 
           <div v-if="messages">
-            <div class="alert alert-danger text-center">
+            <div class="alert alert-info text-center alert-dismissible fade show" role="alert">
               {{ messages }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
+
+          <div v-if="errors">
+            <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+              {{ errors }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           </div>
 
@@ -73,6 +81,7 @@ export default {
       },
 
       messages: "",
+      errors: "",
 
     }
   },
@@ -117,10 +126,10 @@ export default {
 
       this.$store.dispatch('UPDATE_USER', this.userToEdit)
           .then(response => {
-
+            this.messages = 'Updated'
           })
           .catch(error => {
-            this.messages = error.response.data.payload.error
+            this.errors = error.response.data.payload.error
           })
 
     },

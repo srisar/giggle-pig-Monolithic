@@ -18,21 +18,22 @@ try {
     Auth::authenticate();
 
 
-
-//    $fields = [
-//        'id' => Request::getAsInteger('id', true),
-//        'full_name' => Request::getAsString('full_name'),
-//        'username' => Request::getAsString('username'),
-//        'email' => Request::getAsString('email'),
-//    ];
-//
-//    foreach ($fields as $field) {
-//        if (empty($field)) throw new Exception(sprintf("Required field missing"));
-//    }
+    $fields = [
+        'id' => Request::getAsInteger('id', true),
+        'full_name' => Request::getAsString('full_name', true),
+        'username' => Request::getAsString('username', true),
+        'email' => Request::getAsString('email', true),
+    ];
 
 
-    JSONResponse::validResponse(['fields' => $fields]);
-    return;
+    $user = User::build($fields);
+
+    $result = $user->update();
+
+    if ($result) {
+        JSONResponse::validResponse('Updated');
+        return;
+    }
 
 
 } catch (Exception $exception) {

@@ -11,7 +11,6 @@ const _ = require('lodash')
 /* BOOTSTRAP 5 */
 import '@popperjs/core'
 import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 /* local common scss */
