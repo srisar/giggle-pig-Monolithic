@@ -40,7 +40,7 @@ class JSONResponse
     public static function invalidResponse($payload = 'Invalid request', $status_code = 400)
     {
         if (!is_array($payload)) {
-            $response = new JSONResponse([$payload], $status_code);
+            $response = new JSONResponse(['data' => $payload], $status_code);
         } else {
             $response = new JSONResponse($payload, $status_code);
         }
@@ -51,7 +51,7 @@ class JSONResponse
     public static function validResponse($payload = 'Success')
     {
         if (!is_array($payload)) {
-            $response = new JSONResponse([$payload], 200);
+            $response = new JSONResponse(['data' => $payload], 200);
         } else {
             $response = new JSONResponse($payload, 200);
         }

@@ -49,7 +49,7 @@ class User implements IModel
      * @return bool|int|null
      * @throws Exception
      */
-    public function insert()
+    public function insert(): bool|int|null
     {
 
         if ($this->usernameAlreadyExist($this->username)) throw new Exception('Username already exist');
@@ -81,6 +81,7 @@ class User implements IModel
             'username' => $this->username,
             'full_name' => $this->full_name,
             'email' => $this->email,
+            'role' => $this->role
         ];
 
         return Database::update(self::TABLE, $data, ['id' => $this->id]);
@@ -169,4 +170,25 @@ class User implements IModel
         return null;
 
     }
+
+    /* ----------------------------------------------------------------------------- */
+
+    public function validatePassword($password): bool
+    {
+        return password_verify($password, $this->password_hash);
+    }
+
+    public function updatePassword($newPassword): bool
+    {
+
+        $this->password_hash = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        $data = [
+            'password_hash' => $this->password_hash
+        ];
+
+        return Database::update(self::TABLE, $data, ['id' => $this->id]);
+
+    }
+
 }

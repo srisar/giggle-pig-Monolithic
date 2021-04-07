@@ -20,19 +20,21 @@ try {
 
     $fields = [
         'id' => Request::getAsInteger('id', true),
-        'full_name' => Request::getAsString('full_name', true),
-        'username' => Request::getAsString('username', true),
-        'email' => Request::getAsString('email', true),
-        'role' => Request::getAsString('role', true),
+        'current_password' => Request::getAsString('current_password', true),
+        'new_password' => Request::getAsString('new_password', true),
     ];
 
 
-    $user = User::build($fields);
+    $user = User::find($fields['id']);
 
-    $result = $user->update();
+    if (is_null($user)) throw new Exception('Invalid user');
+
+    if (!$user->validatePassword($fields['current_password'])) throw new Exception('Invalid current password');
+
+    $result = $user->updatePassword($fields['new_password']);
 
     if ($result) {
-        JSONResponse::validResponse('Updated');
+        JSONResponse::validResponse('Password updated');
         return;
     }
 

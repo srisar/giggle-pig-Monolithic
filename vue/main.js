@@ -10,8 +10,10 @@ const _ = require('lodash')
 
 /* BOOTSTRAP 5 */
 import '@popperjs/core'
-import 'bootstrap'
+// import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+
+window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.min')
 
 /* local common scss */
 import './assets/scss/common.scss'

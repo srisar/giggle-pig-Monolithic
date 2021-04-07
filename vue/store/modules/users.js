@@ -6,6 +6,11 @@ export default {
     state: {
 
         user: {},
+        roles: {
+            'ADMIN': 'Administrator',
+            'MANAGER': 'Manager',
+            'USER': 'User'
+        },
 
     },
     /* *** STATE *** */
@@ -14,7 +19,11 @@ export default {
 
         getUser: function (state) {
             return state.user
-        }
+        },
+
+        getUserRoles: function (state) {
+            return state.roles
+        },
 
     },
     /* *** GETTERS *** */
@@ -56,8 +65,6 @@ export default {
                 axios.post('users/update.php', user)
                     .then(response => {
 
-                        console.log(response.data.payload)
-
                         resolve()
 
                     })
@@ -69,6 +76,29 @@ export default {
 
         },
         /* update user details */
+
+        UPDATE_USER_PASSWORD: function ({commit}, params) {
+
+            /*
+            * params: {id, current_password, new_password}
+            * */
+
+            return new Promise((resolve, reject) => {
+
+                axios.post('users/update-password.php', params)
+                    .then(response => {
+
+                        resolve(response.data.payload.data)
+
+                    })
+                    .catch(error => {
+                        reject(error)
+                    })
+
+            })
+
+        },
+        /* update user password */
 
 
     },
