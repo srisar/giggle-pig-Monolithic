@@ -148,7 +148,7 @@ export default {
 
     feedbackAlertClass() {
       if (this.feedback.type === "error") return "alert-danger";
-      return "alert-suiccess";
+      return "alert-success";
     },
 
     validPassword() {
