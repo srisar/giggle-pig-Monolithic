@@ -40803,7 +40803,7 @@ window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.mi
 
 axios__WEBPACK_IMPORTED_MODULE_3___default().interceptors.response.use(undefined, function (error) {
   if (error.response.status === 401) {
-    _store_index__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('LOGOUT').then(function () {
+    _store_index__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('auth_logout').then(function () {
       _router_index__WEBPACK_IMPORTED_MODULE_0__.default.push('/login').then();
     });
   }

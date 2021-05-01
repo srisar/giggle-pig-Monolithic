@@ -32,7 +32,7 @@ axios.defaults.headers['auth'] = store.getters.getAuthKey;
 
 axios.interceptors.response.use(undefined, (error => {
     if (error.response.status === 401) {
-        store.dispatch('LOGOUT').then(() => {
+        store.dispatch('auth_logout').then(() => {
             router.push('/login').then();
         })
     }
