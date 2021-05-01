@@ -2382,7 +2382,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     feedbackAlertClass: function feedbackAlertClass() {
       if (this.feedback.type === "error") return "alert-danger";
-      return "alert-suiccess";
+      return "alert-success";
     },
     validPassword: function validPassword() {
       if (this.userToCreate.password === "" || this.userToCreate.password.length < 3) return false;
