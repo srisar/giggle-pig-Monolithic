@@ -11,7 +11,7 @@
 
           <h2>Manage Users</h2>
 
-          <p>The table contains user details fetched from authenticated api.</p>
+          <p>The table contains available users in the system. <router-link to="/users/create">Create new user</router-link></p>
           <table class="table table-bordered table-sm">
             <thead>
             <tr>
@@ -24,7 +24,7 @@
 
             <tbody>
             <tr v-for="user in users" :key="user.id">
-              <td><router-link :to="/user/ + user.id">{{ user.full_name }}</router-link></td>
+              <td><router-link :to="'/users/edit/' + user.id">{{ user.full_name }}</router-link></td>
               <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.role }}</td>
@@ -55,18 +55,17 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
 
-    axios.get('users/all.php')
-        .then(response => {
+    try{
 
-          this.users = response.data.payload
+      let response = await axios.get("users/all.php");
 
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      this.users = response.data.payload;
 
+    }catch (e){
+      console.log(e);
+    }
 
   },
 }

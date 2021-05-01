@@ -40,66 +40,54 @@ export default {
     actions: {
 
 
-        FETCH_USER: function ({commit}, id) {
+        async users_fetchUser(context, id) {
 
-            return new Promise((resolve, reject) => {
-
-                axios.get(`users/get.php?id=${id}`)
-                    .then(response => {
-
-                        commit('setUser', response.data.payload.user)
-
-                    })
-                    .catch(error => {
-                        reject(error)
-                    })
-            })
+            try {
+                const response = await axios.get(`users/get.php?id=${id}`);
+                context.commit("setUser", response.data.payload.user);
+                return true;
+            } catch (e) {
+                throw e;
+            }
 
         },
         /* fetch user */
 
-        UPDATE_USER: function ({commit}, user) {
+        async users_updateUser(context, user) {
 
-            return new Promise((resolve, reject) => {
-
-                axios.post('users/update.php', user)
-                    .then(response => {
-
-                        resolve()
-
-                    })
-                    .catch(error => {
-                        reject(error)
-                    })
-
-            })
-
+            try {
+                await axios.post("users/update.php", user);
+                return true;
+            } catch (e) {
+                throw e;
+            }
         },
         /* update user details */
 
-        UPDATE_USER_PASSWORD: function ({commit}, params) {
+        async users_updatePassword(context, params) {
 
-            /*
-            * params: {id, current_password, new_password}
-            * */
+            /* params: {id, current_password, new_password} */
 
-            return new Promise((resolve, reject) => {
-
-                axios.post('users/update-password.php', params)
-                    .then(response => {
-
-                        resolve(response.data.payload.data)
-
-                    })
-                    .catch(error => {
-                        reject(error)
-                    })
-
-            })
-
+            try {
+                await axios.post('users/update-password.php', params);
+                return true;
+            } catch (e) {
+                throw e;
+            }
         },
         /* update user password */
 
+
+        async users_createUser(context, user) {
+
+            try {
+                await axios.post("users/create.php", user);
+                return true;
+            } catch (e) {
+                throw e;
+            }
+
+        }
 
     },
     /* *** ACTIONS *** */

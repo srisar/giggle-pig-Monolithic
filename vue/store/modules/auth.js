@@ -58,50 +58,31 @@ export default {
 
     actions: {
 
-        LOGIN: function ({commit}, user) {
+        async auth_login({commit}, userParams) {
 
-            return new Promise((resolve, reject) => {
+            let response = await axios.post("auth/login.php", userParams);
 
-                axios.post('auth/login.php', user)
-                    .then(response => {
+            const key = response.data.payload.auth_key;
+            const user = response.data.payload.user;
 
-                        let key = response.data.payload.auth_key
-                        let user = response.data.payload.user
+            localStorage.setItem(AUTH_KEY, key);
+            localStorage.setItem(LOGIN_STATUS, "true");
+            localStorage.setItem(USER, JSON.stringify(user));
 
-                        // add auth data to local storage
-                        localStorage.setItem(AUTH_KEY, key)
-                        localStorage.setItem(LOGIN_STATUS, 'true')
-                        localStorage.setItem(USER, JSON.stringify(user))
+            axios.defaults.headers["auth"] = key;
 
-                        axios.defaults.headers['auth'] = key
+            commit("loginSuccess");
 
-                        commit('loginSuccess')
-
-                        resolve()
-
-
-                    })
-                    .catch(error => {
-                        reject(error)
-                    })
-
-            })
 
         }, /* login */
 
-        LOGOUT: function ({commit}) {
+        async auth_logout({commit}) {
 
-            return new Promise((resolve) => {
+            localStorage.setItem(AUTH_KEY, '')
+            localStorage.setItem(LOGIN_STATUS, 'false')
+            localStorage.setItem(USER, '{}')
 
-                localStorage.setItem(AUTH_KEY, '')
-                localStorage.setItem(LOGIN_STATUS, 'false')
-                localStorage.setItem(USER, '{}')
-
-                commit('logoutSuccess')
-
-                resolve()
-
-            })
+            commit('logoutSuccess')
 
         }, /* logout */
 

@@ -1,28 +1,28 @@
-import Vue from 'vue'
-import router from './router/index'
-import store from './store/index'
+import Vue from 'vue';
+import router from './router/index';
+import store from './store/index';
 
 import App from "./App";
 
-import axios from "axios"
+import axios from "axios";
 
-const _ = require('lodash')
+const _ = require('lodash');
 
 /* BOOTSTRAP 5 */
 import '@popperjs/core'
 // import 'bootstrap'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
-window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.min')
+window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.min');
 
 /* local common scss */
-import './assets/scss/common.scss'
+import './assets/scss/common.scss';
 
 
 /* Axios configurations */
 
-axios.defaults.baseURL = 'http://localhost/api'
-axios.defaults.headers['auth'] = store.getters.getAuthKey
+axios.defaults.baseURL = 'http://localhost/api';
+axios.defaults.headers['auth'] = store.getters.getAuthKey;
 
 /*
 * Axios intercepting incoming responses, to check if it is 401,
@@ -33,11 +33,11 @@ axios.defaults.headers['auth'] = store.getters.getAuthKey
 axios.interceptors.response.use(undefined, (error => {
     if (error.response.status === 401) {
         store.dispatch('LOGOUT').then(() => {
-            router.push('/login').then()
+            router.push('/login').then();
         })
     }
 
-    return Promise.reject(error)
+    return Promise.reject(error);
 }))
 
 
@@ -46,4 +46,4 @@ new Vue({
     store: store,
     router: router,
     render: h => h(App)
-}).$mount("#app")
+}).$mount("#app");

@@ -4,16 +4,16 @@
 
     <TopNavigationBar/>
 
-    <div class="container" v-if="user">
+    <div class="container" v-if="userToEdit">
 
       <div class="row justify-content-center">
         <div class="col-12 col-md-6">
 
-          <h4 class="text-center">Edit {{ user.full_name }} details</h4>
+          <h4 class="text-center">Edit {{ userToEdit.full_name }} details</h4>
 
           <div class="alert alert-secondary">
 
-            <form @submit.prevent="onUpdate">
+            <div id="form-edit-user">
 
               <div class="row g-3">
                 <div class="col">
@@ -58,8 +58,8 @@
               </div>
 
               <div class="text-center">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button class="btn btn-secondary" @click="onCancel">Cancel</button>
+                <button type="button" class="btn btn-primary" @click="onUpdate()">Update</button>
+                <router-link to="/users" class="btn btn-secondary">Cancel</router-link>
               </div>
 
               <hr>
@@ -118,18 +118,16 @@
 
               </div><!-- change password area -->
 
-
-            </form>
-
-          </div>
-
-        </div>
-      </div>
-
-    </div>
+              <!-- feedback messages -->
 
 
-  </div>
+            </div><!-- form-edit-user -->
+          </div><!-- alert -->
+        </div><!-- col -->
+      </div><!-- row -->
+
+    </div><!-- container -->
+  </div><!-- template -->
 
 </template>
 
@@ -159,86 +157,62 @@ export default {
         confirmNewPassword: "",
       },
 
-      messages: "",
-      errors: "",
-
       isChangingPassword: false,
 
-    }
+    };
+
   },
 
 
   computed: {
 
-    user: function () {
-      let user = this.$store.getters.getUser
-      this.userToEdit = user
-      return user
-    },
-
-    roles: function () {
-      return this.$store.getters.getUserRoles
-    },
-
-    loggedInUser: function () {
-      return this.$store.getters.getLoggedInUser
-    },
-
-
-    isSameAsLoggedInUser: function () {
-      return this.user.username === this.loggedInUser.username
-    },
+    roles: function () { return this.$store.getters.getUserRoles; },
+    loggedInUser: function () { return this.$store.getters.getLoggedInUser; },
+    isSameAsLoggedInUser: function () { return this.userToEdit.username === this.loggedInUser.username; },
 
     isNewPasswordValid: function () {
-      if (this.passwordToChange.newPassword === '') return false
-
-      return this.passwordToChange.newPassword === this.passwordToChange.confirmNewPassword
+      if (this.passwordToChange.newPassword === "") return false;
+      return this.passwordToChange.newPassword === this.passwordToChange.confirmNewPassword;
     },
 
   },
 
-  mounted() {
+  async mounted() {
 
-    const id = this.$route.params.id
+    try {
+      const id = this.$route.params.id
+      await this.$store.dispatch("users_fetchUser", id);
 
-    this.$store.dispatch('FETCH_USER', id)
-        .then(response => {
+      this.userToEdit = this.$store.getters.getUser;
 
 
-        })
-        .catch(error => {
-
-          console.log('invalid user')
-          this.$router.push('/users')
-
-        })
+    } catch (error) {
+      console.log(error.response.data.payload.error);
+      // await this.$router.push("/users");
+    }
 
   },
 
   methods: {
 
-    onCancel: function () {
-      this.$router.push('/users')
-    },
-    /* on cancelling */
 
-    onUpdate: function () {
+    async onUpdate() {
 
-      this.$store.dispatch('UPDATE_USER', this.userToEdit)
-          .then(() => {
+      try {
 
-            new AlertDialog({message: 'User details updated', title: 'Updated'})
+        await this.$store.dispatch("users_updateUser", this.userToEdit);
 
-          })
-          .catch(error => {
-            new AlertDialog({message: error.response.data.payload.error, title: 'Error'})
-          })
+        new AlertDialog({message: "User details updated", title: "Updated"});
+
+      } catch (error) {
+        new AlertDialog({message: error.response.data.payload.error, title: "Error"});
+      }
 
     },
     /* on update */
 
 
-    onUpdatePassword: function () {
+    async onUpdatePassword() {
 
       const params = {
         id: this.userToEdit.id,
@@ -246,13 +220,15 @@ export default {
         new_password: this.passwordToChange.newPassword
       }
 
-      this.$store.dispatch('UPDATE_USER_PASSWORD', params)
-          .then(() => {
-            new AlertDialog({message: 'Password updated', title: 'updated'})
-          })
-          .catch(error => {
-            new AlertDialog({message: error.response.data.payload.error, title: 'Error'})
-          })
+      try {
+
+        await this.$store.dispatch("users_updatePassword", params);
+
+        new AlertDialog({message: "Password updated", title: "updated"});
+
+      } catch (error) {
+        new AlertDialog({message: error.response.data.payload.error, title: "Error"});
+      }
 
     },
     /* on update password */

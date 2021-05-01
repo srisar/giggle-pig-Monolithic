@@ -1,10 +1,14 @@
-let mix = require('laravel-mix')
+let mix = require("laravel-mix");
 
 /* sets the base output path for any mix assets. Fonts, images etc. */
-mix.setPublicPath('public')
+mix.setPublicPath("public");
 
 /* load browser sync to reload page whenever script updates */
-mix.browserSync('localhost');
+mix.browserSync("localhost");
 
 
-mix.js('vue/main.js', 'public/assets/js/main.js').vue()
+mix.js("vue/main.js", "public/assets/js/main.js").vue();
+
+
+/* disable build notifications */
+mix.disableSuccessNotifications();

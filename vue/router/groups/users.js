@@ -1,20 +1,22 @@
 import ManageUsers from "../../views/users/ManageUsers";
 import EditUser from "../../views/users/EditUser";
+import CreateUser from "../../views/users/CreateUser";
 
 export default [
 
     {
-        path: '/users',
-        name: 'users-manage',
+        path: "/users",
+        name: "ManageUser",
         component: ManageUsers,
         meta: {
             requiresAuth: true,
             adminOnly: true,
         }
     },
+
     {
-        path: '/user/:id',
-        name: 'user-edit',
+        path: "/users/edit/:id",
+        name: "EditUser",
         component: EditUser,
         meta: {
             requiresAuth: true,
@@ -22,4 +24,14 @@ export default [
         }
     },
 
-]
+    {
+        path: "/users/create",
+        name: "CreateUser",
+        component: CreateUser,
+        meta: {
+            requiresAuth: true,
+            adminOnly: true,
+        }
+    },
+
+];

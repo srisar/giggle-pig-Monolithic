@@ -53,23 +53,23 @@ export default {
 
   methods: {
 
-    onLogin: function () {
+    onLogin: async function () {
 
-      const payload = {
+      const userParams = {
         username: this.username,
         password: this.password
       }
 
-      this.$store.dispatch('LOGIN', payload)
-          .then(response => {
+      try {
 
+        await this.$store.dispatch("auth_login", userParams)
+        await this.$router.push("/");
 
-            this.$router.push('/')
+      } catch (e) {
+        console.log(e);
+        this.error = "Login failed. Please check your username and password";
+      }
 
-          })
-          .catch(error => {
-            this.error = 'Login failed. Please check your username and password'
-          })
 
     }
 

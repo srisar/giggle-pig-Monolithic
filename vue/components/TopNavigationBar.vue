@@ -59,13 +59,18 @@ export default {
 
   methods: {
 
-    logout: function () {
+    async logout() {
 
-      this.$store.dispatch('LOGOUT').then(() => {
-        this.$router.push('/login')
-      })
+      try {
+        await this.$store.dispatch("auth_logout");
+        await this.$router.push("/login");
 
-    }
+      } catch (e) {
+        console.log(e);
+        alert("Failed to logout");
+      }
+
+    },
 
   },
 
