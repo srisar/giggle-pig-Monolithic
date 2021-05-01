@@ -12,7 +12,7 @@ Request::cors();
 
 $db_config = [
     'HOST' => 'localhost',
-    'DATABASE' => 'php_auth_api',
+    'DATABASE' => 'phpvue',
     'USERNAME' => 'root',
     'PASSWORD' => '',
 ];
