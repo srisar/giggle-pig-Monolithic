@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Core\Http;
-
 
 use Exception;
 
 class Request
 {
 
-    public const REQUEST_GET = 'GET';
-    public const REQUEST_POST = 'POST';
+    public const REQUEST_GET = "GET";
+    public const REQUEST_POST = "POST";
 
-    public const METHOD_GET = 'GET';
-    public const METHOD_POST = 'POST';
-    public const METHOD_PUT = 'PUT';
-    public const METHOD_DELETE = 'DELETE';
-    public const METHOD_PATCH = 'PATCH';
+    public const METHOD_GET = "GET";
+    public const METHOD_POST = "POST";
+    public const METHOD_PUT = "PUT";
+    public const METHOD_DELETE = "DELETE";
+    public const METHOD_PATCH = "PATCH";
 
     /**
      * Returns the request method: GET, POST, PUT, DELETE and so on..
@@ -24,45 +24,48 @@ class Request
      */
     public static function method(): string
     {
-        return $_SERVER['REQUEST_METHOD'];
+        return $_SERVER["REQUEST_METHOD"];
     }
 
-    public static function scheme()
+    public static function scheme(): string
     {
-        return $_SERVER['REQUEST_SCHEME'];
+        return $_SERVER["REQUEST_SCHEME"];
     }
 
-    public static function host()
+    public static function host(): string
     {
-        return $_SERVER['HTTP_HOST'];
+        return $_SERVER["HTTP_HOST"];
     }
 
 
     /**
-     * @param $acceptableMethod
+     * Check if the request method can be accepted, if not throw an exception
+     *
+     * @param $acceptableMethod - one of the public const defined in Request class
      * @return bool
      * @throws Exception
      */
     public static function validateRequestMethod($acceptableMethod): bool
     {
-        if (Request::method() == $acceptableMethod) return true;
 
         $method = Request::method();
+        if ($method == $acceptableMethod) return true;
+
         throw new Exception("$method not accepted");
     }
 
-    /*
-     * ---------------------------------------------------------
-     * | Request parameters from GET/POST
-     * ---------------------------------------------------------
-     */
+
     /**
+     * Get raw param from the request for a given key, if require is set
+     * then the key must be in the request, otherwise exception will be thrown
+     *
      * @param string $key
-     * @param bool $required
+     * @param bool $required - if true, and key is not found in the request,
+     *                          will throw an exception
      * @return string|null
      * @throws Exception
      */
-    private static function getParam(string $key, $required = false): ?string
+    private static function getParam(string $key, bool $required = false): ?string
     {
         $axios = self::getAxiosData();
 
@@ -71,28 +74,28 @@ class Request
         if (isset($_REQUEST[$key])) {
             return $_REQUEST[$key];
         }
-        if ($required) throw new Exception("Field ({$key}) is required");
+        if ($required) throw new Exception("Field ($key) is required");
         return null;
     }
 
     /**
      * Returns request parameter value as integer
+     *
      * @param string $key
      * @param bool $required
      * @return int|null
      * @throws Exception
      */
-    public static function getAsInteger(string $key, $required = false): ?int
+    public static function getAsInteger(string $key, bool $required = false): ?int
     {
-        $data = self::getParam($key);
+        $data = self::getParam($key, $required);
 
         if (!empty($data)) {
-            if ($data == '0') return 0;
+            if ($data == "0") return 0;
             if (filter_var($data, FILTER_VALIDATE_INT)) {
                 return (int)$data;
             }
         }
-        if ($required) throw new Exception("Field ({$key}) is required");
         return null;
     }
 
@@ -103,16 +106,14 @@ class Request
      * @return float|null
      * @throws Exception
      */
-    public static function getAsFloat(string $key, $required = false): ?float
+    public static function getAsFloat(string $key, bool $required = false): ?float
     {
-        $data = self::getParam($key);
+        $data = self::getParam($key, $required);
 
         if (!empty($data)) {
-            if ($data == '0') return 0;
+            if ($data == "0") return 0;
             return filter_var($data, FILTER_VALIDATE_FLOAT);
         }
-
-        if ($required) throw new Exception("Field ({$key}) is required");
         return null;
     }
 
@@ -123,14 +124,12 @@ class Request
      * @return string|null
      * @throws Exception
      */
-    public static function getAsString(string $key, $required = false): ?string
+    public static function getAsString(string $key, bool $required = false): ?string
     {
-        $data = self::getParam($key);
+        $data = self::getParam($key, $required);
         if (!empty($data)) {
             return filter_var($data, FILTER_SANITIZE_STRING);
         }
-
-        if ($required) throw new Exception("Field ({$key}) is required");
         return null;
     }
 
@@ -140,11 +139,11 @@ class Request
      * @return string|null
      * @throws Exception
      */
-    public static function getAsRawString(string $key, $required = false): ?string
+    public static function getAsRawString(string $key, bool $required = false): ?string
     {
         $data = self::getParam($key);
 
-        if (empty($data)) throw new Exception("Field ({$key}) is required");
+        if (empty($data)) throw new Exception("Field ($key) is required");
         return $data;
     }
 
@@ -154,80 +153,75 @@ class Request
      * @return bool|null
      * @throws Exception
      */
-    public static function getAsBoolean(string $key, $required = false): ?bool
+    public static function getAsBoolean(string $key, bool $required = false): ?bool
     {
-        $data = self::getParam($key);
+        $data = self::getParam($key, $required);
+
         if (!is_null($data)) {
             return filter_var($data, FILTER_VALIDATE_BOOLEAN);
         }
 
-        if ($required) throw new Exception("Field ({$key}) is required");
-        return null;
-    }
-
-    /*------------------------------------------------------------*/
-
-
-    public static function getAuthKey(): string
-    {
-        if (isset($_SERVER['HTTP_AUTH'])) {
-            return $_SERVER['HTTP_AUTH'];
-        }
-        return '';
-    }
-
-    public static function getBasicAuthData(): ?array
-    {
-
-        if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-
-            $data = $_SERVER['HTTP_AUTHORIZATION'];
-            $data = explode(" ", $data)[1];
-            $data = base64_decode($data);
-
-            return explode(":", $data);
-
-        }
         return null;
     }
 
 
+    /**
+     * gets auth key from the request header
+     * @param string $key - key header value
+     * @return string
+     */
+    public static function getAuthKey(string $key = "HTTP_AUTH"): string
+    {
+        if (isset($_SERVER[$key])) {
+            return $_SERVER[$key];
+        }
+        return "";
+    }
+
+
+    /**
+     * Enable CORS support. This method can be hooked into bootstrap call
+     */
     public static function cors()
     {
 
         // Allow from any origin
-        if (isset($_SERVER['HTTP_ORIGIN'])) {
-            // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
+        if (isset($_SERVER["HTTP_ORIGIN"])) {
+            // Decide if the origin in $_SERVER["HTTP_ORIGIN"] is one
             // you want to allow, and if so:
-            header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-            header('Access-Control-Allow-Credentials: true');
-            header('Access-Control-Max-Age: 86400');    // cache for 1 day
+            header("Access-Control-Allow-Origin: {$_SERVER["HTTP_ORIGIN"]}");
+            header("Access-Control-Allow-Credentials: true");
+            header("Access-Control-Max-Age: 86400");    // cache for 1 day
         }
 
         // Access-Control headers are received during OPTIONS requests
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
 
-            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            if (isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"]))
                 // may also be using PUT, PATCH, HEAD etc
-                header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+                header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
 
-            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
-                header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+            if (isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]))
+                header("Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]}");
 
             exit(0);
         }
 
     }
 
-    /* ----------------------------------------------------------------------------- */
 
+    /**
+     * Enable Axios support: get data sent by axios into php.
+     * By default, PHP handles form-data, but axios sends data as
+     * raw request
+     * @return array
+     */
     private static function getAxiosData(): array
     {
 
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = json_decode(file_get_contents("php://input"), true);
 
         if (!is_null($data)) return $data;
         return [];
-
     }
 }
