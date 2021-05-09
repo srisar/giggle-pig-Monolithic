@@ -18,18 +18,17 @@ try {
     Auth::authenticate();
 
 
-    $id = Request::getAsInteger('id');
+    $id = Request::getAsInteger("id", true);
 
-    if (is_null($id)) throw new Exception('Invalid id');
 
     $user = User::find($id);
 
-    if (is_null($user)) throw new Exception('Invalid user');
+    if (is_null($user)) throw new Exception("Invalid user");
 
     // removing password_hash from going through api
     unset($user->password_hash);
 
-    JSONResponse::validResponse(['user' => $user]);
+    JSONResponse::validResponse(["user" => $user]);
     return;
 
 
