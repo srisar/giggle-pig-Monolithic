@@ -11,7 +11,7 @@
 
           <div class="row justify-content-center mb-3">
             <div class="col-12 col-md-4">
-              <img class="img-fluid" src="assets/images/phpvue-logo.png" alt="PhpVue Logo">
+              <img class="img-fluid" src="../../assets/images/phpvue-logo.png" alt="PhpVue Logo">
             </div>
           </div>
 
@@ -47,9 +47,6 @@ export default {
   components: {TopNavigationBar},
 
   mounted() {
-
-
-
 
 
   },

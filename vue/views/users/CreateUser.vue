@@ -117,7 +117,6 @@
 
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
-import axios from "axios";
 
 export default {
   name: "CreateUser",
