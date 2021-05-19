@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue"
+import Vuex from "vuex"
 
-import Auth from './modules/auth'
-import Users from './modules/users'
+import Auth from "./modules/auth"
+import Users from "./modules/users"
 
 Vue.use(Vuex)
 

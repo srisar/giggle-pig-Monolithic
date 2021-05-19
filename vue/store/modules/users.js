@@ -6,10 +6,11 @@ export default {
     state: {
 
         user: {},
+        users: {},
         roles: {
-            'ADMIN': 'Administrator',
-            'MANAGER': 'Manager',
-            'USER': 'User'
+            "ADMIN": "Administrator",
+            "MANAGER": "Manager",
+            "USER": "User"
         },
 
     },
@@ -17,30 +18,33 @@ export default {
 
     getters: {
 
-        getUser: function (state) {
-            return state.user
-        },
-
-        getUserRoles: function (state) {
-            return state.roles
-        },
+        getUser(state) { return state.user; },
+        getUsers(state) { return state.users; },
+        getUserRoles(state) { return state.roles; },
 
     },
     /* *** GETTERS *** */
 
     mutations: {
 
-        setUser: function (state, user) {
-            state.user = user
-        }
+        setUser(state, user) { state.user = user; },
+        setUsers(state, users) { state.users = users; }
 
     },
     /* *** MUTATIONS *** */
 
     actions: {
 
+        async users_fetchAll(context) {
+            try {
+                const response = await axios.get("users/all.php");
+                context.commit("setUsers", response.data.payload);
+            } catch (e) {
+                throw e;
+            }
+        },
 
-        async users_fetchUser(context, id) {
+        async users_fetch(context, id) {
 
             try {
                 const response = await axios.get(`users/get.php?id=${id}`);
@@ -69,7 +73,7 @@ export default {
             /* params: {id, current_password, new_password} */
 
             try {
-                await axios.post('users/update-password.php', params);
+                await axios.post("users/update-password.php", params);
                 return true;
             } catch (e) {
                 throw e;

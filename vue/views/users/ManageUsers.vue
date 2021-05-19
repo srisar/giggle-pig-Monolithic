@@ -11,8 +11,11 @@
 
           <h2>Manage Users</h2>
 
-          <p>The table contains available users in the system. <router-link to="/users/create">Create new user</router-link></p>
-          <table class="table table-bordered table-sm">
+          <p>The table contains available users in the system.
+            <router-link to="/users/create">Create new user</router-link>
+          </p>
+
+          <table class="table table-bordered table-sm" v-if="users.length > 0">
             <thead>
             <tr>
               <th>Full name</th>
@@ -24,13 +27,19 @@
 
             <tbody>
             <tr v-for="user in users" :key="user.id">
-              <td><router-link :to="'/users/edit/' + user.id">{{ user.full_name }}</router-link></td>
+              <td>
+                <router-link :to="'/users/edit/' + user.id">{{ user.full_name }}</router-link>
+              </td>
               <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.role }}</td>
             </tr>
             </tbody>
           </table>
+
+          <div class="alert alert-warning text-center" v-else>
+            No users found in the system
+          </div>
 
         </div>
       </div>
@@ -50,20 +59,22 @@ export default {
   components: {TopNavigationBar},
 
   data() {
-    return {
-      users: []
+    return {}
+  },
+
+  computed: {
+
+    users() {
+      return this.$store.getters.getUsers;
     }
+
   },
 
   async mounted() {
 
-    try{
-
-      let response = await axios.get("users/all.php");
-
-      this.users = response.data.payload;
-
-    }catch (e){
+    try {
+      await this.$store.dispatch("users_fetchAll");
+    } catch (e) {
       console.log(e);
     }
 

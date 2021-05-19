@@ -180,8 +180,9 @@ export default {
   async mounted() {
 
     try {
+
       const id = this.$route.params.id
-      await this.$store.dispatch("users_fetchUser", id);
+      await this.$store.dispatch("users_fetch", id);
 
       this.userToEdit = this.$store.getters.getUser;
 
