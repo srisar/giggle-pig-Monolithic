@@ -133,8 +133,7 @@
 
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
-
-import {AlertDialog,} from "../../assets/libs/DialogBox";
+import {errorDialog, successDialog} from "../../assets/libs/bs-dialogs";
 
 export default {
   name: "EditUser",
@@ -166,9 +165,15 @@ export default {
 
   computed: {
 
-    roles: function () { return this.$store.getters.getUserRoles; },
-    loggedInUser: function () { return this.$store.getters.getLoggedInUser; },
-    isSameAsLoggedInUser: function () { return this.userToEdit.username === this.loggedInUser.username; },
+    roles: function () {
+      return this.$store.getters.getUserRoles;
+    },
+    loggedInUser: function () {
+      return this.$store.getters.getLoggedInUser;
+    },
+    isSameAsLoggedInUser: function () {
+      return this.userToEdit.username === this.loggedInUser.username;
+    },
 
     isNewPasswordValid: function () {
       if (this.passwordToChange.newPassword === "") return false;
@@ -203,10 +208,14 @@ export default {
 
         await this.$store.dispatch("users_updateUser", this.userToEdit);
 
-        new AlertDialog({message: "User details updated", title: "Updated"});
+        successDialog({
+          message: "User details updated"
+        });
 
       } catch (error) {
-        new AlertDialog({message: error.response.data.payload.error, title: "Error"});
+        errorDialog({
+          message: error.response.data.payload.error
+        })
       }
 
     },
@@ -225,10 +234,10 @@ export default {
 
         await this.$store.dispatch("users_updatePassword", params);
 
-        new AlertDialog({message: "Password updated", title: "updated"});
+        // new AlertDialog({message: "Password updated", title: "updated"});
 
       } catch (error) {
-        new AlertDialog({message: error.response.data.payload.error, title: "Error"});
+        // new AlertDialog({message: error.response.data.payload.error, title: "Error"});
       }
 
     },
