@@ -52,30 +52,32 @@
 
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
-import axios from "axios";
+import {errorDialog} from "../../assets/libs/bs-dialogs";
 
 export default {
   name: "ManageUsers",
-  components: {TopNavigationBar},
+  components: { TopNavigationBar },
 
   data() {
-    return {}
+    return {};
   },
+
 
   computed: {
 
     users() {
       return this.$store.getters.getUsers;
-    }
+    },
 
   },
+
 
   async mounted() {
 
     try {
-      await this.$store.dispatch("users_fetchAll");
-    } catch (e) {
-      console.log(e);
+      await this.$store.dispatch( "users_fetchAll" );
+    } catch ( e ) {
+      errorDialog( { message: "Failed to get users details" } );
     }
 
   },

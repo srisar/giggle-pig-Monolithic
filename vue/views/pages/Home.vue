@@ -46,11 +46,6 @@ export default {
   name: "Home",
   components: {TopNavigationBar},
 
-  mounted() {
-
-
-  },
-
 }
 </script>
 

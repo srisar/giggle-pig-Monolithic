@@ -1,38 +1,39 @@
-import Vue from 'vue'
-import VueRouter from "vue-router"
+import Vue from "vue";
+import VueRouter from "vue-router";
 import Login from "../views/Login";
 
-import store from '../store/index'
+import store from "../store/index";
 
-import UsersRoutesGroup from './groups/users'
-import PagesRoutesGroup from './groups/pages'
+import {userRoutes} from "./groups/users";
+import {pagesRoutes} from "./groups/pages";
 import Page404 from "../views/pages/Page404";
 
-Vue.use( VueRouter )
+Vue.use( VueRouter );
 
 
 const routes = [
 
     {
-        path: '/login',
-        name: 'Login',
+        path: "/login",
+        name: "Login",
         component: Login
     },
 
-    ...PagesRoutesGroup,
-    ...UsersRoutesGroup,
+    ...pagesRoutes,
+    ...userRoutes,
 
     {
         path: "*",
         name: "404",
         component: Page404
     }
-]
+];
 
 
 const router = new VueRouter( {
+    mode: "history",
     routes: routes,
-} )
+} );
 
 
 /**
@@ -40,28 +41,28 @@ const router = new VueRouter( {
  * otherwise redirect to login page
  */
 router.beforeEach( ( to, from, next ) => {
-    const userType = store.getters.getUserType
-    const isLoggedIn = store.getters.getLoginStatus
+    const userType = store.getters.getUserType;
+    const isLoggedIn = store.getters.getLoginStatus;
 
 
     if ( to.matched.some( record => record.meta.requiresAuth ) ) {
 
         if ( to.meta.adminOnly ) {
-            if ( userType !== 'ADMIN' ) {
-                next( '/login' )
+            if ( userType !== "ADMIN" ) {
+                next( "/login" );
             }
         }
 
         if ( isLoggedIn ) {
-            next()
+            next();
         } else {
-            next( '/login' )
+            next( "/login" );
         }
 
     } else {
-        next()
+        next();
     }
 } )
 
 
-export default router
+export default router;

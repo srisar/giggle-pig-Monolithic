@@ -137,7 +137,7 @@ import {errorDialog, successDialog} from "../../assets/libs/bs-dialogs";
 
 export default {
   name: "EditUser",
-  components: {TopNavigationBar},
+  components: { TopNavigationBar },
 
   data() {
     return {
@@ -159,7 +159,6 @@ export default {
       isChangingPassword: false,
 
     };
-
   },
 
 
@@ -176,46 +175,45 @@ export default {
     },
 
     isNewPasswordValid: function () {
-      if (this.passwordToChange.newPassword === "") return false;
+      if ( this.passwordToChange.newPassword === "" ) return false;
       return this.passwordToChange.newPassword === this.passwordToChange.confirmNewPassword;
     },
 
   },
+
 
   async mounted() {
 
     try {
 
       const id = this.$route.params.id
-      await this.$store.dispatch("users_fetch", id);
+      await this.$store.dispatch( "users_fetch", id );
 
       this.userToEdit = this.$store.getters.getUser;
 
-
-    } catch (error) {
-      console.log(error.response.data.payload.error);
-      // await this.$router.push("/users");
+    } catch ( error ) {
+      errorDialog( { message: error.response.data.payload.error } );
     }
 
   },
 
-  methods: {
 
+  methods: {
 
     async onUpdate() {
 
       try {
 
-        await this.$store.dispatch("users_updateUser", this.userToEdit);
+        await this.$store.dispatch( "users_updateUser", this.userToEdit );
 
-        successDialog({
+        successDialog( {
           message: "User details updated"
-        });
+        } );
 
-      } catch (error) {
-        errorDialog({
+      } catch ( error ) {
+        errorDialog( {
           message: error.response.data.payload.error
-        })
+        } )
       }
 
     },
@@ -228,16 +226,16 @@ export default {
         id: this.userToEdit.id,
         current_password: this.passwordToChange.currentPassword,
         new_password: this.passwordToChange.newPassword
-      }
+      };
 
       try {
 
-        await this.$store.dispatch("users_updatePassword", params);
+        await this.$store.dispatch( "users_updatePassword", params );
 
-        // new AlertDialog({message: "Password updated", title: "updated"});
+        successDialog( { message: "Password updated" } );
 
-      } catch (error) {
-        // new AlertDialog({message: error.response.data.payload.error, title: "Error"});
+      } catch ( error ) {
+        errorDialog( { message: "Failed to update password" } );
       }
 
     },

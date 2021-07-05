@@ -6,15 +6,15 @@
 
     <div class="container mt-2">
       <div class="row">
-        <div class="col">
+        <div class="col text-center">
 
-          <h3 class="text-center">About</h3>
-          <p>This page is a protected page. Unless valid login is provided, this page cannot be displayed & will be redirected to login page.</p>
+          <h3 class="text-center">BS-Dialogs</h3>
+          <p>BS-Dialog is a Bootstrap 5 modal based programmatically callable dialog boxes for various needs.</p>
+          <p>Its only dependency is Bootstrap 5. Please <a href="https://srisar.github.io/bs-dialog/">read the documents</a> for how to and examples.</p>
           <hr>
 
           <div>
-            <h3>Testing messagebox fly outs</h3>
-            <hr>
+            <h3 class="text-center">Testing messagebox fly outs</h3>
 
             <div class="my-2 text-center">
               <button class="btn btn-primary" @click="onSuccessMessage()">Open Success Message</button>
@@ -49,8 +49,8 @@ import {datePrompt, errorDialog, numberPrompt, successDialog, textAreaPrompt, te
 
 
 export default {
-  name: "About",
-  components: {TopNavigationBar},
+  name: "BsDialogBoxes",
+  components: { TopNavigationBar },
 
   data() {
     return {
@@ -69,12 +69,12 @@ export default {
 
       this.callBackOutput = "";
 
-      successDialog({
+      successDialog( {
         message: "This is a message - success!",
         title: "You've done it!",
       }, () => {
         this.callBackOutput = "Success message box close callback worked!";
-      });
+      } );
     },
 
     onErrorMessage() {
@@ -86,17 +86,17 @@ export default {
         title: "Oops... Sorry",
       };
 
-      errorDialog(params, () => {
+      errorDialog( params, () => {
         this.callBackOutput = "Error message box close callback worked!";
-      });
+      } );
     },
 
     onTextPrompt() {
       this.callBackOutput = "";
-      textPrompt({
+      textPrompt( {
             message: "What is your name?"
           },
-          (data) => {
+          ( data ) => {
             this.callBackOutput = data;
           },
           () => {
@@ -109,10 +109,10 @@ export default {
     onTextAreaPrompt() {
 
       this.callBackOutput = "";
-      textAreaPrompt({
+      textAreaPrompt( {
             message: "What is your address?"
           },
-          (data) => {
+          ( data ) => {
             this.callBackOutput = data;
           },
           () => {
@@ -124,10 +124,10 @@ export default {
     onDatePrompt() {
 
       this.callBackOutput = "";
-      datePrompt({
+      datePrompt( {
             message: "What is your date of birth?"
           },
-          (data) => {
+          ( data ) => {
             this.callBackOutput = data;
           },
           () => {
@@ -139,10 +139,10 @@ export default {
     onNumberPrompt() {
 
       this.callBackOutput = "";
-      numberPrompt({
+      numberPrompt( {
             message: "What is the meaning of life? (a number)"
-          }, (data) => {
-            if (data === "42")
+          }, ( data ) => {
+            if ( data === "42" )
               this.callBackOutput = "42 is the correct answer";
             else
               this.callBackOutput = "I dont think you understood";

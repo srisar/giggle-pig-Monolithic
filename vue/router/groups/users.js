@@ -2,7 +2,7 @@ import ManageUsers from "../../views/users/ManageUsers";
 import EditUser from "../../views/users/EditUser";
 import CreateUser from "../../views/users/CreateUser";
 
-export default [
+export const userRoutes = [
 
     {
         path: "/users",

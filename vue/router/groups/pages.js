@@ -1,7 +1,7 @@
 import Home from "../../views/pages/Home";
-import About from "../../views/pages/About";
+import BsDialogBoxes from "../../views/pages/BsDialogBoxes";
 
-export default [
+export const pagesRoutes = [
 
     {
         path: '/',
@@ -9,9 +9,9 @@ export default [
         component: Home
     },
     {
-        path: '/about',
-        name: 'about',
-        component: About,
+        path: '/bs-dialogs',
+        name: 'bs-dialogs',
+        component: BsDialogBoxes,
         meta: {
             requiresAuth: true,
         }

@@ -120,7 +120,7 @@ import TopNavigationBar from "../../components/TopNavigationBar";
 
 export default {
   name: "CreateUser",
-  components: {TopNavigationBar},
+  components: { TopNavigationBar },
   data() {
     return {
 
@@ -139,27 +139,28 @@ export default {
       },
 
 
-    }
+    };
   },
 
   computed: {
-    roles() { return this.$store.getters.getUserRoles; },
+    roles() {
+      return this.$store.getters.getUserRoles;
+    },
 
     feedbackAlertClass() {
-      if (this.feedback.type === "error") return "alert-danger";
+      if ( this.feedback.type === "error" ) return "alert-danger";
       return "alert-success";
     },
 
     validPassword() {
-
-      if (this.userToCreate.password === "" || this.userToCreate.password.length < 3) return false;
+      if ( this.userToCreate.password === "" || this.userToCreate.password.length < 3 ) return false;
       return this.userToCreate.password === this.userToCreate.confirm_password;
     }
 
   },
 
   mounted() {
-    //
+    /* */
   },
 
   methods: {
@@ -179,10 +180,10 @@ export default {
       };
 
       try {
-        await this.$store.dispatch("users_createUser", user);
-        await this.$router.push("/users");
+        await this.$store.dispatch( "users_createUser", user );
+        await this.$router.push( "/users" );
 
-      } catch (e) {
+      } catch ( e ) {
         this.feedback.message = e.response.data.payload.error;
         this.feedback.type = "error";
       }
