@@ -11,25 +11,36 @@ function generateModal(element, params, okButtonCallback, cancelButtonCallback) 
     let myPromptDialog = new bootstrap.Modal(document.getElementById(params.id), {backdrop: "static"});
     myPromptDialog.show();
 
-    document.addEventListener("click", (e) => {
+
+    function okEvent(e) {
         if (e.target && e.target.id === "ss-button-prompt-ok") {
             let value = document.getElementById("ss-prompt-input-value").value;
             okButtonCallback(value);
-
             myPromptDialog.hide();
         }
-    });
+    }
 
-    document.addEventListener("click", (e) => {
+    function cancelEvent(e) {
         if (e.target && e.target.id === "ss-button-prompt-cancel") {
             if (cancelButtonCallback !== undefined) {
                 cancelButtonCallback();
             }
             myPromptDialog.hide();
         }
-    });
+    }
+
+
+    document.addEventListener("click", okEvent);
+    document.addEventListener("click", cancelEvent);
 
     document.getElementById(params.id).addEventListener("hide.bs.modal", function () {
+        document.removeEventListener("click", okEvent);
+        document.removeEventListener("click", cancelEvent);
+
+        let dom = document.getElementById(params.id);
+        const modal = bootstrap.Modal.getInstance(dom);
+        modal.dispose();
+
         document.getElementById("ss-modal-dialog-container").remove();
     })
 }
@@ -51,23 +62,21 @@ class AlertDialog {
         let element = document.createElement("div");
         element.id = "ss-modal-dialog-container";
 
-        element.innerHTML = `
-                <div class="modal fade" id="${params.id}" tabindex="-1" aria-labelledby="" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" >
-                  <div class="modal-dialog">
-                    <div class="modal-content border ${params.borderClass}">
-                      <div class="modal-header">
-                        <p class="modal-title text-uppercase fw-bold ${params.titleTextColor}">${params.title}</p>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        ${params.message}
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${params.closeButtonText}</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>`
+        element.innerHTML =
+            `<div class="modal fade" id="${params.id}" tabindex="-1" aria-labelledby="" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" >` +
+            `<div class="modal-dialog">` +
+            `<div class="modal-content border ${params.borderClass}">` +
+            `<div class="modal-header">` +
+            `<p class="modal-title text-uppercase fw-bold ${params.titleTextColor}">${params.title}</p>` +
+            `<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>` +
+            `</div>` +
+            `<div class="modal-body">${params.message}</div>` +
+            `<div class="modal-footer">` +
+            `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${params.closeButtonText}</button>` +
+            `</div>` +
+            `</div>` +
+            `</div>` +
+            `</div>`;
 
         document.body.appendChild(element);
 
@@ -103,25 +112,25 @@ class CustomPrompt {
         if (params.fieldType === "date") inputField = "<input type='date' class='form-control' id='ss-prompt-input-value'>";
         if (params.fieldType === "number") inputField = "<input type='number' class='form-control' id='ss-prompt-input-value'>";
 
-        element.innerHTML = `
-                <div class="modal fade" id="${params.id}" tabindex="-1" aria-labelledby="" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <p class="modal-title text-uppercase fw-bold">${params.title}</p>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        ${params.message}
-                         ${inputField}
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="ss-button-prompt-ok">Ok</button>
-                        <button type="button" class="btn btn-secondary" id="ss-button-prompt-cancel" data-bs-dismiss="modal">Cancel</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>`
+        element.innerHTML =
+            `<div class="modal fade" id="${params.id}" tabindex="-1" aria-labelledby="" aria-hidden="true">` +
+            `<div class="modal-dialog">` +
+            `<div class="modal-content">` +
+            `<div class="modal-header">` +
+            `<p class="modal-title text-uppercase fw-bold">${params.title}</p>` +
+            `<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>` +
+            `</div>` +
+            `<div class="modal-body">` +
+            `${params.message}` +
+            `${inputField}` +
+            `</div>` +
+            ` <div class="modal-footer">` +
+            `<button type="button" class="btn btn-success" id="ss-button-prompt-ok">Ok</button>` +
+            `<button type="button" class="btn btn-secondary" id="ss-button-prompt-cancel" data-bs-dismiss="modal">Cancel</button>` +
+            `</div>` +
+            `</div>` +
+            `</div>` +
+            `</div>`;
 
         generateModal(element, params, okButtonCallback, cancelButtonCallback);
     }
@@ -129,7 +138,25 @@ class CustomPrompt {
 
 
 /**
- * Success message box
+ * Information dialog box
+ * @param params
+ * @param closeCallback
+ */
+export function infoDialog(params = {}, closeCallback) {
+
+    params.title = params.title ?? "Information";
+
+    new AlertDialog({
+        message: params.message,
+        title: params.title,
+        borderClass: "border-primary",
+        closeButtonText: "Ok",
+        titleTextColor: "text-primary"
+    }, closeCallback);
+}
+
+/**
+ * Success dialog box
  * @param params
  * @param closeCallback
  */
@@ -147,7 +174,7 @@ export function successDialog(params = {}, closeCallback) {
 }
 
 /**
- * Error message box
+ * Error dialog box
  * @param params
  * @param closeCallback
  */
