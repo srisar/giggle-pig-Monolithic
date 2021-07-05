@@ -6,9 +6,9 @@ import store from '../store/index'
 
 import UsersRoutesGroup from './groups/users'
 import PagesRoutesGroup from './groups/pages'
-import EditUser from "../views/users/EditUser";
+import Page404 from "../views/pages/Page404";
 
-Vue.use(VueRouter)
+Vue.use( VueRouter )
 
 
 const routes = [
@@ -21,41 +21,47 @@ const routes = [
 
     ...PagesRoutesGroup,
     ...UsersRoutesGroup,
+
+    {
+        path: "*",
+        name: "404",
+        component: Page404
+    }
 ]
 
 
-const router = new VueRouter({
+const router = new VueRouter( {
     routes: routes,
-})
+} )
 
 
 /**
  * To make sure only authenticated pages can be viewed if logged in
  * otherwise redirect to login page
  */
-router.beforeEach((to, from, next) => {
+router.beforeEach( ( to, from, next ) => {
     const userType = store.getters.getUserType
     const isLoggedIn = store.getters.getLoginStatus
 
 
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+    if ( to.matched.some( record => record.meta.requiresAuth ) ) {
 
-        if (to.meta.adminOnly) {
-            if (userType !== 'ADMIN') {
-                next('/login')
+        if ( to.meta.adminOnly ) {
+            if ( userType !== 'ADMIN' ) {
+                next( '/login' )
             }
         }
 
-        if (isLoggedIn) {
+        if ( isLoggedIn ) {
             next()
         } else {
-            next('/login')
+            next( '/login' )
         }
 
     } else {
         next()
     }
-})
+} )
 
 
 export default router
