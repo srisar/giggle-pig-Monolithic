@@ -49,7 +49,7 @@ import {datePrompt, errorDialog, numberPrompt, successDialog, textAreaPrompt, te
 
 
 export default {
-  name: "BsDialogBoxes",
+  name: "BsDialogBoxesView",
   components: { TopNavigationBar },
 
   data() {

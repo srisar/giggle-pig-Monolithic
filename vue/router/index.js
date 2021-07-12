@@ -31,7 +31,7 @@ const routes = [
 
 
 const router = new VueRouter( {
-    mode: "history",
+    // mode: "history",
     routes: routes,
 } );
 
@@ -44,11 +44,12 @@ router.beforeEach( ( to, from, next ) => {
     const userType = store.getters.getUserType;
     const isLoggedIn = store.getters.getLoginStatus;
 
+    console.log( "preparing to check login state..." );
 
     if ( to.matched.some( record => record.meta.requiresAuth ) ) {
 
-        if ( to.meta.adminOnly ) {
-            if ( userType !== "ADMIN" ) {
+        if ( to.meta.hasOwnProperty( "hasAccess" ) ) {
+            if ( !to.meta.hasAccess.includes( userType ) ) {
                 next( "/login" );
             }
         }

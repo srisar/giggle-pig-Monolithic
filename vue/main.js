@@ -6,7 +6,7 @@ import App from "./App";
 
 import axios from "axios";
 
-const _ = require("lodash");
+// const _ = require("lodash");
 
 /* BOOTSTRAP 5 */
 import "@popperjs/core"

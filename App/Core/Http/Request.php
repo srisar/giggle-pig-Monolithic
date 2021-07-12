@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 namespace App\Core\Http;
 
@@ -45,13 +45,13 @@ class Request
      * @return bool
      * @throws Exception
      */
-    public static function validateRequestMethod($acceptableMethod): bool
+    public static function validateRequestMethod( $acceptableMethod ): bool
     {
 
         $method = Request::method();
-        if ($method == $acceptableMethod) return true;
+        if ( $method == $acceptableMethod ) return true;
 
-        throw new Exception("$method not accepted");
+        throw new Exception( "$method not accepted" );
     }
 
 
@@ -65,16 +65,16 @@ class Request
      * @return string|null
      * @throws Exception
      */
-    private static function getParam(string $key, bool $required = false): ?string
+    private static function getParam( string $key, bool $required = false ): ?string
     {
         $axios = self::getAxiosData();
 
-        $_REQUEST = array_merge($axios, $_REQUEST);
+        $_REQUEST = array_merge( $axios, $_REQUEST );
 
-        if (isset($_REQUEST[$key])) {
-            return $_REQUEST[$key];
+        if ( isset( $_REQUEST[ $key ] ) ) {
+            return $_REQUEST[ $key ];
         }
-        if ($required) throw new Exception("Field ($key) is required");
+        if ( $required ) throw new Exception( "Field ($key) is required" );
         return null;
     }
 
@@ -86,13 +86,13 @@ class Request
      * @return int|null
      * @throws Exception
      */
-    public static function getAsInteger(string $key, bool $required = false): ?int
+    public static function getAsInteger( string $key, bool $required = false ): ?int
     {
-        $data = self::getParam($key, $required);
+        $data = self::getParam( $key, $required );
 
-        if (!empty($data)) {
-            if ($data == "0") return 0;
-            if (filter_var($data, FILTER_VALIDATE_INT)) {
+        if ( !empty( $data ) ) {
+            if ( $data == "0" ) return 0;
+            if ( filter_var( $data, FILTER_VALIDATE_INT ) ) {
                 return (int)$data;
             }
         }
@@ -106,13 +106,15 @@ class Request
      * @return float|null
      * @throws Exception
      */
-    public static function getAsFloat(string $key, bool $required = false): ?float
+    public static function getAsFloat( string $key, bool $required = false ): ?float
     {
-        $data = self::getParam($key, $required);
+        $data = self::getParam( $key, $required );
 
-        if (!empty($data)) {
-            if ($data == "0") return 0;
-            return filter_var($data, FILTER_VALIDATE_FLOAT);
+        if ( !empty( $data ) ) {
+            if ( $data == "0" ) return 0;
+            if ( filter_var( $data, FILTER_VALIDATE_FLOAT ) ) {
+                return (float)$data;
+            }
         }
         return null;
     }
@@ -124,11 +126,11 @@ class Request
      * @return string|null
      * @throws Exception
      */
-    public static function getAsString(string $key, bool $required = false): ?string
+    public static function getAsString( string $key, bool $required = false ): ?string
     {
-        $data = self::getParam($key, $required);
-        if (!empty($data)) {
-            return filter_var($data, FILTER_SANITIZE_STRING);
+        $data = self::getParam( $key, $required );
+        if ( !empty( $data ) ) {
+            return filter_var( $data, FILTER_SANITIZE_STRING );
         }
         return null;
     }
@@ -139,11 +141,11 @@ class Request
      * @return string|null
      * @throws Exception
      */
-    public static function getAsRawString(string $key, bool $required = false): ?string
+    public static function getAsRawString( string $key, bool $required = false ): ?string
     {
-        $data = self::getParam($key);
+        $data = self::getParam( $key );
 
-        if (empty($data)) throw new Exception("Field ($key) is required");
+        if ( empty( $data ) ) throw new Exception( "Field ($key) is required" );
         return $data;
     }
 
@@ -153,12 +155,12 @@ class Request
      * @return bool|null
      * @throws Exception
      */
-    public static function getAsBoolean(string $key, bool $required = false): ?bool
+    public static function getAsBoolean( string $key, bool $required = false ): ?bool
     {
-        $data = self::getParam($key, $required);
+        $data = self::getParam( $key, $required );
 
-        if (!is_null($data)) {
-            return filter_var($data, FILTER_VALIDATE_BOOLEAN);
+        if ( !is_null( $data ) ) {
+            return filter_var( $data, FILTER_VALIDATE_BOOLEAN );
         }
 
         return null;
@@ -170,10 +172,10 @@ class Request
      * @param string $key - key header value
      * @return string
      */
-    public static function getAuthKey(string $key = "HTTP_AUTH"): string
+    public static function getAuthKey( string $key = "HTTP_AUTH" ): string
     {
-        if (isset($_SERVER[$key])) {
-            return $_SERVER[$key];
+        if ( isset( $_SERVER[ $key ] ) ) {
+            return $_SERVER[ $key ];
         }
         return "";
     }
@@ -186,25 +188,25 @@ class Request
     {
 
         // Allow from any origin
-        if (isset($_SERVER["HTTP_ORIGIN"])) {
+        if ( isset( $_SERVER["HTTP_ORIGIN"] ) ) {
             // Decide if the origin in $_SERVER["HTTP_ORIGIN"] is one
             // you want to allow, and if so:
-            header("Access-Control-Allow-Origin: {$_SERVER["HTTP_ORIGIN"]}");
-            header("Access-Control-Allow-Credentials: true");
-            header("Access-Control-Max-Age: 86400");    // cache for 1 day
+            header( "Access-Control-Allow-Origin: {$_SERVER["HTTP_ORIGIN"]}" );
+            header( "Access-Control-Allow-Credentials: true" );
+            header( "Access-Control-Max-Age: 86400" );    // cache for 1 day
         }
 
         // Access-Control headers are received during OPTIONS requests
-        if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+        if ( $_SERVER["REQUEST_METHOD"] == "OPTIONS" ) {
 
-            if (isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"]))
+            if ( isset( $_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"] ) )
                 // may also be using PUT, PATCH, HEAD etc
-                header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
+                header( "Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS" );
 
-            if (isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]))
-                header("Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]}");
+            if ( isset( $_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"] ) )
+                header( "Access-Control-Allow-Headers: {$_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]}" );
 
-            exit(0);
+            exit( 0 );
         }
 
     }
@@ -219,9 +221,9 @@ class Request
     private static function getAxiosData(): array
     {
 
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode( file_get_contents( "php://input" ), true );
 
-        if (!is_null($data)) return $data;
+        if ( !is_null( $data ) ) return $data;
         return [];
     }
 }

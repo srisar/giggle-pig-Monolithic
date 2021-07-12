@@ -19,6 +19,9 @@
           <li class="nav-item">
             <router-link to="/bs-dialogs" class="nav-link">BS-Dialogs</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/modals" class="nav-link">Modals</router-link>
+          </li>
         </ul>
 
         <!-- right side -->

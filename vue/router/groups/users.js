@@ -10,7 +10,7 @@ export const userRoutes = [
         component: ManageUsers,
         meta: {
             requiresAuth: true,
-            adminOnly: true,
+            hasAccess: ["ADMIN"],
         }
     },
 
@@ -20,7 +20,7 @@ export const userRoutes = [
         component: EditUser,
         meta: {
             requiresAuth: true,
-            adminOnly: true,
+            hasAccess: ["ADMIN"],
         }
     },
 
@@ -30,7 +30,7 @@ export const userRoutes = [
         component: CreateUser,
         meta: {
             requiresAuth: true,
-            adminOnly: true,
+            hasAccess: ["ADMIN"],
         }
     },
 

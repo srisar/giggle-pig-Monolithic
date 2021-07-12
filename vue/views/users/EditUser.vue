@@ -186,7 +186,7 @@ export default {
 
     try {
 
-      const id = this.$route.params.id
+      const id = this.$route.params.id;
       await this.$store.dispatch( "users_fetch", id );
 
       this.userToEdit = this.$store.getters.getUser;

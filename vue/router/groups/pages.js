@@ -1,5 +1,6 @@
 import Home from "../../views/pages/Home";
-import BsDialogBoxes from "../../views/pages/BsDialogBoxes";
+import BsDialogBoxesView from "../../views/pages/BsDialogBoxesView";
+import ModalWindowView from "../../views/pages/ModalWindowView";
 
 export const pagesRoutes = [
 
@@ -11,9 +12,11 @@ export const pagesRoutes = [
     {
         path: '/bs-dialogs',
         name: 'bs-dialogs',
-        component: BsDialogBoxes,
-        meta: {
-            requiresAuth: true,
-        }
+        component: BsDialogBoxesView,
     },
+    {
+        path: "/modals",
+        name: "modals",
+        component: ModalWindowView
+    }
 ]

@@ -20,19 +20,19 @@ class User implements IModel
     public ?string $username, $full_name, $password, $password_hash, $email, $role;
 
 
-    public static function build($array): self
+    public static function build( $array ): self
     {
         $object = new self();
-        foreach ($array as $key => $value) {
+        foreach ( $array as $key => $value ) {
             $object->$key = $value;
         }
         return $object;
     }
 
 
-    public static function find(int $id): ?User
+    public static function find( int $id ): ?User
     {
-        return Database::find(self::TABLE, $id, self::class);
+        return Database::find( self::TABLE, $id, self::class );
     }
 
     /**
@@ -40,9 +40,9 @@ class User implements IModel
      * @param int $offset
      * @return User[]
      */
-    public static function findAll($limit = 1000, $offset = 0): array
+    public static function findAll( $limit = 1000, $offset = 0 ): array
     {
-        return Database::findAll(self::TABLE, $limit, $offset, self::class, 'username');
+        return Database::findAll( self::TABLE, $limit, $offset, self::class, 'username' );
     }
 
     /**
@@ -52,9 +52,9 @@ class User implements IModel
     public function insert(): bool|int|null
     {
 
-        if ($this->usernameAlreadyExist($this->username)) throw new Exception('Username already exist');
+        if ( $this->usernameAlreadyExist( $this->username ) ) throw new Exception( 'Username already exist' );
 
-        $hash = password_hash($this->password, PASSWORD_DEFAULT);
+        $hash = password_hash( $this->password, PASSWORD_DEFAULT );
 
         $data = [
             'username' => $this->username,
@@ -64,7 +64,7 @@ class User implements IModel
             'password_hash' => $hash,
         ];
 
-        return Database::insert(self::TABLE, $data);
+        return Database::insert( self::TABLE, $data );
 
     }
 
@@ -74,8 +74,8 @@ class User implements IModel
     public function update(): bool
     {
 
-        if ($this->sameUsernameExist()) throw new Exception('Username already exist');
-        if ($this->sameEmailExist()) throw new Exception('Email already exist');
+        if ( $this->sameUsernameExist() ) throw new Exception( 'Username already exist' );
+        if ( $this->sameEmailExist() ) throw new Exception( 'Email already exist' );
 
         $data = [
             'username' => $this->username,
@@ -84,13 +84,13 @@ class User implements IModel
             'role' => $this->role
         ];
 
-        return Database::update(self::TABLE, $data, ['id' => $this->id]);
+        return Database::update( self::TABLE, $data, [ 'id' => $this->id ] );
 
     }
 
-    public function delete()
+    public function delete(): bool
     {
-        // TODO: Implement delete() method.
+        return Database::delete( self::TABLE, "id", $this->id );
     }
 
 
@@ -101,15 +101,15 @@ class User implements IModel
     public function sameUsernameExist(): bool
     {
         $db = Database::instance();
-        $statement = $db->prepare('select * from users where username = :username and id != :id');
-        $statement->execute([
+        $statement = $db->prepare( 'select * from users where username = :username and id != :id' );
+        $statement->execute( [
             ':username' => $this->username,
             ':id' => $this->id
-        ]);
+        ] );
 
-        $result = $statement->fetchObject(self::class);
+        $result = $statement->fetchObject( self::class );
 
-        if (!empty($result)) return true;
+        if ( !empty( $result ) ) return true;
         return false;
     }
 
@@ -120,49 +120,49 @@ class User implements IModel
     public function sameEmailExist(): bool
     {
         $db = Database::instance();
-        $statement = $db->prepare('select * from users where email = :email and id != :id');
-        $statement->execute([
+        $statement = $db->prepare( 'select * from users where email = :email and id != :id' );
+        $statement->execute( [
             ':email' => $this->email,
             ':id' => $this->id
-        ]);
+        ] );
 
-        $result = $statement->fetchObject(self::class);
+        $result = $statement->fetchObject( self::class );
 
-        if (!empty($result)) return true;
+        if ( !empty( $result ) ) return true;
         return false;
     }
 
     /*-------------------------------------------*/
 
 
-    public function usernameAlreadyExist($username): bool
+    public function usernameAlreadyExist( $username ): bool
     {
 
         $db = Database::instance();
-        $statement = $db->prepare('select * from users where username=?');
-        $statement->execute([$username]);
+        $statement = $db->prepare( 'select * from users where username=?' );
+        $statement->execute( [ $username ] );
 
-        $result = $statement->fetchObject(self::class);
+        $result = $statement->fetchObject( self::class );
 
-        if (empty($result)) return false;
+        if ( empty( $result ) ) return false;
         return true;
 
     }
 
-    public static function userExist($username, $password): ?User
+    public static function userExist( $username, $password ): ?User
     {
 
 
         $db = Database::instance();
-        $statement = $db->prepare('select * from users where username=?');
-        $statement->execute([$username]);
+        $statement = $db->prepare( 'select * from users where username=?' );
+        $statement->execute( [ $username ] );
 
         /** @var User $result */
-        $result = $statement->fetchObject(self::class);
+        $result = $statement->fetchObject( self::class );
 
-        if (!empty($result)) {
+        if ( !empty( $result ) ) {
 
-            if (password_verify($password, $result->password_hash)) {
+            if ( password_verify( $password, $result->password_hash ) ) {
                 return $result;
             }
 
@@ -173,21 +173,21 @@ class User implements IModel
 
     /* ----------------------------------------------------------------------------- */
 
-    public function validatePassword($password): bool
+    public function validatePassword( $password ): bool
     {
-        return password_verify($password, $this->password_hash);
+        return password_verify( $password, $this->password_hash );
     }
 
-    public function updatePassword($newPassword): bool
+    public function updatePassword( $newPassword ): bool
     {
 
-        $this->password_hash = password_hash($newPassword, PASSWORD_DEFAULT);
+        $this->password_hash = password_hash( $newPassword, PASSWORD_DEFAULT );
 
         $data = [
             'password_hash' => $this->password_hash
         ];
 
-        return Database::update(self::TABLE, $data, ['id' => $this->id]);
+        return Database::update( self::TABLE, $data, [ 'id' => $this->id ] );
 
     }
 
