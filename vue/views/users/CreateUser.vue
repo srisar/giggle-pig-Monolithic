@@ -181,7 +181,7 @@ export default {
 
       try {
         await this.$store.dispatch( "users_createUser", user );
-        await this.$router.push( "/users" );
+        await this.$router.push( "/admin/users" );
 
       } catch ( e ) {
         this.feedback.message = e.response.data.payload.error;

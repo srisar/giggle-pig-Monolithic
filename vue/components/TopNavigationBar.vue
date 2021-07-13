@@ -17,10 +17,13 @@
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/bs-dialogs" class="nav-link">BS-Dialogs</router-link>
+            <router-link to="/bs-dialogs" class="nav-link">Bootloks: Dialog boxes</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/modals" class="nav-link">Modals</router-link>
+            <router-link to="/modals" class="nav-link">Modal Windows</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/uploads" class="nav-link">Upload Example</router-link>
           </li>
         </ul>
 
@@ -31,7 +34,7 @@
           </span>
           <router-link to="/login" class="btn btn-success btn-sm me-2" v-if="!loginState">Login</router-link>
 
-          <router-link to="/users" class="btn btn-outline-success btn-sm me-2" v-if="loginState && userType === 'ADMIN'"><i class="bi bi-people-fill"></i>Manage
+          <router-link to="/admin/users" class="btn btn-outline-success btn-sm me-2" v-if="loginState && userType === 'ADMIN'"><i class="bi bi-people-fill"></i>Manage
             users
           </router-link>
 
@@ -44,7 +47,7 @@
 </template>
 
 <script>
-import {errorDialog} from "../assets/libs/bs-dialogs";
+import {errorDialog} from "../assets/libs/bootloks";
 
 export default {
   name: "TopNavigationBar",

@@ -12,7 +12,7 @@
           <h2>Manage Users</h2>
 
           <p>The table contains available users in the system.
-            <router-link to="/users/create">Create new user</router-link>
+            <router-link to="/admin/users/create">Create new user</router-link>
           </p>
 
           <table class="table table-bordered table-sm" v-if="users.length > 0">
@@ -28,7 +28,7 @@
             <tbody>
             <tr v-for="user in users" :key="user.id">
               <td>
-                <router-link :to="'/users/edit/' + user.id">{{ user.full_name }}</router-link>
+                <router-link :to="'/admin/users/edit/' + user.id">{{ user.full_name }}</router-link>
               </td>
               <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>
@@ -52,7 +52,7 @@
 
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
-import {errorDialog} from "../../assets/libs/bs-dialogs";
+import {errorDialog} from "../../assets/libs/bootloks";
 
 export default {
   name: "ManageUsers",

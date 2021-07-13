@@ -133,19 +133,6 @@ export default {
     return {
       modalVisible: false,
 
-      simpleModalCode: '<ModalWindow id="myModal">\n' +
-          '\n' +
-          '\t<div class="text-center">\n' +
-          '\t<h1>Bootstrap Modal</h1>\n' +
-          '\t<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum harum, uatur labore odit?</p>\n' +
-          '\t</div>\n' +
-          '\n' +
-          '\t<template v-slot:footer>\n' +
-          '\t\t<button class="btn btn-primary">Confirm</button>\n' +
-          '\t\t<button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>\n' +
-          '\t</template>\n' +
-          '</ModalWindow>',
-
     }
   },
 

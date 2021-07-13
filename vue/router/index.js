@@ -44,8 +44,6 @@ router.beforeEach( ( to, from, next ) => {
     const userType = store.getters.getUserType;
     const isLoggedIn = store.getters.getLoginStatus;
 
-    console.log( "preparing to check login state..." );
-
     if ( to.matched.some( record => record.meta.requiresAuth ) ) {
 
         if ( to.meta.hasOwnProperty( "hasAccess" ) ) {

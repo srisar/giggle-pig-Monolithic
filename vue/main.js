@@ -4,25 +4,25 @@ import store from "./store/index";
 
 import App from "./App";
 
+/* axios*/
 import axios from "axios";
 
-// const _ = require("lodash");
-
-/* BOOTSTRAP 5 */
-import "@popperjs/core"
-// import "bootstrap"
+/* bootstrap 5 */
+import "@popperjs/core";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
-window.bootstrap = require("bootstrap/dist/js/bootstrap.bundle.min");
-
 /* local common scss */
 import "./assets/scss/common.scss";
+/* daterangepicker */
+import "./assets/libs/daterangepicker/daterangepicker.css";
+import "./assets/libs/daterangepicker/daterangepicker";
+
+window.bootstrap = require( "bootstrap/dist/js/bootstrap.bundle.min" );
+window.moment = require( "moment" );
 
 
 /* Axios configurations */
-
 axios.defaults.baseURL = "http://localhost/api";
-axios.defaults.headers["auth"] = store.getters.getAuthKey;
+axios.defaults.headers[ "auth" ] = store.getters.getAuthKey;
 
 /*
 * Axios intercepting incoming responses, to check if it is 401,
@@ -30,20 +30,19 @@ axios.defaults.headers["auth"] = store.getters.getAuthKey;
 * not logged in
 * */
 
-axios.interceptors.response.use(undefined, (error => {
-    if (error.response.status === 401) {
-        store.dispatch("auth_logout").then(() => {
-            router.push("/login").then();
-        })
+axios.interceptors.response.use( undefined, ( error => {
+    if ( error.response.status === 401 ) {
+        store.dispatch( "auth_logout" ).then( () => {
+            router.push( "/login" ).then();
+        } );
     }
-
-    return Promise.reject(error);
-}))
+    return Promise.reject( error );
+} ) )
 
 
 /* Vue initialization */
-new Vue({
+new Vue( {
     store: store,
     router: router,
-    render: h => h(App)
-}).$mount("#app");
+    render: h => h( App )
+} ).$mount( "#app" );

@@ -167,6 +167,12 @@ class Request
     }
 
 
+    public static function getFile( string $key )
+    {
+        if ( isset( $_FILES[ $key ] ) ) return $_FILES[ $key ];
+        return null;
+    }
+
     /**
      * gets auth key from the request header
      * @param string $key - key header value
@@ -220,10 +226,11 @@ class Request
      */
     private static function getAxiosData(): array
     {
-
         $data = json_decode( file_get_contents( "php://input" ), true );
 
         if ( !is_null( $data ) ) return $data;
         return [];
     }
+
+
 }

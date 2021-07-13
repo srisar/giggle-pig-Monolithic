@@ -133,7 +133,7 @@
 
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
-import {errorDialog, successDialog} from "../../assets/libs/bs-dialogs";
+import {errorDialog, successDialog} from "../../assets/libs/bootloks";
 
 export default {
   name: "EditUser",

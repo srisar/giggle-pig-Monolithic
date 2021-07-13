@@ -22,7 +22,7 @@ class Database
      * Init PDO config details for connection
      * @param array $config
      */
-    public static function init(array $config)
+    public static function init( array $config )
     {
         self::$config = $config;
     }
@@ -34,7 +34,7 @@ class Database
      */
     public static function instance(): ?PDO
     {
-        if (is_null(self::$pdo)) {
+        if ( is_null( self::$pdo ) ) {
             return self::createInstance();
         }
         return self::$pdo;
@@ -48,17 +48,17 @@ class Database
     private static function createInstance(): ?PDO
     {
         try {
-            $dsn = sprintf("mysql:host=%s;dbname=%s", self::$config['HOST'], self::$config['DATABASE']);
+            $dsn = sprintf( "mysql:host=%s;dbname=%s", self::$config['HOST'], self::$config['DATABASE'] );
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_CLASS
             ];
-            self::$pdo = new PDO($dsn, self::$config['USERNAME'], self::$config['PASSWORD'], $options);
+            self::$pdo = new PDO( $dsn, self::$config['USERNAME'], self::$config['PASSWORD'], $options );
 
             return self::$pdo;
 
-        } catch (PDOException $exception) {
-            die($exception->getMessage());
+        } catch ( PDOException $exception ) {
+            die( $exception->getMessage() );
         }
     }
 
@@ -74,19 +74,19 @@ class Database
      * @param string $order
      * @return array
      */
-    public static function findAll(string $table, int $limit, int $offset, $returnType, $orderColumn, $order = 'ASC'): array
+    public static function findAll( string $table, int $limit, int $offset, $returnType, $orderColumn, $order = 'ASC' ): array
     {
 
         self::instance();
-        $statement = self::$pdo->prepare("select * from {$table} order by {$orderColumn} {$order} limit :limit_val offset :offset_val");
+        $statement = self::$pdo->prepare( "select * from {$table} order by {$orderColumn} {$order} limit :limit_val offset :offset_val" );
 
-        $statement->bindValue(":limit_val", $limit, PDO::PARAM_INT);
-        $statement->bindValue(":offset_val", $offset, PDO::PARAM_INT);
+        $statement->bindValue( ":limit_val", $limit, PDO::PARAM_INT );
+        $statement->bindValue( ":offset_val", $offset, PDO::PARAM_INT );
         $statement->execute();
 
-        $result = $statement->fetchAll(PDO::FETCH_CLASS, $returnType);
+        $result = $statement->fetchAll( PDO::FETCH_CLASS, $returnType );
 
-        if (!empty($result)) return $result;
+        if ( !empty( $result ) ) return $result;
         return [];
     }
 
@@ -97,15 +97,15 @@ class Database
      * @param $returnType
      * @return mixed|null
      */
-    public static function find(string $table, int $id, $returnType)
+    public static function find( string $table, int $id, $returnType )
     {
         self::instance();
-        $statement = self::$pdo->prepare("select * from {$table} where id=?");
-        $statement->execute([$id]);
+        $statement = self::$pdo->prepare( "select * from {$table} where id=?" );
+        $statement->execute( [ $id ] );
 
-        $result = $statement->fetchObject($returnType);
+        $result = $statement->fetchObject( $returnType );
 
-        if (!empty($result)) return $result;
+        if ( !empty( $result ) ) return $result;
         return null;
     }
 
@@ -114,20 +114,20 @@ class Database
      * Insert a new record and returns id on success
      * @param string $table
      * @param $data
-     * @return bool|int
+     * @return int
      */
-    public static function insert(string $table, $data)
+    public static function insert( string $table, $data ): int
     {
         self::instance();
 
         $query = "insert into {$table} (";
 
-        $columns = array_keys($data);
-        $columnsCount = count($columns);
+        $columns = array_keys( $data );
+        $columnsCount = count( $columns );
 
         $index = 0;
-        foreach ($columns as $column) {
-            if (++$index != $columnsCount) {
+        foreach ( $columns as $column ) {
+            if ( ++$index != $columnsCount ) {
                 $query .= $column . ", ";
             } else {
                 $query .= $column;
@@ -138,8 +138,8 @@ class Database
         $query .= ") values(";
 
         $index = 0;
-        foreach ($columns as $placeholder) {
-            if (++$index != $columnsCount) {
+        foreach ( $columns as $placeholder ) {
+            if ( ++$index != $columnsCount ) {
                 $query .= ":{$placeholder}, ";
             } else {
                 $query .= ":{$placeholder}";
@@ -149,16 +149,16 @@ class Database
         $query .= ");";
 
 
-        $statement = self::$pdo->prepare($query);
+        $statement = self::$pdo->prepare( $query );
 
-        foreach ($data as $key => $value) {
-            $statement->bindValue(":{$key}", $value);
+        foreach ( $data as $key => $value ) {
+            $statement->bindValue( ":{$key}", $value );
         }
 
         $result = $statement->execute();
 
-        if ($result) return (int)self::$pdo->lastInsertId();
-        return $result;
+        if ( $result ) return (int)self::$pdo->lastInsertId();
+        return -1;
 
     }
 
@@ -170,37 +170,37 @@ class Database
      * @param array $unique - ['id' => 12]
      * @return bool
      */
-    public static function update(string $table, array $data, array $unique)
+    public static function update( string $table, array $data, array $unique )
     {
 
         self::instance();
 
         $query = "update {$table} set ";
 
-        $columns = array_keys($data);
-        $columnCount = count($data);
+        $columns = array_keys( $data );
+        $columnCount = count( $data );
 
         $index = 0;
-        foreach ($columns as $column) {
+        foreach ( $columns as $column ) {
 
-            if (++$index != $columnCount) {
+            if ( ++$index != $columnCount ) {
                 $query .= "{$column} = :{$column}, ";
             } else {
                 $query .= "{$column} = :{$column} ";
             }
         }
 
-        $uniqueKey = array_keys($unique)[0];
+        $uniqueKey = array_keys( $unique )[0];
 
         $query .= "where {$uniqueKey} = :{$uniqueKey};";
 
-        $statement = self::$pdo->prepare($query);
+        $statement = self::$pdo->prepare( $query );
 
-        foreach ($data as $key => $value) {
-            $statement->bindValue(":{$key}", $value);
+        foreach ( $data as $key => $value ) {
+            $statement->bindValue( ":{$key}", $value );
         }
 
-        $statement->bindValue(":{$uniqueKey}", $unique[$uniqueKey]);
+        $statement->bindValue( ":{$uniqueKey}", $unique[ $uniqueKey ] );
 
         return $statement->execute();
 
@@ -214,14 +214,14 @@ class Database
      * @param $value
      * @return bool
      */
-    public static function delete(string $table, string $column, $value)
+    public static function delete( string $table, string $column, $value )
     {
         self::instance();
 
         $query = "delete from {$table} where {$column} = :{$column}";
 
-        $statement = self::$pdo->prepare($query);
-        $statement->bindValue(":{$column}", $value);
+        $statement = self::$pdo->prepare( $query );
+        $statement->bindValue( ":{$column}", $value );
 
         return $statement->execute();
 

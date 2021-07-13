@@ -8,9 +8,14 @@
       <div class="row">
         <div class="col text-center">
 
-          <h3 class="text-center">BS-Dialogs</h3>
-          <p>BS-Dialog is a Bootstrap 5 modal based programmatically callable dialog boxes for various needs.</p>
-          <p>Its only dependency is Bootstrap 5. Please <a href="https://srisar.github.io/bs-dialog/">read the documents</a> for how to and examples.</p>
+          <div class="">
+            <img src="https://srisar.github.io/bootloks/bootloks-icon.18d5a4b8.svg" width="250px" alt="">
+          </div>
+
+          <h4>Bootstrap based modal windows</h4>
+
+          <p>Bootloks is a Bootstrap 5 modal based programmatically invokable dialog boxes for various needs.</p>
+          <p>Its only dependency is Bootstrap 5. Please <a href="https://srisar.github.io/bootloks/">read full documentation</a> for how-to and examples.</p>
           <hr>
 
           <div>
@@ -26,6 +31,10 @@
               <button class="btn btn-secondary" @click="onTextAreaPrompt()">Open multiline input</button>
               <button class="btn btn-secondary" @click="onDatePrompt()">Open date input</button>
               <button class="btn btn-secondary" @click="onNumberPrompt()">Open number input</button>
+            </div>
+
+            <div class="my-2 text-center">
+              <button class="btn btn-warning" @click="onDrpDatePrompt()">Open daterangepicker based input</button>
             </div>
 
             <div class="my-3 text-center fw-bold" style="white-space: pre-line" v-if="callBackOutput">
@@ -45,11 +54,11 @@
 
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
-import {datePrompt, errorDialog, numberPrompt, successDialog, textAreaPrompt, textPrompt} from "../../assets/libs/bs-dialogs";
+import {datePrompt, drpDatePrompt, errorDialog, numberPrompt, successDialog, textAreaPrompt, textPrompt} from "../../assets/libs/bootloks";
 
 
 export default {
-  name: "BsDialogBoxesView",
+  name: "BootloksView",
   components: { TopNavigationBar },
 
   data() {
@@ -151,6 +160,18 @@ export default {
           }
       );
     },
+
+    onDrpDatePrompt() {
+
+      this.callBackOutput = "";
+
+      drpDatePrompt( {
+        message: "What is the day of the champions?"
+      }, ( data ) => {
+        this.callBackOutput = data;
+      } );
+
+    }
 
 
   }
