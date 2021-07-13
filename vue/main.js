@@ -15,6 +15,7 @@ import "./assets/scss/common.scss";
 /* daterangepicker */
 import "./assets/libs/daterangepicker/daterangepicker.css";
 import "./assets/libs/daterangepicker/daterangepicker";
+import {errorDialog} from "./assets/libs/bootloks";
 
 window.bootstrap = require( "bootstrap/dist/js/bootstrap.bundle.min" );
 window.moment = require( "moment" );
@@ -34,6 +35,7 @@ axios.interceptors.response.use( undefined, ( error => {
     if ( error.response.status === 401 ) {
         store.dispatch( "auth_logout" ).then( () => {
             router.push( "/login" ).then();
+            errorDialog( { message: "Authentication failed. Please login with proper credentials.", id: "auth-failed" } );
         } );
     }
     return Promise.reject( error );

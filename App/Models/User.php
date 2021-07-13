@@ -15,6 +15,11 @@ class User implements IModel
     public const ROLE_MANAGER = "MANAGER";
     public const ROLE_USER = "USER";
 
+    public const ROLES_ALL = [ self::ROLE_ADMIN, self::ROLE_MANAGER, self::ROLE_USER ];
+    public const ROLES_ADMIN_MANAGER = [ self::ROLE_ADMIN, self::ROLE_MANAGER ];
+    public const ROLES_ADMIN = [ self::ROLE_ADMIN ];
+    public const ROLES_USER = [ self::ROLE_USER ];
+
 
     public ?int $id;
     public ?string $username, $full_name, $password, $password_hash, $email, $role;

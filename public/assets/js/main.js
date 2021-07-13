@@ -3428,14 +3428,20 @@ __webpack_require__.r(__webpack_exports__);
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
 /**
  * Generates the modal window with given data and callbacks
  * @param element
+ * @param container
  * @param params
  * @param okButtonCallback
  * @param cancelButtonCallback
  */
-function generateModal(element, params, okButtonCallback, cancelButtonCallback) {
+
+
+function generateModal(element, container, params, okButtonCallback, cancelButtonCallback) {
   document.body.appendChild(element);
   var myPromptDialog = new bootstrap.Modal(document.getElementById(params.id), {
     backdrop: "static"
@@ -3476,12 +3482,12 @@ function generateModal(element, params, okButtonCallback, cancelButtonCallback) 
     var dom = document.getElementById(params.id);
     var modal = bootstrap.Modal.getInstance(dom);
     modal.dispose();
-    document.getElementById("ss-modal-dialog-container").remove();
+    document.getElementById(container).remove();
   });
 }
 
 var AlertDialog = function AlertDialog() {
-  var _params$id, _params$title, _params$message, _params$borderClass, _params$closeButtonTe, _params$titleTextColo;
+  var _ref, _params$title, _params$message, _params$borderClass, _params$closeButtonTe, _params$titleTextColo;
 
   var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     message: "",
@@ -3494,14 +3500,15 @@ var AlertDialog = function AlertDialog() {
 
   _classCallCheck(this, AlertDialog);
 
-  params.id = (_params$id = params.id) !== null && _params$id !== void 0 ? _params$id : "ss-dialog-box-modal";
+  params.id = (_ref = "bootloks-dialog-box-modal-".concat(params.id)) !== null && _ref !== void 0 ? _ref : "bootloks-dialog-box-modal";
   params.title = (_params$title = params.title) !== null && _params$title !== void 0 ? _params$title : "Alert";
   params.message = (_params$message = params.message) !== null && _params$message !== void 0 ? _params$message : "";
   params.borderClass = (_params$borderClass = params.borderClass) !== null && _params$borderClass !== void 0 ? _params$borderClass : "border-primary";
   params.closeButtonText = (_params$closeButtonTe = params.closeButtonText) !== null && _params$closeButtonTe !== void 0 ? _params$closeButtonTe : "Close";
   params.titleTextColor = (_params$titleTextColo = params.titleTextColor) !== null && _params$titleTextColo !== void 0 ? _params$titleTextColo : "text-primary";
+  var containerId = "ss-modal-dialog-container-" + uid();
   var element = document.createElement("div");
-  element.id = "ss-modal-dialog-container";
+  element.id = containerId;
   element.innerHTML = "<div class=\"modal fade\" id=\"".concat(params.id, "\" tabindex=\"-1\" aria-labelledby=\"\" aria-hidden=\"true\" data-bs-backdrop=\"static\" data-bs-keyboard=\"false\" tabindex=\"-1\" >") + "<div class=\"modal-dialog\">" + "<div class=\"modal-content border ".concat(params.borderClass, "\">") + "<div class=\"modal-header\">" + "<p class=\"modal-title text-uppercase fw-bold ".concat(params.titleTextColor, "\">").concat(params.title, "</p>") + "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>" + "</div>" + "<div class=\"modal-body\">".concat(params.message, "</div>") + "<div class=\"modal-footer\">" + "<button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">".concat(params.closeButtonText, "</button>") + "</div>" + "</div>" + "</div>" + "</div>";
   document.body.appendChild(element);
   var myAlertModal = new bootstrap.Modal(document.getElementById(params.id), {
@@ -3509,7 +3516,7 @@ var AlertDialog = function AlertDialog() {
   });
   myAlertModal.show();
   document.getElementById(params.id).addEventListener("hide.bs.modal", function () {
-    document.getElementById("ss-modal-dialog-container").remove();
+    document.getElementById(containerId).remove();
 
     if (closeCallback !== undefined) {
       closeCallback();
@@ -3518,7 +3525,7 @@ var AlertDialog = function AlertDialog() {
 };
 
 var CustomPrompt = function CustomPrompt() {
-  var _params$id2, _params$title2, _params$message2, _params$fieldType;
+  var _params$id, _params$title2, _params$message2, _params$fieldType;
 
   var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     message: "",
@@ -3531,12 +3538,13 @@ var CustomPrompt = function CustomPrompt() {
 
   _classCallCheck(this, CustomPrompt);
 
-  params.id = (_params$id2 = params.id) !== null && _params$id2 !== void 0 ? _params$id2 : "ss-prompt-box-modal";
+  params.id = (_params$id = params.id) !== null && _params$id !== void 0 ? _params$id : "ss-prompt-box-modal";
   params.title = (_params$title2 = params.title) !== null && _params$title2 !== void 0 ? _params$title2 : "Prompt";
   params.message = (_params$message2 = params.message) !== null && _params$message2 !== void 0 ? _params$message2 : "";
   params.fieldType = (_params$fieldType = params.fieldType) !== null && _params$fieldType !== void 0 ? _params$fieldType : "text";
+  var containerId = "ss-modal-dialog-container-" + uid();
   var element = document.createElement("div");
-  element.id = "ss-modal-dialog-container";
+  element.id = containerId;
   /* types of fields */
 
   var inputField = "<input type='text' class='form-control' id='ss-prompt-input-value'>";
@@ -3546,7 +3554,7 @@ var CustomPrompt = function CustomPrompt() {
   if (params.fieldType === "drp-date") inputField = "<input type='text' class='form-control drp-control' id='ss-prompt-input-value'>";
   if (params.fieldType === "drp-date-range") inputField = "<input type='text' class='form-control drp-range-control' id='ss-prompt-input-value'>";
   element.innerHTML = "<div class=\"modal fade\" id=\"".concat(params.id, "\" tabindex=\"-1\" aria-labelledby=\"\" aria-hidden=\"true\">") + "<div class=\"modal-dialog\">" + "<div class=\"modal-content\">" + "<div class=\"modal-header\">" + "<p class=\"modal-title text-uppercase fw-bold\">".concat(params.title, "</p>") + "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>" + "</div>" + "<div class=\"modal-body\">" + "".concat(params.message) + "".concat(inputField) + "</div>" + " <div class=\"modal-footer\">" + "<button type=\"button\" class=\"btn btn-success\" id=\"ss-button-prompt-ok\">Ok</button>" + "<button type=\"button\" class=\"btn btn-secondary\" id=\"ss-button-prompt-cancel\" data-bs-dismiss=\"modal\">Cancel</button>" + "</div>" + "</div>" + "</div>" + "</div>";
-  generateModal(element, params, okButtonCallback, cancelButtonCallback);
+  generateModal(element, containerId, params, okButtonCallback, cancelButtonCallback);
 };
 /**
  * Information dialog box
@@ -3556,12 +3564,14 @@ var CustomPrompt = function CustomPrompt() {
 
 
 function infoDialog() {
-  var _params$title3;
+  var _params$title3, _ref2;
 
   var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var closeCallback = arguments.length > 1 ? arguments[1] : undefined;
   params.title = (_params$title3 = params.title) !== null && _params$title3 !== void 0 ? _params$title3 : "Information";
+  params.id = (_ref2 = "bootloks-dialog-box-modal-".concat(params.id)) !== null && _ref2 !== void 0 ? _ref2 : "bootloks-dialog-box-modal";
   new AlertDialog({
+    id: params.id,
     message: params.message,
     title: params.title,
     borderClass: "border-primary",
@@ -3576,12 +3586,14 @@ function infoDialog() {
  */
 
 function successDialog() {
-  var _params$title4;
+  var _params$title4, _ref3;
 
   var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var closeCallback = arguments.length > 1 ? arguments[1] : undefined;
   params.title = (_params$title4 = params.title) !== null && _params$title4 !== void 0 ? _params$title4 : "Success";
+  params.id = (_ref3 = "bootloks-dialog-box-modal-".concat(params.id)) !== null && _ref3 !== void 0 ? _ref3 : "bootloks-dialog-box-modal";
   new AlertDialog({
+    id: params.id,
     message: params.message,
     title: params.title,
     borderClass: "border-success",
@@ -3596,12 +3608,14 @@ function successDialog() {
  */
 
 function errorDialog() {
-  var _params$title5;
+  var _params$title5, _ref4;
 
   var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var closeCallback = arguments.length > 1 ? arguments[1] : undefined;
   params.title = (_params$title5 = params.title) !== null && _params$title5 !== void 0 ? _params$title5 : "Error";
+  params.id = (_ref4 = "bootloks-dialog-box-modal-".concat(params.id)) !== null && _ref4 !== void 0 ? _ref4 : "bootloks-dialog-box-modal";
   new AlertDialog({
+    id: params.id,
     message: params.message,
     title: params.title,
     borderClass: "border-danger",
@@ -59919,7 +59933,7 @@ var __webpack_exports__ = {};
   !*** ./vue/main.js ***!
   \*********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./router/index */ "./vue/router/index.js");
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/index */ "./vue/store/index.js");
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App */ "./vue/App.vue");
@@ -59930,6 +59944,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_libs_daterangepicker_daterangepicker_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./assets/libs/daterangepicker/daterangepicker.css */ "./vue/assets/libs/daterangepicker/daterangepicker.css");
 /* harmony import */ var _assets_libs_daterangepicker_daterangepicker__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./assets/libs/daterangepicker/daterangepicker */ "./vue/assets/libs/daterangepicker/daterangepicker.js");
 /* harmony import */ var _assets_libs_daterangepicker_daterangepicker__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_assets_libs_daterangepicker_daterangepicker__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _assets_libs_bootloks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./assets/libs/bootloks */ "./vue/assets/libs/bootloks.js");
 
 
 
@@ -59945,6 +59960,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* daterangepicker */
+
 
 
 
@@ -59964,6 +59980,10 @@ axios__WEBPACK_IMPORTED_MODULE_3___default().interceptors.response.use(undefined
   if (error.response.status === 401) {
     _store_index__WEBPACK_IMPORTED_MODULE_1__.default.dispatch("auth_logout").then(function () {
       _router_index__WEBPACK_IMPORTED_MODULE_0__.default.push("/login").then();
+      (0,_assets_libs_bootloks__WEBPACK_IMPORTED_MODULE_8__.errorDialog)({
+        message: "Authentication failed. Please login with proper credentials.",
+        id: "auth-failed"
+      });
     });
   }
 
@@ -59971,7 +59991,7 @@ axios__WEBPACK_IMPORTED_MODULE_3___default().interceptors.response.use(undefined
 });
 /* Vue initialization */
 
-new vue__WEBPACK_IMPORTED_MODULE_8__.default({
+new vue__WEBPACK_IMPORTED_MODULE_9__.default({
   store: _store_index__WEBPACK_IMPORTED_MODULE_1__.default,
   router: _router_index__WEBPACK_IMPORTED_MODULE_0__.default,
   render: function render(h) {
