@@ -1,4 +1,4 @@
-# PhpVue
+# Plum Pig: PHP/Vue Application Framework
 
 ![](https://raw.githubusercontent.com/srisar/php_vue_framework/master/vue/assets/images/phpvue-logo.png)
 
