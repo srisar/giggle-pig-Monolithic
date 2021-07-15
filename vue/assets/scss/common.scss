@@ -7,3 +7,34 @@ $font-family-monospace: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New
 $font-size-base: 0.9rem !default;
 
 @import "~bootstrap/scss/bootstrap";
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+
+.page-container {
+  height: inherit;
+  display: flex;
+}
+
+#main {
+  height: inherit;
+  //padding: 50px 10px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+
+@media (max-width: 576px) {
+  #sidebar {
+    position: absolute;
+
+  }
+
+  #main {
+    margin-left: 60px;
+  }
+}

@@ -22,7 +22,8 @@ window.moment = require( "moment" );
 
 
 /* Axios configurations */
-axios.defaults.baseURL = "http://localhost/api";
+const currentDomain = window.location.origin;
+axios.defaults.baseURL = `${ currentDomain }/api`;
 axios.defaults.headers[ "auth" ] = store.getters.getAuthKey;
 
 /*
@@ -30,7 +31,6 @@ axios.defaults.headers[ "auth" ] = store.getters.getAuthKey;
 * then route to login page, because auth token is expired, or
 * not logged in
 * */
-
 axios.interceptors.response.use( undefined, ( error => {
     if ( error.response.status === 401 ) {
         store.dispatch( "auth_logout" ).then( () => {
@@ -41,6 +41,9 @@ axios.interceptors.response.use( undefined, ( error => {
     return Promise.reject( error );
 } ) )
 
+
+/* set document title */
+document.title = "Plum Pig: Application Framework";
 
 /* Vue initialization */
 new Vue( {

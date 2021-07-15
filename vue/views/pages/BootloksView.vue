@@ -1,65 +1,70 @@
 <template>
 
-  <div>
+  <div class="page-container">
+    <keep-alive>
+      <AdminSidebar/>
+    </keep-alive>
 
-    <TopNavigationBar/>
+    <main id="main">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col text-center">
 
-    <div class="container mt-2">
-      <div class="row">
-        <div class="col text-center">
+            <div class="">
+              <img src="https://srisar.github.io/bootloks/bootloks-icon.18d5a4b8.svg" width="250px" alt="">
+            </div>
 
-          <div class="">
-            <img src="https://srisar.github.io/bootloks/bootloks-icon.18d5a4b8.svg" width="250px" alt="">
+            <h4>Bootstrap based modal windows</h4>
+
+            <p>Bootloks is a Bootstrap 5 modal based programmatically invokable dialog boxes for various needs.</p>
+            <p>Its only dependency is Bootstrap 5. Please <a href="https://srisar.github.io/bootloks/">read full documentation</a> for how-to and examples.</p>
+            <hr>
+
+            <div>
+              <h3 class="text-center">Testing messagebox fly outs</h3>
+
+              <div class="my-2 text-center">
+                <button class="btn btn-primary" @click="onSuccessMessage()">Open Success Message</button>
+                <button class="btn btn-primary" @click="onErrorMessage()">Open Error Message</button>
+              </div>
+
+              <div class="my-2 text-center">
+                <button class="btn btn-secondary" @click="onTextPrompt()">Open text input</button>
+                <button class="btn btn-secondary" @click="onTextAreaPrompt()">Open multiline input</button>
+                <button class="btn btn-secondary" @click="onDatePrompt()">Open date input</button>
+                <button class="btn btn-secondary" @click="onNumberPrompt()">Open number input</button>
+              </div>
+
+              <div class="my-2 text-center">
+                <button class="btn btn-warning" @click="onDrpDatePrompt()">Open daterangepicker based input</button>
+              </div>
+
+              <div class="my-3 text-center fw-bold" style="white-space: pre-line" v-if="callBackOutput">
+                {{ callBackOutput }}
+              </div>
+
+            </div>
+
+
           </div>
-
-          <h4>Bootstrap based modal windows</h4>
-
-          <p>Bootloks is a Bootstrap 5 modal based programmatically invokable dialog boxes for various needs.</p>
-          <p>Its only dependency is Bootstrap 5. Please <a href="https://srisar.github.io/bootloks/">read full documentation</a> for how-to and examples.</p>
-          <hr>
-
-          <div>
-            <h3 class="text-center">Testing messagebox fly outs</h3>
-
-            <div class="my-2 text-center">
-              <button class="btn btn-primary" @click="onSuccessMessage()">Open Success Message</button>
-              <button class="btn btn-primary" @click="onErrorMessage()">Open Error Message</button>
-            </div>
-
-            <div class="my-2 text-center">
-              <button class="btn btn-secondary" @click="onTextPrompt()">Open text input</button>
-              <button class="btn btn-secondary" @click="onTextAreaPrompt()">Open multiline input</button>
-              <button class="btn btn-secondary" @click="onDatePrompt()">Open date input</button>
-              <button class="btn btn-secondary" @click="onNumberPrompt()">Open number input</button>
-            </div>
-
-            <div class="my-2 text-center">
-              <button class="btn btn-warning" @click="onDrpDatePrompt()">Open daterangepicker based input</button>
-            </div>
-
-            <div class="my-3 text-center fw-bold" style="white-space: pre-line" v-if="callBackOutput">
-              {{ callBackOutput }}
-            </div>
-
-          </div>
-
-
         </div>
       </div>
-    </div>
+    </main>
 
   </div>
+
 
 </template>
 
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
 import {datePrompt, drpDatePrompt, errorDialog, numberPrompt, successDialog, textAreaPrompt, textPrompt} from "../../assets/libs/bootloks";
+import AdminSidebar from "../admin/components/AdminSidebar";
 
 
 export default {
   name: "BootloksView",
-  components: { TopNavigationBar },
+  components: { AdminSidebar, TopNavigationBar },
 
   data() {
     return {

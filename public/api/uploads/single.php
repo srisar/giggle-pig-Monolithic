@@ -20,7 +20,7 @@ try {
      * Authenticate for incoming auth key
      * if no valid key is present, will return 401
      * */
-    Auth::authenticate( User::ROLES_ADMIN );
+    Auth::authenticate();
 
     /* gets the file from request */
     $file = Request::getFile( "file" );

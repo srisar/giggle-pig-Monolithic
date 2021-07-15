@@ -2,9 +2,15 @@
 
   <div class="container my-5">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-4">
 
         <div class="alert alert-success">
+
+          <h1 class="text-center">Plum Pig</h1>
+
+          <div class="text-center">
+            <img src="../assets/images/app-icon.svg" alt="Plum Pig" class="img-fluid" style="width: 100px">
+          </div>
 
           <form @submit.prevent="onLogin">
             <div class="mb-3">
@@ -37,19 +43,20 @@
 </template>
 
 <script>
+
 export default {
   name: "Login",
 
   data() {
     return {
 
-      username: '',
-      password: '',
+      username: "",
+      password: "",
 
-      error: ''
-
+      error: "",
     }
   },
+
 
   methods: {
 
@@ -58,11 +65,11 @@ export default {
       const userParams = {
         username: this.username,
         password: this.password
-      }
+      };
 
       try {
 
-        await this.$store.dispatch( "auth_login", userParams )
+        await this.$store.dispatch( "auth_login", userParams );
         await this.$router.push( "/" );
 
       } catch ( e ) {

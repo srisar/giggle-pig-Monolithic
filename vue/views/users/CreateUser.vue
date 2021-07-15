@@ -2,9 +2,8 @@
 
   <div id="view-create-user">
 
-    <TopNavigationBar/>
 
-    <div class="container">
+    <div class="container-fluid">
 
       <div class="row justify-content-center">
 
@@ -91,7 +90,7 @@
                 <div class="col text-center">
 
                   <button type="button" class="btn btn-primary" :disabled="!validPassword" @click="onCreate()">Create</button>
-                  <router-link to="/users" class="btn btn-secondary">Cancel</router-link>
+                  <router-link to="/admin/users" class="btn btn-secondary">Cancel</router-link>
 
                 </div>
               </div>

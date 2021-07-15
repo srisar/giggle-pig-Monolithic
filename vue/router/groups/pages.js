@@ -11,8 +11,7 @@ export const pagesRoutes = [
         component: Home
     },
     {
-        path: '/bs-dialogs',
-        name: 'bs-dialogs',
+        path: '/bootloks',
         component: BootloksView,
     },
     {
@@ -24,5 +23,5 @@ export const pagesRoutes = [
         path: "/uploads",
         name: "file-uploads",
         component: FileUploadView
-    }
+    },
 ]

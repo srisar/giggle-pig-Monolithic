@@ -7,6 +7,7 @@ import store from "../store/index";
 import {userRoutes} from "./groups/users";
 import {pagesRoutes} from "./groups/pages";
 import Page404 from "../views/pages/Page404";
+import {adminRoutes} from "./groups/admin";
 
 Vue.use( VueRouter );
 
@@ -20,8 +21,7 @@ const routes = [
     },
 
     ...pagesRoutes,
-    ...userRoutes,
-
+    ...adminRoutes,
     {
         path: "*",
         name: "404",

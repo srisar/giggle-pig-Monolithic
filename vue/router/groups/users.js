@@ -5,7 +5,7 @@ import CreateUser from "../../views/users/CreateUser";
 export const userRoutes = [
 
     {
-        path: "/admin/users",
+        path: "users",
         component: ManageUsers,
         meta: {
             requiresAuth: true,
@@ -14,7 +14,7 @@ export const userRoutes = [
     },
 
     {
-        path: "/admin/users/edit/:id",
+        path: "users/edit/:id",
         component: EditUser,
         meta: {
             requiresAuth: true,
@@ -23,7 +23,7 @@ export const userRoutes = [
     },
 
     {
-        path: "/admin/users/create",
+        path: "users/create",
         component: CreateUser,
         meta: {
             requiresAuth: true,

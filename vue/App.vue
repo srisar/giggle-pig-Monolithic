@@ -13,6 +13,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+#app {
+  height: inherit;
+}
 </style>

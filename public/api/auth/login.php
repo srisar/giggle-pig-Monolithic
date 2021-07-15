@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 use App\Core\Http\JSONResponse;
 use App\Core\Http\Request;
@@ -12,15 +12,17 @@ require_once "../../../bootstrap.php";
 try {
 
     $fields = [
-        'username' => Request::getAsString('username'),
-        'password' => Request::getAsString('password'),
+        'username' => Request::getAsString( 'username' ),
+        'password' => Request::getAsString( 'password' ),
     ];
 
-    $loggedInUser = User::userExist($fields['username'], $fields['password']);
+    error_log( print_r( $fields, true ) );
 
-    if (!is_null($loggedInUser)) {
+    $loggedInUser = User::userExist( $fields['username'], $fields['password'] );
 
-        $key = AuthKey::generateAuthKey($loggedInUser);
+    if ( !is_null( $loggedInUser ) ) {
+
+        $key = AuthKey::generateAuthKey( $loggedInUser );
 
         $user = [
             'username' => $loggedInUser->username,
@@ -29,15 +31,15 @@ try {
             'role' => $loggedInUser->role,
         ];
 
-        JsonResponse::validResponse(['auth_key' => $key, 'user' => $user]);
+        JsonResponse::validResponse( [ 'auth_key' => $key, 'user' => $user ] );
         return;
 
     }
 
-    JsonResponse::invalidResponse('Login failed');
+    JsonResponse::invalidResponse( 'Login failed' );
     return;
 
 
-} catch (Exception $exception) {
-    JSONResponse::exceptionResponse($exception);
+} catch ( Exception $exception ) {
+    JSONResponse::exceptionResponse( $exception );
 }

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const LOGIN_STATUS = "login-status"
-const AUTH_KEY = "auth-key"
-const USER = "user-details"
+const LOGIN_STATUS = "login-status";
+const AUTH_KEY = "auth-key";
+const USER = "user-details";
 
 export const authStore = {
 
@@ -54,18 +54,22 @@ export const authStore = {
 
         async auth_login( context, userParams ) {
 
-            let response = await axios.post( "auth/login.php", userParams );
+            try {
+                let response = await axios.post( "auth/login.php", userParams );
 
-            const key = response.data.payload.auth_key;
-            const user = response.data.payload.user;
+                const key = response.data.payload.auth_key;
+                const user = response.data.payload.user;
 
-            localStorage.setItem( AUTH_KEY, key );
-            localStorage.setItem( LOGIN_STATUS, "true" );
-            localStorage.setItem( USER, JSON.stringify( user ) );
+                localStorage.setItem( AUTH_KEY, key );
+                localStorage.setItem( LOGIN_STATUS, "true" );
+                localStorage.setItem( USER, JSON.stringify( user ) );
 
-            axios.defaults.headers[ "auth" ] = key;
+                axios.defaults.headers[ "auth" ] = key;
 
-            context.commit( "loginSuccess" );
+                context.commit( "loginSuccess" );
+            } catch ( e ) {
+                throw e;
+            }
 
 
         }, /* login */

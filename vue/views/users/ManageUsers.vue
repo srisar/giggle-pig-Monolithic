@@ -2,46 +2,52 @@
 
   <div>
 
-    <TopNavigationBar/>
 
     <div class="container">
 
       <div class="row">
-        <div class="col">
 
-          <h2>Manage Users</h2>
+        <div class="col my-3" id="content-area">
 
-          <p>The table contains available users in the system.
-            <router-link to="/admin/users/create">Create new user</router-link>
-          </p>
+          <div class="row">
+            <div class="col-12 col-xl-6">
+              <h2>Manage Users</h2>
 
-          <table class="table table-bordered table-sm" v-if="users.length > 0">
-            <thead>
-            <tr>
-              <th>Full name</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Role</th>
-            </tr>
-            </thead>
+              <p>The table contains available users in the system.
+                <router-link to="/admin/users/create">Create new user</router-link>
+              </p>
 
-            <tbody>
-            <tr v-for="user in users" :key="user.id">
-              <td>
-                <router-link :to="'/admin/users/edit/' + user.id">{{ user.full_name }}</router-link>
-              </td>
-              <td>{{ user.username }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.role }}</td>
-            </tr>
-            </tbody>
-          </table>
+              <table class="table table-bordered table-sm table-responsive" v-if="users.length > 0">
+                <thead>
+                <tr>
+                  <th>Full name</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                </tr>
+                </thead>
 
-          <div class="alert alert-warning text-center" v-else>
-            No users found in the system
+                <tbody>
+                <tr v-for="user in users" :key="user.id">
+                  <td>
+                    <router-link :to="'/admin/users/edit/' + user.id">{{ user.full_name }}</router-link>
+                  </td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.role }}</td>
+                </tr>
+                </tbody>
+              </table>
+
+              <div class="alert alert-warning text-center" v-else>
+                No users found in the system
+              </div>
+
+            </div>
           </div>
 
-        </div>
+
+        </div><!--  -->
       </div>
 
     </div>
@@ -53,10 +59,11 @@
 <script>
 import TopNavigationBar from "../../components/TopNavigationBar";
 import {errorDialog} from "../../assets/libs/bootloks";
+import AdminSidebar from "../admin/components/AdminSidebar";
 
 export default {
   name: "ManageUsers",
-  components: { TopNavigationBar },
+  components: { AdminSidebar, TopNavigationBar },
 
   data() {
     return {};

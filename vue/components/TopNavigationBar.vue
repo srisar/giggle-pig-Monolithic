@@ -3,7 +3,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand">
-        <img src="../assets/images/navbar-icon.svg" alt="" height="24px">
+        <img src="../assets/images/app-icon.svg" alt="" height="24px">
       </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
               aria-expanded="false"
@@ -17,13 +17,16 @@
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/bs-dialogs" class="nav-link">Bootloks: Dialog boxes</router-link>
+            <router-link to="/bootloks" class="nav-link">Bootloks: Dialog boxes</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/modals" class="nav-link">Modal Windows</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/uploads" class="nav-link">Upload Example</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/admin" class="nav-link">Admin Page</router-link>
           </li>
         </ul>
 
@@ -34,8 +37,8 @@
           </span>
           <router-link to="/login" class="btn btn-success btn-sm me-2" v-if="!loginState">Login</router-link>
 
-          <router-link to="/admin/users" class="btn btn-outline-success btn-sm me-2" v-if="loginState && userType === 'ADMIN'"><i class="bi bi-people-fill"></i>Manage
-            users
+          <router-link to="/admin/users" class="btn btn-outline-success btn-sm me-2" v-if="loginState && userType === 'ADMIN'">
+            <i class="bi bi-people-fill"></i>Manage users
           </router-link>
 
           <button class="btn btn-danger btn-sm" @click="logout" v-if="loginState">Logout</button>
