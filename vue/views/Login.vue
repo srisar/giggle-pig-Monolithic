@@ -6,7 +6,7 @@
 
         <div class="alert alert-success">
 
-          <h1 class="text-center">Plum Pig</h1>
+          <h1 class="text-center">Giggle Pig</h1>
 
           <div class="text-center">
             <img src="../assets/images/app-icon.svg" alt="Plum Pig" class="img-fluid" style="width: 100px">

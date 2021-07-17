@@ -59039,7 +59039,7 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-12 col-md-4" }, [
         _c("div", { staticClass: "alert alert-success" }, [
-          _c("h1", { staticClass: "text-center" }, [_vm._v("Plum Pig")]),
+          _c("h1", { staticClass: "text-center" }, [_vm._v("Giggle Pig")]),
           _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
