@@ -6,22 +6,23 @@ import FileUploadView from "../../views/pages/FileUploadView";
 export const pagesRoutes = [
 
     {
-        path: '/',
-        name: 'home',
+        path: "/",
+        name: "home",
         component: Home
     },
     {
-        path: '/bootloks',
+        path: "/bootloks",
+        name: "bootloksDemo",
         component: BootloksView,
     },
     {
         path: "/modals",
-        name: "modals",
+        name: "modalsDemo",
         component: ModalWindowView
     },
     {
         path: "/uploads",
-        name: "file-uploads",
+        name: "fileUploadDemo",
         component: FileUploadView
     },
 ]

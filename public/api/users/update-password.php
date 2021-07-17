@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 use App\Core\Http\Auth;
 use App\Core\Http\JSONResponse;
@@ -19,26 +19,26 @@ try {
 
 
     $fields = [
-        'id' => Request::getAsInteger('id', true),
-        'current_password' => Request::getAsString('current_password', true),
-        'new_password' => Request::getAsString('new_password', true),
+        "id" => Request::getAsInteger( "id", true ),
+        "new_password" => Request::getAsString( "new_password", true ),
     ];
 
 
-    $user = User::find($fields['id']);
+    $user = User::find( $fields["id"] );
 
-    if (is_null($user)) throw new Exception('Invalid user');
+    if ( is_null( $user ) ) throw new Exception( "Invalid user" );
 
-    if (!$user->validatePassword($fields['current_password'])) throw new Exception('Invalid current password');
+    /* if needed to validate current password */
+    // if (!$user->validatePassword($fields["current_password"])) throw new Exception("Invalid current password");
 
-    $result = $user->updatePassword($fields['new_password']);
+    $result = $user->updatePassword( $fields["new_password"] );
 
-    if ($result) {
-        JSONResponse::validResponse('Password updated');
+    if ( $result ) {
+        JSONResponse::validResponse( "Password updated" );
         return;
     }
 
 
-} catch (Exception $exception) {
-    JSONResponse::exceptionResponse($exception);
+} catch ( Exception $exception ) {
+    JSONResponse::exceptionResponse( $exception );
 }

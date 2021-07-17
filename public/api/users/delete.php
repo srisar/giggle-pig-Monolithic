@@ -15,11 +15,11 @@ try {
      * Authenticate for incoming auth key
      * if no valid key is present, will return 401
      * */
-    Auth::authenticate();
+    Auth::authenticate( User::ROLES_ADMIN_MANAGER );
 
 
     $fields = [
-        'id' => Request::getAsInteger( 'id', true ),
+        "id" => Request::getAsInteger( "id", true ),
     ];
 
     $user = User::find( $fields["id"] );

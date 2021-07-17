@@ -22,19 +22,6 @@ html, body {
 
 #main {
   height: inherit;
-  //padding: 50px 10px;
   overflow-y: auto;
   flex-grow: 1;
-}
-
-
-@media (max-width: 576px) {
-  #sidebar {
-    position: absolute;
-
-  }
-
-  #main {
-    margin-left: 60px;
-  }
 }

@@ -1,8 +1,8 @@
-# Plum Pig: PHP/Vue Application Framework
+# Giggle Pig: PHP/Vue Framework
 
-![](https://raw.githubusercontent.com/srisar/php_vue_framework/master/vue/assets/images/phpvue-logo.png)
+![](https://raw.githubusercontent.com/srisar/php_vue_framework/master/vue/assets/images/app-logo.svg)
 
-PHPVue application framework is a minimal framework/template to develop applications with PHP backend and Vue.js-based front-end SPA. It is not a replacement
+Giggle Pig framework is a minimal framework/template to develop applications with PHP backend and Vue.js-based front-end SPA. It is not a replacement
 for any production ready frameworks such as Laravel or Symphony.
 
 It comes with an authentication mechanism for Vue, and a way to authenticate API calls from backend php. Using a simple auth-key based authentication.

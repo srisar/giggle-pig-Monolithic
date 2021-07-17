@@ -10,14 +10,20 @@ use Exception;
 class Uploader
 {
 
-    private array $supportedMimes;
-    private bool $checkMime;
+    private array $mimes = [
+        "supportedMimes" => [],
+        "checkMime" => false,
+        "preferredExtension" => ".ext",
+        "hasPreferredExtension" => false,
+    ];
+
     private int $maxFileSize;
+    private array $fileObject;
+
     private string $baseDir;
     private string $subDir;
     private string $absolutePath;
     private string $relativePath;
-    private array $fileObject;
 
 
     /**
@@ -35,9 +41,8 @@ class Uploader
         $this->fileObject = $file_object;
         $this->maxFileSize = $max_file_size;
 
-        $this->supportedMimes = $supported_mimes;
-        if ( empty( $supported_mimes ) ) $this->checkMime = false;
-        else $this->checkMime = true;
+        $this->mimes["supportedMimes"] = $supported_mimes;
+        if ( !empty( $this->mimes["supportedMimes"] ) ) $this->mimes["checkMime"] = true;
 
         if ( !$this->validateFileObject() ) throw new Exception( "Invalid file object given" );
         if ( !$this->validateMime() ) throw new Exception( "Invalid file type uploaded" );
@@ -60,7 +65,7 @@ class Uploader
 
         $extension = $this->validateExtension( $ext );
 
-        $uid = KeyGenerator::generateUID( prepend: $newFileName . "_" );
+        $uid = KeyGenerator::generateUID( $newFileName . "_" );
 
         $this->relativePath = $this->subDir . "/" . $uid . "." . $extension;
         $this->absolutePath = $this->baseDir . "/" . $this->relativePath;
@@ -79,16 +84,11 @@ class Uploader
      */
     private function validateExtension( $ext )
     {
-
-        /* check if user passed extension is not empty, then return it */
+        /* 1. check if user provided the extension, forcing to use that extension */
         if ( !empty( $ext ) ) return $ext;
 
-        /* try to get extension from uploaded file */
-        $extArray = explode( ".", $this->fileObject["name"] );
-        $ext = end( $extArray );
-        if ( empty( $ext ) ) throw new Exception( "Invalid extension" );
-
-        return $ext;
+        /* 2. if extension is determined from the uploaded file, use it */
+        return $this->mimes["preferredExtension"];
     }
 
     /**
@@ -99,11 +99,18 @@ class Uploader
      */
     private function validateMime(): bool
     {
-        if ( !$this->checkMime ) return true;
+        if ( !$this->mimes["checkMime"] ) return true;
 
         $fileMime = $this->fileObject["type"];
 
-        return in_array( $fileMime, $this->supportedMimes );
+        foreach ( $this->mimes["supportedMimes"] as $mime => $ext ) {
+            if ( $mime == $fileMime ) {
+                $this->mimes["preferredExtension"] = $ext;
+                $this->mimes["hasPreferredExtension"] = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

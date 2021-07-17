@@ -1,231 +1,145 @@
 <template>
 
-  <nav id="sidebar" :class="sidebarStateClass">
-    <div class="sidebar-toggle-button" @click="sidebarExpanded = !sidebarExpanded">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-        <path
-            d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-      </svg>
+  <div id="sidebar__container">
+
+
+    <div class="sidebar__toggle">
+      <button class="sidebar__toggle__button">
+        <i class="bi bi-arrow-right"></i>
+      </button>
     </div>
 
-    <div class="sidebar__contents">
-
-      <div class="sidebar__contents__top">
-
-        <div class="app-icon mb-3">
-          <router-link to="/admin">
-            <img src="../../../assets/images/app-icon.svg" alt="Plum Pig">
-          </router-link>
-          <hr>
-        </div><!-- app-icon -->
-
-        <div class="sidebar-nav">
-
-          <ul class="list-unstyled menu__ul">
-
-            <li class="menu__li">
-              <a class="menu__item" @click="toggleSubmenu('#users_menu')">
-                <div class="btn__icon"><i class="bi bi-people-fill"></i></div>
-                <div class="btn__text">Users</div>
-              </a>
-
-              <div class="menu__submenu collapse" id="users_menu">
-                <ul>
-                  <li>
-                    <router-link to="/admin/users" class="menu__item">
-                      <div class="btn__icon"><i class="bi bi-people-fill"></i></div>
-                      <div class="btn__text">Manage users</div>
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link to="/admin/users/create" class="menu__item">
-                      <div class="btn__icon"><i class="bi bi-person-lines-fill"></i></div>
-                      <div class="btn__text">Create user</div>
-                    </router-link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-
-            <li class="menu__li">
-              <a class="menu__item" @click="toggleSubmenu('#submenu_1')">
-                <div class="btn__icon"><i class="bi bi-arrow-right-short"></i></div>
-                <div class="btn__text">Menu Item 1</div>
-              </a>
-
-              <div class="menu__submenu collapse" id="submenu_1">
-                <ul>
-                  <li>
-                    <a href="#" class="menu__item">
-                      <div class="btn__icon"><i class="bi bi-arrow-right-short"></i></div>
-                      <div class="btn__text">Sub Menu 1.1</div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="menu__item">
-                      <div class="btn__icon"><i class="bi bi-arrow-right-short"></i></div>
-                      <div class="btn__text">Sub Menu 1.2</div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
+    <div id="sidebar">
 
 
-            <li class="menu__li">
-              <a class="menu__item" @click="toggleSubmenu('#submenu_2')">
-                <div class="btn__icon"><i class="bi bi-arrow-right-short"></i></div>
-                <div class="btn__text">Menu Item 2</div>
-              </a>
+      <div class="sidebar__contents">
 
-              <div class="menu__submenu collapse" id="submenu_2">
-                <ul>
-                  <li>
-                    <a href="#" class="menu__item">
-                      <div class="btn__icon"><i class="bi bi-arrow-right-short"></i></div>
-                      <div class="btn__text">Sub Menu 2.1</div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="menu__item">
-                      <div class="btn__icon"><i class="bi bi-arrow-right-short"></i></div>
-                      <div class="btn__text">Sub Menu 2.2</div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="menu__item">
-                      <div class="btn__icon"><i class="bi bi-arrow-right-short"></i></div>
-                      <div class="btn__text">Sub Menu 2.3</div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
+        <div class="sidebar__contents__top">
 
-
-          </ul>
-
-        </div><!--  -->
-
-      </div><!-- sidebar-top -->
-
-      <div class="sidebar__contents__bottom d-grid gap-2">
-
-        <div class="d-flex gap-1 align-items-center justify-content-between" v-if="isLoggedIn">
-          <div class="footer__username">{{ loggedInUser.full_name }}</div>
-
-          <div class="dropdown">
-            <a class="footer__btn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-gear"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li>
-                <button class="dropdown-item" @click="logout()">Logout</button>
-              </li>
-              <li>
-                <router-link to="/admin/users" class="dropdown-item">Manage Users</router-link>
-              </li>
-            </ul>
+          <div class="sidebar__top__logo">
+            <div class="logo__container">
+              <router-link :to="{name: 'home'}"><img src="../../../assets/images/app-icon.svg" alt="" class="img-fluid"></router-link>
+            </div>
           </div>
+
+          <nav class="sidebar__nav">
+            <SidebarNavs/>
+          </nav>
+
+        </div>
+        <div class="sidebar__contents__bottom">
+
+          <div class="sidebar__user">
+            <div class="sidebar__user__left">
+              <img :src="profilePicUrl" style="width: 24px" class="img-fluid rounded-circle" alt="">
+              <div class="">{{ loggedInUser.full_name }}</div>
+            </div>
+            <div class="sidebar__user__right">
+              <div class="dropdown">
+                <button class="dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-gear"></i></button>
+                <ul class="dropdown-menu" id="sidebarUserMenu">
+                  <li>
+                    <div @click="logout()" class="dropdown-item">Logout</div>
+                  </li>
+                  <li v-if="isAdmin">
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li v-if="isAdmin">
+                    <router-link class="dropdown-item" :to="{name: 'manageUsers'}">Manage users</router-link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="d-flex gap-1 align-items-center justify-content-center" v-else>
-          <router-link to="/login" class="footer__btn">
-            <div class="btn__icon"><i class="bi bi-box-arrow-in-right"></i></div>
-            <div class="btn__text">Login</div>
-          </router-link>
-        </div>
+      </div>
+    </div>
 
-      </div><!-- sidebar-bottom -->
-
+    <div class="sidebar__backdrop">
 
     </div>
 
+  </div>
 
-  </nav>
 
 </template>
 
 <script>
-
-import {errorDialog} from "../../../assets/libs/bootloks";
+import {usersMixins} from "../../../mixins/users_mixins";
+import SidebarNavs from "./sidebar/SidebarNavs";
 
 export default {
   name: "AdminSidebar",
-
-  data() {
-    return {
-      screenSize: screen.width,
-      sidebarExpanded: screen.width > 576,
-    }
-  },
-
-  computed: {
-
-    sidebarStateClass() {
-      if ( this.sidebarExpanded ) return "sidebar__expanded";
-      return "sidebar__collapsed";
-    },
-
-    isLoggedIn() {
-      return this.$store.getters.getLoginStatus;
-    },
-
-    loggedInUser() {
-      return this.$store.getters.getLoggedInUser;
-    },
-
-    userType() {
-      return this.$store.getters.getUserType;
-    },
-  },
+  components: { SidebarNavs },
+  mixins: [usersMixins],
 
   mounted() {
-    window.addEventListener( "resize", () => {
-      this.screenSize = screen.width;
-      this.sidebarExpanded = this.screenSize > 576;
+
+    document.querySelectorAll( ".nav__root-button" ).forEach( button => {
+
+      button.addEventListener( "click", () => {
+        const closestMenu = button.nextElementSibling;
+        button.classList.toggle( "nav__root-button-active" );
+
+        if ( button.classList.contains( "nav__root-button-active" ) ) {
+          closestMenu.style.maxHeight = closestMenu.scrollHeight + "px";
+        } else {
+          closestMenu.style.maxHeight = 0;
+        }
+
+      } );
+    } );
+
+    document.querySelector( ".sidebar__toggle" ).addEventListener( "click", () => {
+      this.toggleSidebar();
+    } );
+
+    document.querySelector( ".sidebar__backdrop" ).addEventListener( "click", () => {
+      this.toggleSidebar();
     } );
 
   },
 
   methods: {
 
-    toggleSubmenu( id ) {
-      let element = document.querySelector( id );
-      let allSubmenus = document.querySelectorAll( ".menu__submenu" );
-      let closest = element.closest( ".menu__submenu" );
+    toggleSidebar() {
+      document.querySelector( "#sidebar__container" ).classList.toggle( "sidebar__container-show" );
+      document.querySelector( "#sidebar" ).classList.toggle( "sidebar-show" );
+      document.querySelector( ".sidebar__toggle__button" ).classList.toggle( "opened" );
+      document.querySelector( ".sidebar__backdrop" ).classList.toggle( "sidebar__backdrop-show" );
+    }
 
-      if ( closest.classList.contains( "show" ) ) {
-        closest.classList.remove( "show" );
-        return;
-      }
-
-      allSubmenus.forEach( ( item ) => {
-        item.classList.remove( "show" );
-      } );
-
-
-      closest.classList.add( "show" );
-
-    },
-
-    async logout() {
-
-      try {
-        await this.$store.dispatch( "auth_logout" );
-        await this.$router.push( "/login" );
-
-      } catch ( e ) {
-        errorDialog( { message: "Login attempt failed." } );
-      }
-
-    },
   },
 
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+  // For Google Chrome
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // For Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
 
 
 $color-sidebar-bg: #161C2E;
@@ -234,216 +148,287 @@ $color-active: #394151;
 $color-text: #FBFAFF;
 $color-footer-bg: #0A0F17;
 
+$color-submenu: #ffffff;
+
 $margin: 5px;
 $padding: 5px;
 
 
-#sidebar {
+/* collapsed sidebar in mobile screen */
+@media (max-width: 576px) {
 
-  z-index: 999;
-
-  height: inherit;
-  position: relative;
-  background-color: $color-sidebar-bg;
-  flex-shrink: 0;
-  box-shadow: 0 0 10px #cccccc;
-  transition: width 50ms ease-in;
-
-  .sidebar-toggle-button {
+  #sidebar_container {
     position: absolute;
     z-index: 99;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0.2rem;
-    right: 0.2rem;
-    width: 24px;
-    height: 24px;
-    background-color: $color-active;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 200ms ease-in-out;
+    width: 0;
+  }
 
-    svg {
-      width: 16px;
-      height: 16px;
+  .sidebar__container-show {
+    position: absolute;
+    height: inherit;
+    width: 100%;
+  }
+
+  .sidebar__backdrop-show {
+    width: 100%;
+    height: 100%;
+    transition: background-color 200ms ease-in;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 89;
+    position: absolute;
+  }
+
+  #sidebar {
+    max-width: 0;
+    position: absolute;
+    z-index: 98;
+    padding-top: 40px;
+    overflow-y: hidden;
+    transition: max-width 100ms ease-in-out;
+    height: inherit;
+  }
+
+  #main {
+    padding-top: 40px;
+  }
+
+  .sidebar-show {
+    max-width: 100% !important;
+  }
+
+  .sidebar__toggle {
+    display: block !important;
+    z-index: 9999;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+    .sidebar__toggle__button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      //width: 24px;
+      //height: 24px;
+      border-radius: 50%;
+      font-size: 1.5em;
+      border: none;
+      background-color: $color-sidebar-bg;
       color: $color-text;
+
+      i:before {
+        transition: transform 300ms ease-in-out;
+      }
     }
-  }
 
-  a {
-    text-decoration: none;
-  }
+    .sidebar__toggle__button.opened {
 
-  /* sidebar-toggle-button */
+      background-color: $color-text;
+      color: $color-sidebar-bg;
+
+      i:before {
+        transform: rotate(-180deg);
+
+      }
+    }
+
+  }
+}
+
+
+#sidebar_container {
+  height: 100% !important;
+  position: relative;
+  display: flex;
+}
+
+.sidebar__toggle {
+  position: absolute;
+  display: none;
+
+}
+
+#sidebar {
+  width: 250px;
+  background-color: $color-sidebar-bg;
+  color: $color-text;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+
+  @include scrollbars(.2em, black);
+
 
   .sidebar__contents {
     height: inherit;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    transition: all 300ms ease-in-out;
   }
 
-  .sidebar__contents__top {
-    padding: 50px $margin $margin $margin;
-  }
-
-  .sidebar__contents__bottom {
-    background-color: $color-footer-bg;
-    color: $color-text;
-    padding: $margin;
-  }
-
-
-  .menu__li {
-    margin-bottom: 20px;
-  }
-
-  .menu__submenu > ul {
-    list-style: none;
-    padding: 0 0 0 5px;
-  }
-
-  .menu__submenu {
-    border-left: solid 2px $color-text;
-    margin: 0 0 0 10px;
-  }
-
-
-  .menu__item {
+  .sidebar__top__logo {
     display: flex;
-    gap: 10px;
-    //background-color: $color-active;
-    margin: 5px 0;
-    padding: 5px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: $color-text;
-    cursor: pointer;
-    transition: inherit;
+    justify-content: center;
+    padding-top: 10px;
+    margin-bottom: 20px;
 
-    &:hover {
+    .logo__container {
+      img {
+        width: 50px;
+      }
+    }
+  }
+
+
+  .sidebar__nav {
+
+    padding: 10px;
+
+    .nav__ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+
+      > li {
+        margin-bottom: 20px;
+      }
+
+    }
+
+
+    .nav__root-button {
+      // base styles
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      cursor: pointer;
+
+      // button styles
+      border: none;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: $color-sidebar-bg;
+      color: $color-text;
+
+      i:before {
+        transform: rotate(0deg);
+        transition: transform 500ms;
+      }
+
+
+    }
+
+    .nav__root-button:hover {
       background-color: $color-hover;
     }
 
-    &.router-link-exact-active {
+    .nav__root-button-active {
+
       background-color: $color-active;
+
+      > i:before {
+        transform: rotate(180deg);
+        transition: transform 500ms;
+      }
     }
+
+
+    .submenu {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 200ms ease-in-out;
+
+      border-left: solid 1px white;
+      margin-left: 10px;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 0 10px;
+
+        li {
+          margin: 10px 0;
+        }
+
+        li:last-child {
+          margin-bottom: 0 !important;
+        }
+
+      }
+
+      a {
+        border-radius: 5px;
+        display: flex;
+        width: 100%;
+        padding: 5px;
+
+        text-decoration: none;
+        color: $color-submenu;
+      }
+
+      a:hover {
+        background-color: $color-hover;
+      }
+
+      .router-link-exact-active {
+        background-color: $color-hover;
+      }
+
+    }
+
+
   }
 
+  /* sidebar bottom */
+  .sidebar__contents__bottom {
+    background-color: black;
+  }
 
-  .footer__btn {
+  .sidebar__user {
     display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 10px;
-    border-radius: 5px;
-    padding: 5px;
-    color: $color-text;
-    background-color: $color-active;
-  }
-
-
-}
-
-
-/* ---- sidebar expanded state ----- */
-.sidebar__expanded {
-  width: 200px;
-
-  .sidebar-toggle-button {
-    transform: rotatez(-180deg);
-  }
-
-  .app-icon {
-    justify-content: center;
-    text-align: center;
-
-    img {
-      width: 60px;
-    }
-  }
-
-}
-
-/* ----- sidebar collapsed state ----- */
-.sidebar__collapsed {
-  width: 60px;
-
-  .sidebar-toggle-button {
-    transform: rotatez(0deg);
-  }
-
-  .menu__item {
-    gap: 0;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 2px !important;
-    width: 100%;
-  }
+    padding: 10px;
 
-  .menu__submenu > ul {
-    list-style: none;
-    margin: 0;
-    padding-left: 0 !important;
-  }
+    .sidebar__user__left {
+      display: flex;
+      gap: 5px;
+      align-items: center;
 
-  .menu__submenu {
-    margin: 0 !important;
-    padding-left: 5px;
-  }
 
-  .btn__text {
-    display: none;
-  }
+      img {
+        object-fit: cover;
+        width: 24px;
+        height: 24px;
+      }
 
-  .btn__icon {
-    font-size: 1.2rem;
-  }
 
-  /* sidebar_li__link */
-
-  .app-icon {
-    display: flex;
-    justify-content: center;
-
-    img {
-      width: 36px;
     }
-  }
 
-  /* app-icon */
+    .sidebar__user__right {
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-active;
+        border: none;
+        border-radius: 5px;
+        color: $color-text;
+        //width: 24px;
+        height: 24px;
 
-  .footer__username {
-    display: none;
-  }
+      }
 
-  .sidebar__contents__bottom .dropdown {
-    width: 100%;
-  }
+      button:hover {
+        background-color: #357ebd;
+      }
 
-  .footer__btn {
-    width: 100%;
-    gap: 0 !important;
-    border-radius: 5px;
-    font-size: 1rem;
-    padding: 2px !important;
-    color: $color-text;
-    background-color: #999999;
-  }
-}
 
-@media (max-width: 576px) {
-  #sidebar {
-    position: absolute;
+    }
 
   }
 
-  #main {
-    margin-left: 100px;
-  }
 }
 
 

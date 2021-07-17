@@ -62,18 +62,18 @@ class Request
      * @param string $key
      * @param bool $required - if true, and key is not found in the request,
      *                          will throw an exception
-     * @return string|null
+     * @return mixed
      * @throws Exception
      */
-    private static function getParam( string $key, bool $required = false ): ?string
+    private static function getParam( string $key, bool $required = false )
     {
         $axios = self::getAxiosData();
-
         $_REQUEST = array_merge( $axios, $_REQUEST );
 
         if ( isset( $_REQUEST[ $key ] ) ) {
             return $_REQUEST[ $key ];
         }
+
         if ( $required ) throw new Exception( "Field ($key) is required" );
         return null;
     }

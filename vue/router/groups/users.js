@@ -1,11 +1,12 @@
-import ManageUsers from "../../views/users/ManageUsers";
-import EditUser from "../../views/users/EditUser";
-import CreateUser from "../../views/users/CreateUser";
+import ManageUsers from "../../views/admin/users/ManageUsers";
+import EditUser from "../../views/admin/users/EditUser";
+import CreateUser from "../../views/admin/users/CreateUser";
 
 export const userRoutes = [
 
     {
         path: "users",
+        name: "manageUsers",
         component: ManageUsers,
         meta: {
             requiresAuth: true,
@@ -15,6 +16,7 @@ export const userRoutes = [
 
     {
         path: "users/edit/:id",
+        name: "editUser",
         component: EditUser,
         meta: {
             requiresAuth: true,
@@ -24,6 +26,7 @@ export const userRoutes = [
 
     {
         path: "users/create",
+        name: "createUser",
         component: CreateUser,
         meta: {
             requiresAuth: true,

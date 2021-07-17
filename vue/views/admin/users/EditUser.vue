@@ -1,22 +1,26 @@
 <template>
 
-  <div>
-
-    <TopNavigationBar/>
+  <div class="mt-3">
 
     <div class="container" v-if="userToEdit">
 
       <div class="row justify-content-center">
         <div class="col-12 col-md-6">
 
+
           <h4 class="text-center">Edit {{ userToEdit.full_name }} details</h4>
 
+          <!-- user details area -->
           <div class="alert alert-secondary">
+
+            <div class="text-center profile__pic">
+              <img :src="profilePicUrl" alt="Profile picture" class="img-fluid">
+            </div>
 
             <div id="form-edit-user">
 
               <div class="row g-3">
-                <div class="col">
+                <div class="col-12 col-md-6">
 
                   <div class="mb-3">
                     <label for="text-fullname" class="form-label">Full name</label>
@@ -24,7 +28,7 @@
                   </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-6">
 
                   <div class="mb-3">
                     <label for="text-username" class="form-label">Username</label>
@@ -36,7 +40,7 @@
 
 
               <div class="row g-3">
-                <div class="col">
+                <div class="col-12 col-md-6">
 
                   <div class="mb-3">
                     <label for="text-email" class="form-label">Email</label>
@@ -44,7 +48,7 @@
                   </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-6">
 
 
                   <div class="mb-3">
@@ -59,7 +63,7 @@
 
               <div class="text-center">
                 <button type="button" class="btn btn-primary" @click="onUpdate()">Update</button>
-                <router-link to="/users" class="btn btn-secondary">Cancel</router-link>
+                <router-link :to="{name: 'manageUsers'}" class="btn btn-secondary">Cancel</router-link>
               </div>
 
               <hr>
@@ -76,22 +80,10 @@
               <!-- change password area -->
               <div v-if="isChangingPassword">
 
-                <div class="row g-3">
-                  <div class="col">
+                <div class="row g-3 mb-3">
+                  <div class="col-12 col-md-6">
 
-                    <div class="mb-3">
-                      <label for="current-password">Current password</label>
-                      <input id="current-password" type="password" class="form-control" v-model="passwordToChange.currentPassword">
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="row">
-                  <div class="col">
-
-                    <div class="mb-3">
+                    <div class="">
                       <label for="new-password">New password</label>
                       <input id="new-password" type="password" class="form-control" v-model="passwordToChange.newPassword"
                              :class="{'is-invalid': !isNewPasswordValid, 'is-valid': isNewPasswordValid}">
@@ -101,9 +93,9 @@
 
                   </div>
 
-                  <div class="col">
+                  <div class="col-12 col-md-6">
 
-                    <div class="mb-3">
+                    <div class="">
                       <label for="confirm-new-password">New password</label>
                       <input id="confirm-new-password" type="password" class="form-control" v-model="passwordToChange.confirmNewPassword"
                              :class="{'is-invalid': !isNewPasswordValid, 'is-valid': isNewPasswordValid}">
@@ -123,6 +115,22 @@
 
             </div><!-- form-edit-user -->
           </div><!-- alert -->
+
+
+          <!-- upload profile pic -->
+          <div class="alert alert-secondary">
+            <div class="mb-3">
+              <label class="form-label">Upload profile pic</label>
+              <input type="file" class="form-control form-control-sm" ref="profilePicField" @change="onChooseFile()">
+            </div>
+
+            <div class="text-center">
+              <button class="btn btn-sm btn-primary" :disabled="!profilePicFile" @click="onUploadProfilePic()">Upload Image</button>
+            </div>
+
+          </div>
+
+
         </div><!-- col -->
       </div><!-- row -->
 
@@ -132,12 +140,13 @@
 </template>
 
 <script>
-import TopNavigationBar from "../../components/TopNavigationBar";
-import {errorDialog, successDialog} from "../../assets/libs/bootloks";
+import {errorDialog, successDialog} from "../../../assets/libs/bootloks";
+
+let _ = require( "lodash" );
 
 export default {
   name: "EditUser",
-  components: { TopNavigationBar },
+  components: {},
 
   data() {
     return {
@@ -147,7 +156,7 @@ export default {
         username: "",
         full_name: "",
         email: "",
-        role: ""
+        role: "",
       },
 
       passwordToChange: {
@@ -157,6 +166,8 @@ export default {
       },
 
       isChangingPassword: false,
+
+      profilePicFile: null,
 
     };
   },
@@ -179,6 +190,13 @@ export default {
       return this.passwordToChange.newPassword === this.passwordToChange.confirmNewPassword;
     },
 
+    profilePicUrl() {
+      if ( _.isEmpty( this.userToEdit.profile_pic ) ) {
+        return "images/user.svg";
+      }
+      return `uploads/${ this.userToEdit.profile_pic }`;
+    }
+
   },
 
 
@@ -199,6 +217,31 @@ export default {
 
 
   methods: {
+
+    onChooseFile() {
+      this.profilePicFile = this.$refs.profilePicField.files[ 0 ];
+    },
+
+    async onUploadProfilePic() {
+      try {
+
+        const params = {
+          profilePicFile: this.profilePicFile,
+          id: this.userToEdit.id,
+        }
+
+        await this.$store.dispatch( "users_uploadProfilePic", params );
+
+        const id = this.$route.params.id;
+        await this.$store.dispatch( "users_fetch", id );
+
+        this.userToEdit = this.$store.getters.getUser;
+
+      } catch ( e ) {
+        console.log( e.response.data );
+        errorDialog( { message: "Failed to upload image" } );
+      }
+    },
 
     async onUpdate() {
 
@@ -221,14 +264,12 @@ export default {
 
 
     async onUpdatePassword() {
-
-      const params = {
-        id: this.userToEdit.id,
-        current_password: this.passwordToChange.currentPassword,
-        new_password: this.passwordToChange.newPassword
-      };
-
       try {
+
+        const params = {
+          id: this.userToEdit.id,
+          new_password: this.passwordToChange.newPassword
+        };
 
         await this.$store.dispatch( "users_updatePassword", params );
 
@@ -248,6 +289,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+.profile__pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+}
 
 </style>

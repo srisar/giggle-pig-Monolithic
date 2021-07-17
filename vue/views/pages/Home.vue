@@ -20,12 +20,11 @@
             </div>
           </div>
 
-          <h2 class="text-center">Welcome to Plum Pig Application scaffolding</h2>
+          <h2 class="text-center">Welcome to Giggle Pig Application scaffolding</h2>
           <hr>
 
-          <p>PHPVue application scaffolding is a minimal framework/template to develop applications with PHP backend and Vue.js-based single page application.
-            It comes with an authentication mechanism
-            for Vue and a way to authenticate API from backend calls.</p>
+          <p>Giggle Pig is an opinionated framework/template to develop applications with PHP backend and Vue.js-based frontend.
+            It comes with an authentication mechanism for Vue and a way to authenticate API from backend calls.</p>
 
 
           <h3>From PHP side</h3>

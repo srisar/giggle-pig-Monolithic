@@ -1,6 +1,6 @@
 <template>
 
-  <div id="view-create-user">
+  <div id="view-create-user" class="mt-3">
 
 
     <div class="container-fluid">
@@ -15,18 +15,18 @@
 
             <div id="form-create-user">
 
-              <div class="row g-3">
-                <div class="col">
+              <div class="row g-3 mb-3">
+                <div class="col-12 col-md-6">
 
-                  <div class="mb-3">
+                  <div class="mb-0">
                     <label for="text-fullname" class="form-label">Full name</label>
                     <input type="text" id="text-fullname" class="form-control" v-model="userToCreate.full_name">
                   </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-6">
 
-                  <div class="mb-3">
+                  <div class="mb-0">
                     <label for="text-username" class="form-label">Username</label>
                     <input type="text" id="text-username" class="form-control" v-model="userToCreate.username">
                   </div>
@@ -34,18 +34,18 @@
                 </div>
               </div>
 
-              <div class="row g-3">
-                <div class="col">
+              <div class="row g-3 mb-3">
+                <div class="col-12 col-md-6">
 
-                  <div class="mb-3">
+                  <div class="mb-0">
                     <label for="text-email" class="form-label">Email</label>
                     <input type="text" id="text-email" class="form-control" v-model="userToCreate.email">
                   </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-6">
 
-                  <div class="mb-3">
+                  <div class="mb-0">
                     <label for="roles" class="form-label">Role</label>
                     <select id="roles" class="form-select" v-model="userToCreate.role">
                       <option v-for="(item, key) in roles" :key="key" :value="key">{{ item }}</option>
@@ -56,18 +56,18 @@
               </div>
 
 
-              <div class="row g-3">
-                <div class="col">
+              <div class="row g-3 mb-3">
+                <div class="col-12 col-md-6">
 
-                  <div class="mb-3">
+                  <div class="mb-0">
                     <label for="text-password" class="form-label">Password</label>
                     <input type="text" id="text-password" class="form-control" v-model="userToCreate.password">
                   </div>
 
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-6">
 
-                  <div class="mb-3">
+                  <div class="mb-0">
                     <label for="text-confirm-password" class="form-label">Confirm Password</label>
                     <input type="text" id="text-confirm-password" class="form-control" v-model="userToCreate.confirm_password">
                   </div>
@@ -76,7 +76,7 @@
               </div>
 
               <div class="row" v-if="!validPassword">
-                <div class="col">
+                <div class="col-12">
 
                   <div class="alert alert-danger">
                     Invalid password or password mismatch.
@@ -115,11 +115,10 @@
 </template>
 
 <script>
-import TopNavigationBar from "../../components/TopNavigationBar";
 
 export default {
   name: "CreateUser",
-  components: { TopNavigationBar },
+  components: {},
   data() {
     return {
 

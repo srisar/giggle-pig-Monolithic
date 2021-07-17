@@ -22,7 +22,7 @@ class User implements IModel
 
 
     public ?int $id;
-    public ?string $username, $full_name, $password, $password_hash, $email, $role;
+    public ?string $username, $full_name, $password, $password_hash, $email, $role, $profile_pic;
 
 
     public static function build( $array ): self
@@ -91,6 +91,16 @@ class User implements IModel
 
         return Database::update( self::TABLE, $data, [ "id" => $this->id ] );
 
+    }
+
+
+    public function updateProfilePic(): bool
+    {
+        $data = [
+            "profile_pic" => $this->profile_pic,
+        ];
+
+        return Database::update( self::TABLE, $data, [ "id" => $this->id ] );
     }
 
     public function delete(): bool

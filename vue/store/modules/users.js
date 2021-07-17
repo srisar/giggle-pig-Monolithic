@@ -86,7 +86,24 @@ export const usersStore = {
             } catch ( e ) {
                 throw e;
             }
+        },
 
+        async users_uploadProfilePic( context, params = { profilePicFile: null, id: null } ) {
+            try {
+
+                let formData = new FormData();
+                formData.append( "profile_pic", params.profilePicFile );
+                formData.append( "id", params.id );
+
+                const response = await axios.post( "users/upload-profile-pic.php", formData, {
+                    "Content-Type": "multipart/form-data"
+                } );
+
+                return response.data.payload.data;
+
+            } catch ( e ) {
+                throw e;
+            }
         }
 
     },

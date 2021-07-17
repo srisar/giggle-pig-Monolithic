@@ -30,7 +30,7 @@
                 <tbody>
                 <tr v-for="user in users" :key="user.id">
                   <td>
-                    <router-link :to="'/admin/users/edit/' + user.id">{{ user.full_name }}</router-link>
+                    <router-link :to="{name: 'editUser', params: {id: user.id}}">{{ user.full_name }}</router-link>
                   </td>
                   <td>{{ user.username }}</td>
                   <td>{{ user.email }}</td>
@@ -57,13 +57,12 @@
 </template>
 
 <script>
-import TopNavigationBar from "../../components/TopNavigationBar";
-import {errorDialog} from "../../assets/libs/bootloks";
-import AdminSidebar from "../admin/components/AdminSidebar";
+import {errorDialog} from "../../../assets/libs/bootloks";
+import AdminSidebar from "../components/AdminSidebar";
 
 export default {
   name: "ManageUsers",
-  components: { AdminSidebar, TopNavigationBar },
+  components: { AdminSidebar },
 
   data() {
     return {};

@@ -8,7 +8,11 @@ class MimeTypes
 {
 
     public const IMAGE_MIMES = [
-        "image/gif", "image/png", "image/jpeg", "image/bmp", "image/tiff"
+        "image/gif" => "gif",
+        "image/png" => "png",
+        "image/jpeg" => "jpg",
+        "image/bmp" => "bmp",
+        "image/tiff" => "tiff"
     ];
 
 }

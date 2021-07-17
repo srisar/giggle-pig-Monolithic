@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 use App\Core\Http\Auth;
 use App\Core\Http\JSONResponse;
@@ -15,23 +15,23 @@ try {
      * Authenticate for incoming auth key
      * if no valid key is present, will return 401
      * */
-    Auth::authenticate();
+    Auth::authenticate( User::ROLES_ADMIN_MANAGER );
 
 
-    $id = Request::getAsInteger("id", true);
+    $id = Request::getAsInteger( "id", true );
 
 
-    $user = User::find($id);
+    $user = User::find( $id );
 
-    if (is_null($user)) throw new Exception("Invalid user");
+    if ( is_null( $user ) ) throw new Exception( "Invalid user" );
 
     // removing password_hash from going through api
-    unset($user->password_hash);
+    unset( $user->password_hash );
 
-    JSONResponse::validResponse(["user" => $user]);
+    JSONResponse::validResponse( [ "user" => $user ] );
     return;
 
 
-} catch (Exception $exception) {
-    JSONResponse::exceptionResponse($exception);
+} catch ( Exception $exception ) {
+    JSONResponse::exceptionResponse( $exception );
 }

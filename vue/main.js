@@ -43,7 +43,7 @@ axios.interceptors.response.use( undefined, ( error => {
 
 
 /* set document title */
-document.title = "Plum Pig: Application Framework";
+document.title = "Giggle Pig: The Framework";
 
 /* Vue initialization */
 new Vue( {

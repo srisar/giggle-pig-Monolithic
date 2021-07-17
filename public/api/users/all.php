@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 use App\Core\Http\Auth;
 use App\Core\Http\JSONResponse;
@@ -14,14 +14,14 @@ try {
      * Authenticate for incoming auth key
      * if no valid key is present, will return 401
      * */
-    Auth::authenticate();
+    Auth::authenticate( User::ROLES_ADMIN_MANAGER );
 
     $users = User::findAll();
 
-    JSONResponse::validResponse($users);
+    JSONResponse::validResponse( $users );
     return;
 
 
-} catch (Exception $exception) {
-    JSONResponse::exceptionResponse($exception);
+} catch ( Exception $exception ) {
+    JSONResponse::exceptionResponse( $exception );
 }

@@ -31,7 +31,7 @@ try {
     /* create new uploader instance to move the uploaded file to desired location */
     $uploader = new Uploader( $file, $MAX_UPLOAD_SIZE, "images", MimeTypes::IMAGE_MIMES );
     /* store the uploaded file */
-    $path = $uploader->storeUploadFile( "img", );
+    $path = $uploader->storeUploadFile( "img" );
 
     /* return stored relative path back as response */
     JSONResponse::validResponse( $path );

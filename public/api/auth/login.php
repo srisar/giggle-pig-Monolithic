@@ -12,31 +12,34 @@ require_once "../../../bootstrap.php";
 try {
 
     $fields = [
-        'username' => Request::getAsString( 'username' ),
-        'password' => Request::getAsString( 'password' ),
+        "username" => Request::getAsString( "username" ),
+        "password" => Request::getAsString( "password" ),
     ];
 
     error_log( print_r( $fields, true ) );
 
-    $loggedInUser = User::userExist( $fields['username'], $fields['password'] );
+    $loggedInUser = User::userExist( $fields["username"], $fields["password"] );
 
     if ( !is_null( $loggedInUser ) ) {
 
         $key = AuthKey::generateAuthKey( $loggedInUser );
 
         $user = [
-            'username' => $loggedInUser->username,
-            'email' => $loggedInUser->email,
-            'full_name' => $loggedInUser->full_name,
-            'role' => $loggedInUser->role,
+            "id" => $loggedInUser->id,
+            "username" => $loggedInUser->username,
+            "email" => $loggedInUser->email,
+            "full_name" => $loggedInUser->full_name,
+            "role" => $loggedInUser->role,
+            "profile_pic" => $loggedInUser->profile_pic,
+
         ];
 
-        JsonResponse::validResponse( [ 'auth_key' => $key, 'user' => $user ] );
+        JsonResponse::validResponse( [ "auth_key" => $key, "user" => $user ] );
         return;
 
     }
 
-    JsonResponse::invalidResponse( 'Login failed' );
+    JsonResponse::invalidResponse( "Login failed" );
     return;
 
 
