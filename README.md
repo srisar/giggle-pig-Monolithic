@@ -1,6 +1,6 @@
 # Giggle Pig: PHP/Vue Framework
 
-![](https://raw.githubusercontent.com/srisar/php_vue_framework/master/vue/assets/images/app-logo.svg)
+![](https://raw.githubusercontent.com/srisar/giggle-pig/master/public/images/app-logo.svg)
 
 Giggle Pig framework is a minimal framework/template to develop applications with PHP backend and Vue.js-based front-end SPA. It is not a replacement
 for any production ready frameworks such as Laravel or Symphony.
