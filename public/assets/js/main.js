@@ -60780,7 +60780,7 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("h2", { staticClass: "text-center" }, [
-            _vm._v("Welcome to Giggle Pig Application scaffolding")
+            _vm._v("Welcome to Giggle Pig PHP/Vue Framework")
           ]),
           _vm._v(" "),
           _c("hr"),

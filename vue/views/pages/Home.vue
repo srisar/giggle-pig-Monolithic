@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <h2 class="text-center">Welcome to Giggle Pig Application scaffolding</h2>
+          <h2 class="text-center">Welcome to Giggle Pig PHP/Vue Framework</h2>
           <hr>
 
           <p>Giggle Pig is an opinionated framework/template to develop applications with PHP backend and Vue.js-based frontend.
