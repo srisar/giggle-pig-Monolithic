@@ -5,9 +5,9 @@
 
     <div class="container-fluid">
 
-      <div class="row justify-content-center">
+      <div class="row">
 
-        <div class="col-12 col-md-6">
+        <div class="col-md-12 col-lg-6">
 
           <h4 class="text-center">Add new user</h4>
 

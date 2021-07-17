@@ -1,6 +1,6 @@
 <template>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 shadow">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand">
         <img src="../assets/images/app-icon.svg" alt="" height="24px">
@@ -16,22 +16,30 @@
           <li class="nav-item">
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/bootloks" class="nav-link">Bootloks: Dialog boxes</router-link>
+          <li class="nav-item dropdown">
+
+            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Components</a>
+
+            <ul class="dropdown-menu">
+              <li class="dropdown-item">
+                <router-link :to="{name: 'demoBootloks'}" class="nav-link">Bootloks: Dialog boxes</router-link>
+              </li>
+              <li class="dropdown-item">
+                <router-link :to="{name: 'demoModals'}" class="nav-link">Modal Windows</router-link>
+              </li>
+              <li class="dropdown-item">
+                <router-link :to="{name: 'demoFileUploads'}" class="nav-link">Upload Example</router-link>
+              </li>
+            </ul>
           </li>
-          <li class="nav-item">
-            <router-link to="/modals" class="nav-link">Modal Windows</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/uploads" class="nav-link">Upload Example</router-link>
-          </li>
+
           <li class="nav-item">
             <router-link to="/admin" class="nav-link">Admin Page</router-link>
           </li>
         </ul>
 
         <!-- right side -->
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center" v-if="showUserArea">
           <span v-if="loginState" class="me-2">
             <span class="navbar-text">Welcome {{ loggedInUser.full_name }}</span>
           </span>
@@ -54,6 +62,16 @@ import {errorDialog} from "../assets/libs/bootloks";
 
 export default {
   name: "TopNavigationBar",
+
+  data() {
+    return {
+
+      /* use this flag to set if navbar should display user admin area */
+      showUserArea: false,
+
+    };
+  },
+
 
   computed: {
 

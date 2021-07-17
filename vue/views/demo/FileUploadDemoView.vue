@@ -1,8 +1,8 @@
 <template>
 
   <div class="">
-    <TopNavigationBar/>
 
+    <TopNavigationBar/>
 
     <div class="container">
       <div class="row justify-content-center">
@@ -41,7 +41,7 @@ import {errorDialog, successDialog} from "../../assets/libs/bootloks";
 import axios from "axios";
 
 export default {
-  name: "FileUploadView",
+  name: "FileUploadDemoView",
   components: { TopNavigationBar },
 
   data() {

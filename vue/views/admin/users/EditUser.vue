@@ -5,13 +5,12 @@
     <div class="container" v-if="userToEdit">
 
       <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-
-
-          <h4 class="text-center">Edit {{ userToEdit.full_name }} details</h4>
+        <div class="col-12 col-md-8 col-lg-6">
 
           <!-- user details area -->
           <div class="alert alert-secondary">
+
+            <h4 class="text-center">Edit {{ userToEdit.full_name }} details</h4>
 
             <div class="text-center profile__pic">
               <img :src="profilePicUrl" alt="Profile picture" class="img-fluid">

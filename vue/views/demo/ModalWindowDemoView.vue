@@ -1,12 +1,10 @@
 <template>
 
   <div class="page-container">
-    <keep-alive>
-      <AdminSidebar/>
-    </keep-alive>
-
 
     <main id="main">
+
+      <TopNavigationBar/>
 
       <div class="container">
 
@@ -131,7 +129,7 @@ import ModalWindow from "../../components/ModalWindow";
 import AdminSidebar from "../admin/components/AdminSidebar";
 
 export default {
-  name: "ModalWindowView",
+  name: "ModalWindowDemoView",
   components: { AdminSidebar, ModalWindow, TopNavigationBar },
 
   data() {

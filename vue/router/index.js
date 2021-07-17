@@ -4,10 +4,10 @@ import Login from "../views/Login";
 
 import store from "../store/index";
 
-import {userRoutes} from "./groups/users";
 import {pagesRoutes} from "./groups/pages";
-import Page404 from "../views/pages/Page404";
 import {adminRoutes} from "./groups/admin";
+import {demoRoutes} from "./groups/demo"; /* demo routes: this can be removed */
+import Page404 from "../views/pages/Page404";
 
 Vue.use( VueRouter );
 
@@ -22,6 +22,7 @@ const routes = [
 
     ...pagesRoutes,
     ...adminRoutes,
+    ...demoRoutes, /* demo routes, can be removed */
     {
         path: "*",
         name: "404",

@@ -13,5 +13,9 @@ export const adminRoutes = [
             },
             ...userRoutes,
         ],
+        meta: {
+            requiresAuth: true,
+            hasAccess: ["ADMIN"],
+        }
     }
 ];

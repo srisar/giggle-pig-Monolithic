@@ -1,11 +1,10 @@
 <template>
 
   <div class="page-container">
-    <keep-alive>
-      <AdminSidebar/>
-    </keep-alive>
 
     <main id="main">
+      <TopNavigationBar/>
+
       <div class="container">
         <div class="row justify-content-center">
           <div class="col text-center">
@@ -63,7 +62,7 @@ import AdminSidebar from "../admin/components/AdminSidebar";
 
 
 export default {
-  name: "BootloksView",
+  name: "BootloksDemoView",
   components: { AdminSidebar, TopNavigationBar },
 
   data() {

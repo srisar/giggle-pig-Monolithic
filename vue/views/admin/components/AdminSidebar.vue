@@ -1,6 +1,6 @@
 <template>
 
-  <div id="sidebar__container">
+  <div id="sidebar__container" class="shadow">
 
 
     <div class="sidebar__toggle">
@@ -9,7 +9,7 @@
       </button>
     </div>
 
-    <div id="sidebar">
+    <div id="sidebar" class="shadow">
 
 
       <div class="sidebar__contents">
@@ -118,163 +118,171 @@ export default {
 
 <style lang="scss">
 
+$color_backdrop_bg   : rgba(0, 0, 0, 0.5);
+$color_sidebar_bg    : #161C2E;
+$color_footer_bg     : #0A0F17;
+$color_top_logo_bg   : $color-footer-bg;
+
+$color_button        : $color_sidebar_bg;
+$color_button_active : #394151;
+$color_button_hover  : #394151;
+$color_text          : #FBFAFF;
+$color_button_text   : #FBFAFF;
+
+$color-submenu       : #ffffff;
+
+$color_scrollbar_bg  : $color_sidebar_bg;
+$color_scrollbar_bar : $color_text;
+$margin              : 5px;
+$padding             : 5px;
+
+
 @mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
   // For Google Chrome
   &::-webkit-scrollbar {
-    width: $size;
-    height: $size;
+    width  : $size;
+    height : $size;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $foreground-color;
-    border-radius: 6px;
+    background    : $foreground-color;
+    border-radius : 6px;
   }
 
   &::-webkit-scrollbar-track {
-    background: $background-color;
+    background : $background-color;
   }
 
   // For Internet Explorer
   & {
-    scrollbar-face-color: $foreground-color;
-    scrollbar-track-color: $background-color;
+    scrollbar-face-color  : $foreground-color;
+    scrollbar-track-color : $background-color;
   }
 }
-
-
-$color-sidebar-bg: #161C2E;
-$color-hover: #394151;
-$color-active: #394151;
-$color-text: #FBFAFF;
-$color-footer-bg: #0A0F17;
-
-$color-submenu: #ffffff;
-
-$margin: 5px;
-$padding: 5px;
 
 
 /* collapsed sidebar in mobile screen */
-@media (max-width: 576px) {
+@media (max-width : 576px) {
 
   #sidebar_container {
-    position: absolute;
-    z-index: 99;
-    width: 0;
+    position : absolute;
+    z-index  : 99;
+    width    : 0;
   }
+  /* sidebar container */
 
   .sidebar__container-show {
-    position: absolute;
-    height: inherit;
-    width: 100%;
+    position : absolute;
+    width    : 100%;
+    height   : 100vh !important;
   }
 
   .sidebar__backdrop-show {
-    width: 100%;
-    height: 100%;
-    transition: background-color 200ms ease-in;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 89;
-    position: absolute;
+    position         : absolute;
+    z-index          : 89;
+    width            : 100%;
+    height           : 100%;
+    background-color : $color_backdrop_bg;
+    transition       : background-color 200ms ease-in;
   }
 
   #sidebar {
-    max-width: 0;
-    position: absolute;
-    z-index: 98;
-    padding-top: 40px;
-    overflow-y: hidden;
-    transition: max-width 100ms ease-in-out;
-    height: inherit;
+    max-width   : 0;
+    position    : absolute;
+    z-index     : 98;
+    //padding-top : 40px;
+    overflow-y  : hidden;
+    transition  : max-width 100ms ease-in-out;
+    height      : inherit;
   }
 
+
   #main {
-    padding-top: 40px;
+    padding-top : 40px;
   }
 
   .sidebar-show {
-    max-width: 100% !important;
+    max-width : 100% !important;
   }
 
   .sidebar__toggle {
-    display: block !important;
-    z-index: 9999;
-    position: absolute;
-    top: 5px;
-    left: 5px;
+    display  : block !important;
+    z-index  : 9999;
+    position : absolute;
+    top      : 5px;
+    left     : 5px;
 
     .sidebar__toggle__button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      //width: 24px;
-      //height: 24px;
-      border-radius: 50%;
-      font-size: 1.5em;
-      border: none;
-      background-color: $color-sidebar-bg;
-      color: $color-text;
+      display          : flex;
+      justify-content  : center;
+      align-items      : center;
+      border-radius    : 50%;
+      font-size        : 1.5em;
+      border           : none;
+      background-color : $color_sidebar_bg;
+      color            : $color_text;
 
       i:before {
-        transition: transform 300ms ease-in-out;
+        transition : transform 300ms ease-in-out;
       }
     }
+    /* sidebar__toggle__button */
 
     .sidebar__toggle__button.opened {
-
-      background-color: $color-text;
-      color: $color-sidebar-bg;
+      background-color : $color_text;
+      color            : $color_button_active;
 
       i:before {
-        transform: rotate(-180deg);
-
+        transform : rotate(-180deg);
       }
     }
-
   }
+  /* sidebar__toggle */
 }
+/* @media */
 
 
 #sidebar_container {
-  height: 100% !important;
-  position: relative;
-  display: flex;
+  height   : 100% !important;
+  position : relative;
+  display  : flex;
 }
+/* sidebar_container */
 
 .sidebar__toggle {
-  position: absolute;
-  display: none;
-
+  position : absolute;
+  display  : none;
 }
 
 #sidebar {
-  width: 250px;
-  background-color: $color-sidebar-bg;
-  color: $color-text;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow-y: scroll;
+  width            : 250px;
+  background-color : $color_sidebar_bg;
+  color            : $color-text;
+  display          : flex;
+  flex-direction   : column;
+  height           : 100%;
+  overflow-y       : scroll;
 
-  @include scrollbars(.2em, black);
+  @include scrollbars(3px, $color_scrollbar_bar, $color_scrollbar_bg);
 
 
   .sidebar__contents {
-    height: inherit;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    height          : inherit;
+    display         : flex;
+    flex-direction  : column;
+    justify-content : space-between;
   }
 
   .sidebar__top__logo {
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-    margin-bottom: 20px;
+    display          : flex;
+    justify-content  : center;
+    padding-top      : 10px;
+    padding-bottom   : 20px;
+    background-color : $color_top_logo_bg;
 
     .logo__container {
       img {
-        width: 50px;
+        width : 50px;
       }
     }
   }
@@ -282,154 +290,140 @@ $padding: 5px;
 
   .sidebar__nav {
 
-    padding: 10px;
+    padding : 10px;
 
     .nav__ul {
-      padding: 0;
-      margin: 0;
-      list-style: none;
+      padding    : 0;
+      margin     : 0;
+      list-style : none;
 
       > li {
-        margin-bottom: 20px;
+        margin-bottom : 20px;
       }
 
     }
 
 
     .nav__root-button {
-      // base styles
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      cursor: pointer;
-
-      // button styles
-      border: none;
-      padding: 5px;
-      border-radius: 5px;
-      background-color: $color-sidebar-bg;
-      color: $color-text;
+      display          : flex;
+      justify-content  : space-between;
+      width            : 100%;
+      padding          : 5px;
+      border           : none;
+      border-radius    : 5px;
+      color            : $color_button_text;
+      background-color : $color_button;
+      cursor           : pointer;
 
       i:before {
-        transform: rotate(0deg);
-        transition: transform 500ms;
+        transform  : rotate(0deg);
+        transition : transform 500ms;
       }
-
-
     }
 
     .nav__root-button:hover {
-      background-color: $color-hover;
+      background-color : $color_button_hover;
     }
 
     .nav__root-button-active {
-
-      background-color: $color-active;
+      background-color : $color_button_active;
 
       > i:before {
-        transform: rotate(180deg);
-        transition: transform 500ms;
+        transform  : rotate(180deg);
+        transition : transform 500ms;
       }
     }
+    /* nav__root-button */
 
 
     .submenu {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 200ms ease-in-out;
+      overflow    : hidden;
+      max-height  : 0;
+      transition  : max-height 200ms ease-in-out;
 
-      border-left: solid 1px white;
-      margin-left: 10px;
+      border-left : solid 1px white;
+      margin-left : 10px;
 
       ul {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 0 10px;
+        list-style : none;
+        padding    : 0;
+        margin     : 0 0 0 10px;
 
         li {
-          margin: 10px 0;
+          margin : 10px 0;
         }
 
         li:last-child {
-          margin-bottom: 0 !important;
+          margin-bottom : 0 !important;
         }
-
       }
 
       a {
-        border-radius: 5px;
-        display: flex;
-        width: 100%;
-        padding: 5px;
-
-        text-decoration: none;
-        color: $color-submenu;
+        border-radius   : 5px;
+        display         : flex;
+        width           : 100%;
+        padding         : 5px;
+        text-decoration : none;
+        color           : $color_submenu;
       }
 
       a:hover {
-        background-color: $color-hover;
+        background-color : $color_button_hover;
       }
 
       .router-link-exact-active {
-        background-color: $color-hover;
+        background-color : $color_button_active;
       }
-
     }
-
+    /* submenu */
 
   }
+  /* sidebar__nav */
 
-  /* sidebar bottom */
+
   .sidebar__contents__bottom {
-    background-color: black;
+    background-color : black;
   }
 
   .sidebar__user {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+    display         : flex;
+    gap             : 10px;
+    justify-content : space-between;
+    align-items     : center;
+    padding         : 10px;
 
     .sidebar__user__left {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-
+      display     : flex;
+      gap         : 5px;
+      align-items : center;
 
       img {
-        object-fit: cover;
-        width: 24px;
-        height: 24px;
+        object-fit : cover;
+        width      : 24px;
+        height     : 24px;
       }
-
-
     }
 
     .sidebar__user__right {
       button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: $color-active;
-        border: none;
-        border-radius: 5px;
-        color: $color-text;
-        //width: 24px;
-        height: 24px;
-
+        display          : flex;
+        justify-content  : center;
+        align-items      : center;
+        background-color : $color_button_active;
+        border           : none;
+        border-radius    : 5px;
+        color            : $color_text;
+        height           : 24px;
       }
 
       button:hover {
-        background-color: #357ebd;
+        background-color : #357ebd;
       }
-
-
     }
-
   }
+  /* sidebar__user */
 
 }
-
+/* sidebar */
 
 </style>

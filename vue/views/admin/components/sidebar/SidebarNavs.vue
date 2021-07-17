@@ -20,17 +20,19 @@
     </li>
 
     <li>
-      <button class="nav__root-button">Components <i class="bi bi-arrow-down-short"></i></button>
+      <div class="nav__root-button">
+        <div><i class="bi bi-cpu"></i> Components</div>
+        <i class="bi bi-arrow-down-short"></i></div>
       <div class="submenu">
         <ul>
           <li>
-            <router-link :to="{name: 'bootloksDemo'}">Bootloks</router-link>
+            <router-link :to="{name: 'demoBootloks'}">Bootloks</router-link>
           </li>
           <li>
-            <router-link :to="{name: 'modalsDemo'}">Modals</router-link>
+            <router-link :to="{name: 'demoModals'}">Modals</router-link>
           </li>
           <li>
-            <router-link :to="{name: 'fileUploadDemo'}">File upload</router-link>
+            <router-link :to="{name: 'demoFileUploads'}">File upload</router-link>
           </li>
         </ul>
       </div>
@@ -46,6 +48,5 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
 </style>

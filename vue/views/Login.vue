@@ -4,27 +4,27 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-4">
 
-        <div class="alert alert-success">
-
-          <h1 class="text-center">Giggle Pig</h1>
+        <div class="alert alert-success shadow">
 
           <div class="text-center">
-            <img src="../assets/images/app-icon.svg" alt="Plum Pig" class="img-fluid" style="width: 100px">
+            <router-link :to="{name: 'home'}">
+              <img src="../assets/images/giggle-pig-full.svg" alt="Giggle Pig" class="img-fluid" style="width: 250px">
+            </router-link>
           </div>
 
-          <form @submit.prevent="onLogin">
-            <div class="mb-3">
+          <form @submit.prevent="onLogin()">
+            <div class="form-floating mb-3">
+              <input id="txt-username" type="text" class="form-control" v-model="username" placeholder="Username">
               <label for="txt-username" class="form-label">Username</label>
-              <input id="txt-username" type="text" class="form-control" v-model="username">
             </div>
 
-            <div class="mb-3">
+            <div class="form-floating mb-3">
+              <input id="txt-password" type="password" class="form-control" v-model="password" placeholder="password">
               <label for="txt-password" class="form-label">Password</label>
-              <input id="txt-password" type="password" class="form-control" v-model="password">
             </div>
 
             <div class="text-center">
-              <button class="btn btn-success" type="submit">Login</button>
+              <button class="btn btn-success btn-lg" type="submit">Login</button>
             </div>
           </form>
 
