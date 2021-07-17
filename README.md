@@ -1,12 +1,13 @@
 # Giggle Pig: PHP/Vue Framework
 
-![](https://raw.githubusercontent.com/srisar/giggle-pig/master/public/images/giggle-pig-full.svg)
+<p style="text-align: center">
+  <img width="460" height="300" src="https://raw.githubusercontent.com/srisar/giggle-pig/master/public/images/giggle-pig-full.svg">
+</p>
 
-Giggle Pig framework is a minimal framework/template to develop applications with PHP backend and Vue.js-based front-end SPA. It is not a replacement
-for any production ready frameworks such as Laravel or Symphony.
+Giggle Pig framework is a minimal framework/template to develop applications with PHP backend and Vue.js-based front-end SPA. It is not a replacement for any
+production ready frameworks such as Laravel or Symphony.
 
-It comes with an authentication mechanism for Vue, and a way to authenticate API calls from backend php. 
-Using a disposable auth-key based authentication.
+It comes with an authentication mechanism for Vue, and a way to authenticate API calls from backend php. Using a disposable auth-key based authentication.
 
 This project is strictly for educational purpose as to understand and study how can we write authentication mechanism in php ourselves.
 
