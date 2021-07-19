@@ -7,7 +7,7 @@ require_once 'vendor/autoload.php';
 
 use App\Core\Database\Database;
 use App\Core\Http\Request;
-use App\Core\Http\Storage;
+use App\Core\Services\Storage;
 
 Request::cors();
 

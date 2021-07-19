@@ -5,7 +5,8 @@ declare( strict_types=1 );
 use App\Core\Http\Auth;
 use App\Core\Http\JSONResponse;
 use App\Core\Http\Request;
-use App\Core\Http\Uploader;
+use App\Core\Services\ImageProcessor;
+use App\Core\Services\Uploader;
 use App\Core\Resources\MimeTypes;
 use App\Models\User;
 
@@ -29,12 +30,14 @@ try {
     if ( empty( $user ) ) throw new Exception( "Invalid user" );
 
     $uploader = new Uploader( $fileObject, $UPLOAD_SIZE, "images/users/", MimeTypes::IMAGE_MIMES );
-    $path = $uploader->storeUploadFile( "profile_" . $user->id . "_" );
 
-    $user->profile_pic = $path;
+    $processor = ImageProcessor::createImageObject( $uploader );
+    $processor->fit( 250 )->save( "profile_" . $user->id . ".jpg", 85, "jpg" );
+
+    $user->profile_pic = $processor->getRelativePath();
 
     if ( $user->updateProfilePic() ) {
-        JSONResponse::validResponse( $path );
+        JSONResponse::validResponse();
     }
 
 

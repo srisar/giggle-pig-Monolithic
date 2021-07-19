@@ -21,6 +21,7 @@ export let usersMixins = {
         },
 
         profilePicUrl() {
+
             if ( _.isEmpty( this.loggedInUser.profile_pic ) ) {
                 return "images/user.svg";
             }

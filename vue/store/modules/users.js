@@ -38,7 +38,7 @@ export const usersStore = {
             } catch ( e ) {
                 throw e;
             }
-        },
+        }, /* fetch all users */
 
         async users_fetch( context, id ) {
 
@@ -50,8 +50,7 @@ export const usersStore = {
                 throw e;
             }
 
-        },
-        /* fetch user */
+        }, /* fetch user */
 
         async users_updateUser( context, user ) {
 
@@ -61,8 +60,7 @@ export const usersStore = {
             } catch ( e ) {
                 throw e;
             }
-        },
-        /* update user details */
+        }, /* update user details */
 
         async users_updatePassword( context, params ) {
 
@@ -74,8 +72,7 @@ export const usersStore = {
             } catch ( e ) {
                 throw e;
             }
-        },
-        /* update user password */
+        }, /* update user password */
 
 
         async users_createUser( context, user ) {
@@ -86,10 +83,20 @@ export const usersStore = {
             } catch ( e ) {
                 throw e;
             }
-        },
+        }, /* create new user */
 
-        async users_uploadProfilePic( context, params = { profilePicFile: null, id: null } ) {
+        async users_delete( context, id ) {
             try {
+                await axios.post( "users/delete.php", { id: id } );
+            } catch ( e ) {
+                throw e;
+            }
+        }, /* delete user */
+
+        async users_uploadProfilePic( context, params ) {
+            try {
+
+                /* params = {profilePicFile, id} */
 
                 let formData = new FormData();
                 formData.append( "profile_pic", params.profilePicFile );
@@ -104,7 +111,7 @@ export const usersStore = {
             } catch ( e ) {
                 throw e;
             }
-        }
+        }, /* uploads profile picture */
 
     },
     /* *** ACTIONS *** */

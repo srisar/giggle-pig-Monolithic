@@ -9,7 +9,8 @@
   "require": {
     "nesbot/carbon": "^2.46",
     "ext-json": "*",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "intervention/image": "^2.6"
   },
   "description": "",
   "autoload": {

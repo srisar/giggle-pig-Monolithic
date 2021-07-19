@@ -2311,6 +2311,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var List = __webpack_require__(/*! list.js */ "./node_modules/list.js/src/index.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2890,6 +2897,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
@@ -3092,8 +3108,83 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
           }
         }, _callee4, null, [[0, 7]]);
       }))();
-    }
+    },
+
     /* on update password */
+    onDelete: function onDelete() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                (0,_assets_libs_bootloks__WEBPACK_IMPORTED_MODULE_1__.textPrompt)({
+                  message: "Do you want to delete the user? Type \"DELETE\" to confirm",
+                  title: "Delete user"
+                }, /*#__PURE__*/function () {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(value) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+                      while (1) {
+                        switch (_context5.prev = _context5.next) {
+                          case 0:
+                            if (!(value === "DELETE")) {
+                              _context5.next = 13;
+                              break;
+                            }
+
+                            _context5.prev = 1;
+                            _context5.next = 4;
+                            return _this5.$store.dispatch("users_delete", _this5.userToEdit.id);
+
+                          case 4:
+                            _context5.next = 6;
+                            return _this5.$router.push({
+                              name: "manageUsers"
+                            });
+
+                          case 6:
+                            _context5.next = 11;
+                            break;
+
+                          case 8:
+                            _context5.prev = 8;
+                            _context5.t0 = _context5["catch"](1);
+                            (0,_assets_libs_bootloks__WEBPACK_IMPORTED_MODULE_1__.errorDialog)({
+                              message: "Failed to delete the user"
+                            });
+
+                          case 11:
+                            _context5.next = 14;
+                            break;
+
+                          case 13:
+                            (0,_assets_libs_bootloks__WEBPACK_IMPORTED_MODULE_1__.infoDialog)({
+                              message: "Please type the word DELETE to delete the user"
+                            });
+
+                          case 14:
+                          case "end":
+                            return _context5.stop();
+                        }
+                      }
+                    }, _callee5, null, [[1, 8]]);
+                  }));
+
+                  return function (_x) {
+                    return _ref.apply(this, arguments);
+                  };
+                }());
+
+              case 1:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    }
+    /* on delete user */
 
   }
 });
@@ -5982,6 +6073,8 @@ var usersStore = {
         }, _callee, null, [[0, 7]]);
       }))();
     },
+
+    /* fetch all users */
     users_fetch: function users_fetch(context, id) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var response;
@@ -6095,44 +6188,76 @@ var usersStore = {
         }, _callee5, null, [[0, 6]]);
       }))();
     },
-    users_uploadProfilePic: function users_uploadProfilePic(context) {
-      var _arguments = arguments;
+
+    /* create new user */
+    users_delete: function users_delete(context, id) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        var params, formData, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                params = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : {
-                  profilePicFile: null,
-                  id: null
-                };
-                _context6.prev = 1;
-                formData = new FormData();
-                formData.append("profile_pic", params.profilePicFile);
-                formData.append("id", params.id);
-                _context6.next = 7;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("users/upload-profile-pic.php", formData, {
-                  "Content-Type": "multipart/form-data"
+                _context6.prev = 0;
+                _context6.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("users/delete.php", {
+                  id: id
                 });
 
-              case 7:
-                response = _context6.sent;
-                return _context6.abrupt("return", response.data.payload.data);
+              case 3:
+                _context6.next = 8;
+                break;
 
-              case 11:
-                _context6.prev = 11;
-                _context6.t0 = _context6["catch"](1);
+              case 5:
+                _context6.prev = 5;
+                _context6.t0 = _context6["catch"](0);
                 throw _context6.t0;
 
-              case 14:
+              case 8:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, null, [[1, 11]]);
+        }, _callee6, null, [[0, 5]]);
+      }))();
+    },
+
+    /* delete user */
+    users_uploadProfilePic: function users_uploadProfilePic(context, params) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+        var formData, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.prev = 0;
+
+                /* params = {profilePicFile, id} */
+                formData = new FormData();
+                formData.append("profile_pic", params.profilePicFile);
+                formData.append("id", params.id);
+                _context7.next = 6;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post("users/upload-profile-pic.php", formData, {
+                  "Content-Type": "multipart/form-data"
+                });
+
+              case 6:
+                response = _context7.sent;
+                return _context7.abrupt("return", response.data.payload.data);
+
+              case 10:
+                _context7.prev = 10;
+                _context7.t0 = _context7["catch"](0);
+                throw _context7.t0;
+
+              case 13:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[0, 10]]);
       }))();
     }
+    /* uploads profile picture */
+
   }
   /* *** ACTIONS *** */
 
@@ -61115,20 +61240,26 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
+          _c("p", [_vm._v("Simple list.js based table implementation.")]),
+          _vm._v(" "),
           _c("div", { attrs: { id: "users" } }, [
-            _c("input", {
-              staticClass: "search form-control",
-              attrs: { placeholder: "Search" }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "sort btn btn-sm btn-primary",
-                attrs: { "data-sort": "born" }
-              },
-              [_vm._v("\n          Sort by name\n        ")]
-            ),
+            _c("div", { staticClass: "mb-3" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("input", {
+                  staticClass: "search form-control",
+                  attrs: { placeholder: "Search" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "sort btn btn-sm btn-primary",
+                    attrs: { "data-sort": "born" }
+                  },
+                  [_vm._v("Sort by name")]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("table", { staticClass: "table table-bordered table-striped" }, [
               _c("tbody", { staticClass: "list" }, [
@@ -61816,20 +61947,57 @@ var render = function() {
   return _c("div", { staticClass: "mt-3" }, [
     _vm.userToEdit
       ? _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "row g-2 justify-content-center" }, [
+            _c("div", { staticClass: "col-12 col-md-4 col-lg-4" }, [
+              _c("div", { staticClass: "alert alert-secondary" }, [
+                _c("div", { staticClass: "text-center profile__pic" }, [
+                  _c("img", {
+                    staticClass: "img-fluid",
+                    attrs: { src: _vm.profilePicUrl, alt: "Profile picture" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-3 text-center" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Upload profile picture")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    ref: "profilePicField",
+                    staticClass: "form-control form-control-sm",
+                    attrs: { type: "file" },
+                    on: {
+                      change: function($event) {
+                        return _vm.onChooseFile()
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "text-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-primary",
+                      attrs: { disabled: !_vm.profilePicFile },
+                      on: {
+                        click: function($event) {
+                          return _vm.onUploadProfilePic()
+                        }
+                      }
+                    },
+                    [_vm._v("Upload Image")]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "col-12 col-md-8 col-lg-6" }, [
               _c("div", { staticClass: "alert alert-secondary" }, [
                 _c("h4", { staticClass: "text-center" }, [
                   _vm._v(
                     "Edit " + _vm._s(_vm.userToEdit.full_name) + " details"
                   )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "text-center profile__pic" }, [
-                  _c("img", {
-                    staticClass: "img-fluid",
-                    attrs: { src: _vm.profilePicUrl, alt: "Profile picture" }
-                  })
                 ]),
                 _vm._v(" "),
                 _c("div", { attrs: { id: "form-edit-user" } }, [
@@ -62220,40 +62388,22 @@ var render = function() {
                         ])
                       ])
                     : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "alert alert-secondary" }, [
-                _c("div", { staticClass: "mb-3" }, [
-                  _c("label", { staticClass: "form-label" }, [
-                    _vm._v("Upload profile pic")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    ref: "profilePicField",
-                    staticClass: "form-control form-control-sm",
-                    attrs: { type: "file" },
-                    on: {
-                      change: function($event) {
-                        return _vm.onChooseFile()
-                      }
-                    }
-                  })
                 ]),
+                _vm._v(" "),
+                _c("hr"),
                 _vm._v(" "),
                 _c("div", { staticClass: "text-center" }, [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-sm btn-primary",
-                      attrs: { disabled: !_vm.profilePicFile },
+                      staticClass: "btn btn-sm btn-danger",
                       on: {
                         click: function($event) {
-                          return _vm.onUploadProfilePic()
+                          return _vm.onDelete()
                         }
                       }
                     },
-                    [_vm._v("Upload Image")]
+                    [_vm._v("Delete user")]
                   )
                 ])
               ])

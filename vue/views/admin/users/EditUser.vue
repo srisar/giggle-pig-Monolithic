@@ -4,17 +4,36 @@
 
     <div class="container" v-if="userToEdit">
 
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
+      <div class="row g-2 justify-content-center">
 
+        <div class="col-12 col-md-4 col-lg-4">
+
+          <!-- upload profile pic -->
+          <div class="alert alert-secondary">
+
+            <div class="text-center profile__pic">
+              <img :src="profilePicUrl" alt="Profile picture" class="img-fluid">
+            </div>
+
+            <div class="mb-3 text-center">
+              <label class="form-label">Upload profile picture</label>
+              <input type="file" class="form-control form-control-sm" ref="profilePicField" @change="onChooseFile()">
+            </div>
+
+            <div class="text-center">
+              <button class="btn btn-sm btn-primary" :disabled="!profilePicFile" @click="onUploadProfilePic()">Upload Image</button>
+            </div>
+
+          </div>
+
+        </div><!-- col -->
+
+        <div class="col-12 col-md-8 col-lg-6">
           <!-- user details area -->
           <div class="alert alert-secondary">
 
             <h4 class="text-center">Edit {{ userToEdit.full_name }} details</h4>
 
-            <div class="text-center profile__pic">
-              <img :src="profilePicUrl" alt="Profile picture" class="img-fluid">
-            </div>
 
             <div id="form-edit-user">
 
@@ -110,27 +129,17 @@
               </div><!-- change password area -->
 
               <!-- feedback messages -->
-
-
             </div><!-- form-edit-user -->
-          </div><!-- alert -->
 
-
-          <!-- upload profile pic -->
-          <div class="alert alert-secondary">
-            <div class="mb-3">
-              <label class="form-label">Upload profile pic</label>
-              <input type="file" class="form-control form-control-sm" ref="profilePicField" @change="onChooseFile()">
-            </div>
+            <hr>
 
             <div class="text-center">
-              <button class="btn btn-sm btn-primary" :disabled="!profilePicFile" @click="onUploadProfilePic()">Upload Image</button>
+              <button class="btn btn-sm btn-danger" @click="onDelete()">Delete user</button>
             </div>
 
-          </div>
-
-
+          </div><!-- alert -->
         </div><!-- col -->
+
       </div><!-- row -->
 
     </div><!-- container -->
@@ -139,7 +148,7 @@
 </template>
 
 <script>
-import {errorDialog, successDialog} from "../../../assets/libs/bootloks";
+import {errorDialog, infoDialog, successDialog, textPrompt} from "../../../assets/libs/bootloks";
 
 let _ = require( "lodash" );
 
@@ -282,6 +291,35 @@ export default {
     /* on update password */
 
 
+    async onDelete() {
+
+      textPrompt(
+          {
+            message: "Do you want to delete the user? Type \"DELETE\" to confirm",
+            title: "Delete user"
+          },
+          async ( value ) => {
+
+            if ( value === "DELETE" ) {
+
+              try {
+                await this.$store.dispatch( "users_delete", this.userToEdit.id );
+
+                await this.$router.push( { name: "manageUsers" } );
+
+              } catch ( e ) {
+                errorDialog( { message: "Failed to delete the user" } );
+              }
+
+            } else {
+              infoDialog( { message: "Please type the word DELETE to delete the user" } );
+            }
+
+          } );
+
+    }, /* on delete user */
+
+
   },
 
 
@@ -291,16 +329,16 @@ export default {
 <style scoped lang="scss">
 
 .profile__pic {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  margin-bottom   : 20px;
 
   img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
+    width         : 150px;
+    height        : 150px;
+    object-fit    : cover;
+    border-radius : 50%;
   }
 
 }

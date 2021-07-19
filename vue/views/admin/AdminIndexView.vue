@@ -13,11 +13,18 @@
 
         <hr>
 
+        <p>Simple list.js based table implementation.</p>
+
         <div id="users">
-          <input class="search form-control" placeholder="Search"/>
-          <button class="sort btn btn-sm btn-primary" data-sort="born">
-            Sort by name
-          </button>
+
+          <div class="mb-3">
+            <div class="input-group">
+              <input class="search form-control" placeholder="Search"/>
+              <button class="sort btn btn-sm btn-primary" data-sort="born">Sort by name</button>
+            </div>
+          </div>
+
+
           <table class="table table-bordered table-striped">
             <!-- IMPORTANT, class="list" have to be at tbody -->
             <tbody class="list">
@@ -51,7 +58,7 @@
 
 <script>
 
-let List = require("list.js");
+let List = require( "list.js" );
 
 export default {
   name: "AdminIndexView",

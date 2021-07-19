@@ -25,6 +25,13 @@ class User implements IModel
     public ?string $username, $full_name, $password, $password_hash, $email, $role, $profile_pic;
 
 
+    /**
+     * Builds an user object from given array of values.
+     * Array key must be of user property and value matches the datatype
+     *
+     * @param $array
+     * @return static
+     */
     public static function build( $array ): self
     {
         $object = new self();
@@ -35,12 +42,20 @@ class User implements IModel
     }
 
 
+    /**
+     * Finds a user by id and returns it as user object
+     *
+     * @param int $id
+     * @return User|null
+     */
     public static function find( int $id ): ?User
     {
         return Database::find( self::TABLE, $id, self::class );
     }
 
     /**
+     * Find all user rows and return it as array of user objects
+     *
      * @param int $limit
      * @param int $offset
      * @return User[]
@@ -51,6 +66,8 @@ class User implements IModel
     }
 
     /**
+     * Insert a new user row in the database
+     *
      * @return int
      * @throws Exception
      */
@@ -74,6 +91,8 @@ class User implements IModel
     }
 
     /**
+     * Updates the user row in the database
+     *
      * @throws Exception
      */
     public function update(): bool
@@ -94,6 +113,11 @@ class User implements IModel
     }
 
 
+    /**
+     * Updates profile picture URL in the database
+     *
+     * @return bool
+     */
     public function updateProfilePic(): bool
     {
         $data = [
@@ -103,6 +127,11 @@ class User implements IModel
         return Database::update( self::TABLE, $data, [ "id" => $this->id ] );
     }
 
+    /**
+     * Deletes the user from database by given id
+     *
+     * @return bool
+     */
     public function delete(): bool
     {
         return Database::delete( self::TABLE, "id", $this->id );
@@ -111,6 +140,7 @@ class User implements IModel
 
     /**
      * Check if username provided exists for other users in the database
+     *
      * @return bool
      */
     public function sameUsernameExist(): bool
@@ -130,6 +160,7 @@ class User implements IModel
 
     /**
      * Check if email provided exists for other users in the database
+     *
      * @return bool
      */
     public function sameEmailExist(): bool
@@ -148,6 +179,12 @@ class User implements IModel
     }
 
 
+    /**
+     * Checks if given username is already in the database
+     *
+     * @param $username
+     * @return bool
+     */
     public function usernameAlreadyExist( $username ): bool
     {
 
@@ -162,6 +199,13 @@ class User implements IModel
 
     }
 
+    /**
+     * Checks if given username and password exist in the database
+     *
+     * @param $username
+     * @param $password
+     * @return User|null
+     */
     public static function userExist( $username, $password ): ?User
     {
 
@@ -178,18 +222,28 @@ class User implements IModel
             if ( password_verify( $password, $result->password_hash ) ) {
                 return $result;
             }
-
         }
         return null;
-
     }
 
 
+    /**
+     * Validates the given password against the hashed version in the database
+     *
+     * @param $password
+     * @return bool
+     */
     public function validatePassword( $password ): bool
     {
         return password_verify( $password, $this->password_hash );
     }
 
+    /**
+     * Updates user with the given new password
+     *
+     * @param $newPassword
+     * @return bool
+     */
     public function updatePassword( $newPassword ): bool
     {
 
