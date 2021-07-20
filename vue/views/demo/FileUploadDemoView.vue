@@ -31,6 +31,21 @@
     </div>
 
 
+    <div class="container">
+      <div class="row">
+        <div class="col">
+
+          <p class="lead">Here is how to process the upload file on the PHP side.</p>
+          <EmbedGist gist-id="b1b9c955f451bacb80d03a98ec5e1026"/>
+
+          <p class="lead">How to process image uploads</p>
+          <EmbedGist gist-id="7c4eecab98d5513fe6e15c941777ea56"/>
+
+        </div>
+      </div>
+    </div>
+
+
   </div><!-- template -->
 
 </template>
@@ -39,10 +54,11 @@
 import TopNavigationBar from "../../components/TopNavigationBar";
 import {errorDialog, successDialog} from "../../assets/libs/bootloks";
 import axios from "axios";
+import EmbedGist from "../../components/gist/EmbedGist";
 
 export default {
   name: "FileUploadDemoView",
-  components: { TopNavigationBar },
+  components: { EmbedGist, TopNavigationBar },
 
   data() {
     return {

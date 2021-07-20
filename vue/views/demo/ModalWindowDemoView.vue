@@ -51,11 +51,7 @@
               <code>data-bs-target="#modalName"</code>. Where <code>#modalName</code> is the id of the modal being invoked.
             </p>
 
-            <p>
-              <code>
-                < button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDefault" > Open default size modal < /button >
-              </code>
-            </p>
+            <EmbedGist gist-id="ae7c551121b74a2a04fbbcd048b83dc3"/>
 
           </div>
         </div>
@@ -127,10 +123,11 @@
 import TopNavigationBar from "../../components/TopNavigationBar";
 import ModalWindow from "../../components/ModalWindow";
 import AdminSidebar from "../admin/components/AdminSidebar";
+import EmbedGist from "../../components/gist/EmbedGist";
 
 export default {
   name: "ModalWindowDemoView",
-  components: { AdminSidebar, ModalWindow, TopNavigationBar },
+  components: { EmbedGist, AdminSidebar, ModalWindow, TopNavigationBar },
 
   data() {
     return {

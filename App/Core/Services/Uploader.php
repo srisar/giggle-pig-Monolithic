@@ -134,13 +134,13 @@ class Uploader
     /**
      * Move the uploaded file from temp location and store it with given name,
      * to avoid name conflicts, a unique id is appended to the file while saving.
-     * @param string $fileName
-     * @param bool $useMimeExtension
-     * @param bool $returnAbsolutePath
+     * @param string $file_name
+     * @param bool $use_mime_extension
+     * @param bool $return_absolute_path
      * @return string
      * @throws Exception
      */
-    public function storeUploadFile( string $fileName, bool $useMimeExtension = false, bool $returnAbsolutePath = false ): string
+    public function storeUploadFile( string $file_name, bool $use_mime_extension = false, bool $return_absolute_path = false ): string
     {
 
         /*
@@ -148,14 +148,14 @@ class Uploader
          * if useMimeExtension flag is set, then extension is fetched from mime
          */
         $ext = "";
-        if ( $useMimeExtension ) {
+        if ( $use_mime_extension ) {
             $ext = "." . $this->mimes["preferredExtension"];
         }
 
         /*
          * Generate the file path, absolute and relative
          */
-        $this->generateUniqueFileName( $fileName, $ext );
+        $this->generateUniqueFileName( $file_name, $ext );
 
         /*
          * Move the uploaded file to the generated absolute path
@@ -166,7 +166,7 @@ class Uploader
          * Return the relative path, unless returnAbsolutePath flag is set
          */
         if ( $result ) {
-            if ( !$returnAbsolutePath ) return $this->relativePath;
+            if ( !$return_absolute_path ) return $this->relativePath;
             return $this->absolutePath;
         }
 

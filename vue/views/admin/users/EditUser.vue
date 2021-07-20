@@ -6,28 +6,6 @@
 
       <div class="row g-2 justify-content-center">
 
-        <div class="col-12 col-md-4 col-lg-4">
-
-          <!-- upload profile pic -->
-          <div class="alert alert-secondary">
-
-            <div class="text-center profile__pic">
-              <img :src="profilePicUrl" alt="Profile picture" class="img-fluid">
-            </div>
-
-            <div class="mb-3 text-center">
-              <label class="form-label">Upload profile picture</label>
-              <input type="file" class="form-control form-control-sm" ref="profilePicField" @change="onChooseFile()">
-            </div>
-
-            <div class="text-center">
-              <button class="btn btn-sm btn-primary" :disabled="!profilePicFile" @click="onUploadProfilePic()">Upload Image</button>
-            </div>
-
-          </div>
-
-        </div><!-- col -->
-
         <div class="col-12 col-md-8 col-lg-6">
           <!-- user details area -->
           <div class="alert alert-secondary">
@@ -131,13 +109,36 @@
               <!-- feedback messages -->
             </div><!-- form-edit-user -->
 
-            <hr>
+          </div><!-- alert -->
 
-            <div class="text-center">
-              <button class="btn btn-sm btn-danger" @click="onDelete()">Delete user</button>
+          <hr>
+
+          <div class="text-center">
+            <button class="btn btn-sm btn-danger" @click="onDelete()">Delete user</button>
+          </div>
+
+        </div><!-- col -->
+
+        <div class="col-12 col-md-4 col-lg-4">
+
+          <!-- upload profile pic -->
+          <div class="alert alert-secondary">
+
+            <div class="text-center profile__pic">
+              <img :src="profilePicUrl" alt="Profile picture" class="img-fluid">
             </div>
 
-          </div><!-- alert -->
+            <div class="mb-3 text-center">
+              <label class="form-label">Upload profile picture</label>
+              <input type="file" class="form-control form-control-sm" ref="profilePicField" @change="onChooseFile()">
+            </div>
+
+            <div class="text-center">
+              <button class="btn btn-sm btn-primary" :disabled="!profilePicFile" @click="onUploadProfilePic()">Upload Image</button>
+            </div>
+
+          </div>
+
         </div><!-- col -->
 
       </div><!-- row -->
@@ -165,6 +166,7 @@ export default {
         full_name: "",
         email: "",
         role: "",
+        profile_pic: ""
       },
 
       passwordToChange: {
@@ -183,17 +185,19 @@ export default {
 
   computed: {
 
-    roles: function () {
+    roles() {
       return this.$store.getters.getUserRoles;
     },
-    loggedInUser: function () {
+
+    loggedInUser() {
       return this.$store.getters.getLoggedInUser;
     },
-    isSameAsLoggedInUser: function () {
+
+    isSameAsLoggedInUser() {
       return this.userToEdit.username === this.loggedInUser.username;
     },
 
-    isNewPasswordValid: function () {
+    isNewPasswordValid() {
       if ( this.passwordToChange.newPassword === "" ) return false;
       return this.passwordToChange.newPassword === this.passwordToChange.confirmNewPassword;
     },
@@ -222,6 +226,7 @@ export default {
     }
 
   },
+  /* -- mounted -- */
 
 
   methods: {
@@ -249,7 +254,8 @@ export default {
         console.log( e.response.data );
         errorDialog( { message: "Failed to upload image" } );
       }
-    },
+
+    }, /* on upload profile picture */
 
     async onUpdate() {
 
@@ -267,8 +273,7 @@ export default {
         } )
       }
 
-    },
-    /* on update */
+    }, /* on update */
 
 
     async onUpdatePassword() {
@@ -287,8 +292,7 @@ export default {
         errorDialog( { message: "Failed to update password" } );
       }
 
-    },
-    /* on update password */
+    }, /* on update password */
 
 
     async onDelete() {
@@ -321,6 +325,7 @@ export default {
 
 
   },
+  /* -- methods -- */
 
 
 }
@@ -340,7 +345,6 @@ export default {
     object-fit    : cover;
     border-radius : 50%;
   }
-
 }
 
 </style>
