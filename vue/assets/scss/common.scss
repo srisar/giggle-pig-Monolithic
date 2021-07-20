@@ -24,3 +24,16 @@ html, body {
   overflow-y : auto;
   flex-grow  : 1;
 }
+
+/* ------------------------------------*/
+/* BOOTSTRAP 5 Mods */
+/* ------------------------------------*/
+
+.card-header {
+  font-size   : 1.2rem;
+  font-weight : bold;
+}
+
+
+
+@import "datatables.css";

@@ -113,7 +113,19 @@ export const usersStore = {
             }
         }, /* uploads profile picture */
 
+        async users_removeProfilePicture( context, params ) {
+            try {
+
+                /* params = {id} */
+
+                await axios.post( "users/remove-profile-pic.php", params )
+
+            } catch ( e ) {
+                throw e;
+            }
+        }, /* remove profile picture */
+
     },
-    /* *** ACTIONS *** */
+    /* --- ACTIONS --- */
 
 }

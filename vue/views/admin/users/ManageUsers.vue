@@ -1,40 +1,27 @@
 <template>
 
-  <div>
+  <div id="view:manage_users">
 
 
-    <div class="container">
+    <div class="container my-3">
 
-      <div class="row">
+      <div class="row justify-content-center">
 
-        <div class="col my-3" id="content-area">
+        <div class="col-12 col-md-8">
 
-          <div class="row">
-            <div class="col-12 col-md-8 col-lg-6">
-              <h2>Manage Users</h2>
+
+          <div class="card shadow">
+            <div class="card-header">Manage Users</div>
+            <div class="card-body">
 
               <p>The table contains available users in the system.
                 <router-link to="/admin/users/create">Create new user</router-link>
               </p>
 
 
-              <div id="list__users">
+              <div id="list__users" class="">
 
-
-                <div class="row g-3 mb-3">
-                  <div class="col">
-
-                    <div class="input-group">
-                      <input class="search form-control" placeholder="Search"/>
-                      <button class="sort btn btn-outline-secondary" data-sort="full_name">Sort by name</button>
-                      <button class="sort btn btn-outline-secondary" data-sort="email">Sort by email</button>
-                    </div>
-
-                  </div>
-                </div>
-
-
-                <table class="table table-bordered table-sm table-responsive" v-if="users.length > 0">
+                <table class="table table-bordered data_table" v-if="users.length > 0">
                   <thead>
                   <tr>
                     <th>Full name</th>
@@ -59,17 +46,19 @@
                 <div class="alert alert-warning text-center" v-else>
                   No users found in the system
                 </div>
-
               </div>
 
-            </div>
-          </div>
+            </div><!-- card-body -->
+          </div><!-- card -->
 
 
-        </div><!--  -->
+        </div>
+
       </div>
 
     </div>
+
+  </div>
 
   </div>
 
@@ -78,8 +67,6 @@
 <script>
 import {errorDialog} from "../../../assets/libs/bootloks";
 import AdminSidebar from "../components/AdminSidebar";
-
-let List = require( "list.js" );
 
 export default {
   name: "ManageUsers",
@@ -104,10 +91,7 @@ export default {
     try {
       await this.$store.dispatch( "users_fetchAll" );
 
-      let options = {
-        valueNames: ["full_name", "username", "email", "role"]
-      };
-      new List( "list__users", options );
+      $( ".data_table" ).DataTable();
 
     } catch ( e ) {
       errorDialog( { message: "Failed to get users details" } );

@@ -123,9 +123,24 @@ class User implements IModel
         $data = [
             "profile_pic" => $this->profile_pic,
         ];
-
         return Database::update( self::TABLE, $data, [ "id" => $this->id ] );
     }
+
+
+    /**
+     * Removes profile pic from database
+     *
+     * @return bool
+     */
+    public function removeProfilePic(): bool
+    {
+        $data = [
+            "profile_pic" => ""
+
+        ];
+        return Database::update( self::TABLE, $data, [ "id" => $this->id ] );
+    }
+
 
     /**
      * Deletes the user from database by given id
