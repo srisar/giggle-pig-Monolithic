@@ -246,9 +246,9 @@ class Uploader
     }
 
 
-    public function generateUniqueFileName( string $fileName, string $ext )
+    public function generateUniqueFileName( string $file_name, string $ext )
     {
-        $uid = KeyGenerator::generateUID( "", "_" . $fileName );
+        $uid = KeyGenerator::generateUID( "", "_" . $file_name );
 
         $this->relativePath = $this->subDir . "/" . $uid . $ext;
         $this->absolutePath = $this->baseDir . "/" . $this->relativePath;
