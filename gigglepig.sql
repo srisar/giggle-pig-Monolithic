@@ -26,14 +26,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password_hash` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `full_name` varchar(255) NOT NULL,
+  `profile_pic` varchar(300) NULL,
   `role` enum('ADMIN','MANAGER','USER') NOT NULL DEFAULT 'USER',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table phpvue.users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT IGNORE INTO `users` (`id`, `username`, `password_hash`, `email`, `full_name`, `role`) VALUES
-	(1, 'admin', '$2y$10$JN/JQbRZ8zj6ReU5StNgc.AXIWuw7c8OexEk1Hlnh7/TBkuDzdyp2', 'admin@hello.com', 'Administrator', 'ADMIN');
+INSERT IGNORE INTO `users` (`id`, `username`, `password_hash`, `email`, `full_name`, `role`, `profile_pic`) VALUES
+	(1, 'admin', '$2y$10$JN/JQbRZ8zj6ReU5StNgc.AXIWuw7c8OexEk1Hlnh7/TBkuDzdyp2', 'admin@hello.com', 'Administrator', 'ADMIN', '');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table phpvue.users_auth_keys
