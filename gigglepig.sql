@@ -14,9 +14,9 @@
 
 
 -- Dumping database structure for phpvue
-DROP DATABASE IF EXISTS `phpvue`;
-CREATE DATABASE IF NOT EXISTS `phpvue` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `phpvue`;
+DROP DATABASE IF EXISTS `giggle_pig`;
+CREATE DATABASE IF NOT EXISTS `giggle_pig` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `giggle_pig`;
 
 -- Dumping structure for table phpvue.users
 DROP TABLE IF EXISTS `users`;

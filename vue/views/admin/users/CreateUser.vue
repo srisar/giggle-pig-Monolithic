@@ -89,8 +89,8 @@
                 <div class="row g-3">
                   <div class="col text-center">
 
-                    <button type="button" class="btn btn-primary" :disabled="!validPassword" @click="onCreate()">Create</button>
-                    <router-link to="/admin/users" class="btn btn-secondary">Cancel</router-link>
+                    <button type="button" class="btn btn-primary mx-1" :disabled="!validPassword" @click="onCreate()">Create</button>
+                    <router-link to="/admin/users" class="btn btn-secondary mx-1">Cancel</router-link>
 
                   </div>
                 </div>

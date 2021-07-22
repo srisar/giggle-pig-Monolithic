@@ -242,7 +242,7 @@ class Uploader
     {
         $path = $this->baseDir . "/" . $this->subDir;
         if ( file_exists( $path ) ) return true;
-        return mkdir( $path );
+        return mkdir( $path, "0777", true );
     }
 
 

@@ -1,15 +1,11 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 import Login from "../views/Login";
-
-import store from "../store/index";
+import {store} from "../store/index";
 
 import {pagesRoutes} from "./groups/pages";
 import {adminRoutes} from "./groups/admin";
 import {demoRoutes} from "./groups/demo"; /* demo routes: this can be removed */
 import Page404 from "../views/pages/Page404";
-
-Vue.use( VueRouter );
 
 
 const routes = [
@@ -24,15 +20,15 @@ const routes = [
     ...adminRoutes,
     ...demoRoutes, /* demo routes, can be removed */
     {
-        path: "*",
+        path: "/:pathMatch(.*)*",
         name: "404",
         component: Page404
     }
 ];
 
 
-const router = new VueRouter( {
-    // mode: "history",
+export const router = createRouter( {
+    history: createWebHashHistory(),
     routes: routes,
 } );
 
@@ -65,4 +61,4 @@ router.beforeEach( ( to, from, next ) => {
 } )
 
 
-export default router;
+// export default router;

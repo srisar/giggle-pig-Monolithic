@@ -1,12 +1,9 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import {createStore} from "vuex";
 
 import {authStore} from "./modules/auth";
 import {usersStore} from "./modules/users";
 
-Vue.use( Vuex );
-
-export default new Vuex.Store( {
+export const store = createStore( {
 
     state: {},
     mutations: {},
@@ -15,5 +12,4 @@ export default new Vuex.Store( {
         auth: authStore,
         users: usersStore,
     }
-
 } );

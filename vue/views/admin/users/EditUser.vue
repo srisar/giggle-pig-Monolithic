@@ -65,8 +65,8 @@
                 </div>
 
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary" @click="onUpdate()">Update</button>
-                  <router-link :to="{name: 'manageUsers'}" class="btn btn-secondary">Cancel</router-link>
+                  <button type="button" class="btn btn-primary mx-1" @click="onUpdate()">Update</button>
+                  <router-link :to="{name: 'manageUsers'}" class="btn btn-secondary mx-1">Cancel</router-link>
                 </div>
 
                 <hr>

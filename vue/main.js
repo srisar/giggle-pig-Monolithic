@@ -1,6 +1,6 @@
-import Vue from "vue";
-import router from "./router/index";
-import store from "./store/index";
+import {createApp} from "vue";
+import {router} from "./router/index";
+import {store} from "./store/index";
 
 import App from "./App";
 
@@ -26,7 +26,7 @@ window.moment = require( "moment" );
 
 
 /* datatables */
-require( 'datatables.net-bs5' );
+require( "datatables.net-bs5" );
 /* css file for datatable is loaded with main scss file under assets/scss/datatables.css */
 
 /* Axios configurations */
@@ -54,8 +54,4 @@ axios.interceptors.response.use( undefined, ( error => {
 document.title = "Giggle Pig: The Framework";
 
 /* Vue initialization */
-new Vue( {
-    store: store,
-    router: router,
-    render: h => h( App )
-} ).$mount( "#app" );
+createApp( App ).use( router).use(store).mount( "#app" );

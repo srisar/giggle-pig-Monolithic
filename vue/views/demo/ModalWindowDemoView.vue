@@ -30,10 +30,10 @@
         <div class="row my-2">
           <div class="col text-center">
 
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDefault">Open default size modal</button>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalXl">Open xl size modal</button>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalMd">Open md size modal</button>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSm">Open sm size modal</button>
+            <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#modalDefault">Open default size modal</button>
+            <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#modalXl">Open xl size modal</button>
+            <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#modalMd">Open md size modal</button>
+            <button class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#modalSm">Open sm size modal</button>
 
           </div>
         </div><!-- row -->

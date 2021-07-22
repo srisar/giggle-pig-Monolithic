@@ -10,7 +10,7 @@
           <div class="col text-center">
 
             <div class="">
-              <img src="https://srisar.github.io/bootloks/bootloks-icon.18d5a4b8.svg" width="250px" alt="">
+              <img src="https://srisar.github.io/bootloks/bootloks-icon.18d5a4b8.svg" style="width: 250px" alt="Bootloks Logo">
             </div>
 
             <h4>Bootstrap based modal windows</h4>
@@ -23,15 +23,15 @@
               <h3 class="text-center">Testing messagebox fly outs</h3>
 
               <div class="my-2 text-center">
-                <button class="btn btn-primary" @click="onSuccessMessage()">Open Success Message</button>
-                <button class="btn btn-primary" @click="onErrorMessage()">Open Error Message</button>
+                <button class="btn btn-primary mx-1" @click="onSuccessMessage()">Open Success Message</button>
+                <button class="btn btn-primary mx-1" @click="onErrorMessage()">Open Error Message</button>
               </div>
 
               <div class="my-2 text-center">
-                <button class="btn btn-secondary" @click="onTextPrompt()">Open text input</button>
-                <button class="btn btn-secondary" @click="onTextAreaPrompt()">Open multiline input</button>
-                <button class="btn btn-secondary" @click="onDatePrompt()">Open date input</button>
-                <button class="btn btn-secondary" @click="onNumberPrompt()">Open number input</button>
+                <button class="btn btn-secondary mx-1" @click="onTextPrompt()">Open text input</button>
+                <button class="btn btn-secondary mx-1" @click="onTextAreaPrompt()">Open multiline input</button>
+                <button class="btn btn-secondary mx-1" @click="onDatePrompt()">Open date input</button>
+                <button class="btn btn-secondary mx-1" @click="onNumberPrompt()">Open number input</button>
               </div>
 
               <div class="my-2 text-center">
@@ -44,10 +44,12 @@
 
             </div>
 
-
           </div>
         </div>
+
       </div>
+
+
     </main>
 
   </div>

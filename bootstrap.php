@@ -13,7 +13,7 @@ Request::cors();
 
 $db_config = [
     "HOST" => "localhost",
-    "DATABASE" => "phpvue",
+    "DATABASE" => "giggle_pig",
     "USERNAME" => "root",
     "PASSWORD" => "",
 ];

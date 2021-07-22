@@ -8,7 +8,7 @@ export const adminRoutes = [
         component: AdminApp,
         children: [
             {
-                path: "/",
+                path: "",
                 component: AdminIndexView
             },
             ...userRoutes,
