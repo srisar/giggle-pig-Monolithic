@@ -23,4 +23,8 @@ export default {
 
 <style scoped lang="scss">
 
+.page-container{
+  height: 100%;
+}
+
 </style>

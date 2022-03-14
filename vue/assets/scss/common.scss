@@ -19,10 +19,8 @@ html, body {
   display : flex;
 }
 
-#main {
-  height     : inherit;
-  overflow-y : auto;
-  flex-grow  : 1;
+#app {
+  height : 100%;
 }
 
 /* ------------------------------------*/
